@@ -390,66 +390,90 @@
         }
 
         .practice-area {
-            margin-top: 30px;
-            padding: 0;
+            margin-top: 40px;
+            padding: 40px 0;
             background: transparent;
             border-radius: 0;
         }
 
         .practice-area h2 {
-            color: #495057;
-            margin-bottom: 15px;
-            font-size: 0.95em;
-            font-weight: 600;
+            color: #6c757d;
+            margin-bottom: 25px;
+            font-size: 0.85em;
+            font-weight: 500;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            opacity: 0.7;
+            letter-spacing: 1px;
+            opacity: 0.6;
         }
 
         .target-text {
-            font-size: 1.5em;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            margin-bottom: 8px;
+            font-size: 2.8em;
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', 'Roboto Mono', 'Courier New', monospace;
+            margin-bottom: 30px;
             padding: 0;
+            padding-right: 10px;
             background: transparent;
             border-radius: 0;
-            line-height: 2;
-            min-height: 60px;
-            letter-spacing: 0.5px;
+            line-height: 1.8;
+            max-height: 25.2em;
+            overflow-y: auto;
+            overflow-x: hidden;
+            letter-spacing: 0.02em;
             word-wrap: break-word;
             word-break: break-word;
             overflow-wrap: break-word;
             white-space: pre-wrap;
             text-align: left;
-            color: #495057;
+            color: #2d3748;
+            font-weight: 400;
+            position: relative;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(0, 0, 0, 0.1) transparent;
+        }
+
+        .target-text::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .target-text::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .target-text::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 3px;
+        }
+
+        .target-text::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.2);
         }
 
         .target-text span {
-            transition: all 0.1s;
+            transition: all 0.15s ease;
         }
 
         .target-text .correct {
-            color: #95a5a6;
-            font-weight: normal;
+            color: #a0aec0;
+            font-weight: 400;
+            opacity: 0.5;
         }
 
         .target-text .error {
-            color: #e74c3c;
-            font-weight: normal;
-            background: transparent;
-            text-decoration: underline;
-            text-decoration-color: #e74c3c;
-            text-decoration-thickness: 2px;
+            color: #ef4444;
+            font-weight: 400;
+            background: #fef2f2;
+            padding: 0 2px;
+            border-radius: 2px;
         }
 
         .target-text .current {
             background: transparent;
-            color: #212529;
-            font-weight: 600;
-            border-bottom: 3px solid #667eea;
-            padding: 0;
+            color: #1a202c;
+            font-weight: 500;
+            border-bottom: 4px solid #667eea;
+            padding: 0 2px;
             border-radius: 0;
-            animation: blink-cursor 1s infinite;
+            animation: blink-cursor 1.2s ease-in-out infinite;
         }
 
         @keyframes blink-cursor {
@@ -486,12 +510,13 @@
 
         .stats {
             display: flex;
-            gap: 20px;
-            margin-top: 20px;
-            padding: 12px 0;
-            border-top: 1px solid #e9ecef;
+            gap: 24px;
+            margin-bottom: 30px;
+            padding: 0;
+            border: none;
             flex-wrap: wrap;
             align-items: center;
+            opacity: 0.7;
         }
 
         .stat-box {
@@ -502,36 +527,45 @@
             box-shadow: none;
             display: flex;
             align-items: baseline;
-            gap: 6px;
+            gap: 8px;
         }
 
         .stat-label {
-            color: #6c757d;
-            font-size: 0.85em;
+            color: #718096;
+            font-size: 0.75em;
             margin-bottom: 0;
             font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .stat-value {
-            color: #212529;
-            font-size: 1.1em;
+            color: #2d3748;
+            font-size: 1em;
             font-weight: 600;
+            font-family: 'SF Mono', 'Monaco', monospace;
         }
 
         .button-group {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             justify-content: flex-start;
-            margin-top: 15px;
+            margin-top: 30px;
+            opacity: 0.4;
+            transition: opacity 0.3s;
+        }
+
+        .button-group:hover {
+            opacity: 1;
         }
 
         .btn-generate, .btn-restart {
-            padding: 6px 14px;
+            padding: 6px 12px;
             background: transparent;
             color: #667eea;
-            border: 1px solid #dee2e6;
-            border-radius: 5px;
-            font-size: 0.85em;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            font-size: 0.75em;
             cursor: pointer;
             transition: all 0.2s;
             font-weight: 500;
@@ -539,25 +573,25 @@
         }
 
         .btn-restart {
-            color: #6c757d;
+            color: #718096;
         }
 
         .btn-generate:hover {
-            background: #f8f9fa;
+            background: #f7fafc;
             border-color: #667eea;
             transform: none;
             box-shadow: none;
         }
 
         .btn-restart:hover {
-            background: #f8f9fa;
-            border-color: #6c757d;
+            background: #f7fafc;
+            border-color: #718096;
             transform: none;
             box-shadow: none;
         }
 
         .btn-generate:disabled, .btn-restart:disabled {
-            opacity: 0.4;
+            opacity: 0.3;
             cursor: not-allowed;
             transform: none;
             box-shadow: none;
@@ -565,38 +599,38 @@
 
         .instructions {
             text-align: left;
-            color: #adb5bd;
-            margin-top: 10px;
+            color: #cbd5e0;
+            margin-top: 12px;
             font-style: normal;
-            font-size: 0.85em;
+            font-size: 0.7em;
         }
 
         .shortcuts {
             text-align: left;
-            margin-top: 8px;
+            margin-top: 6px;
             padding: 0;
             background: transparent;
             border-radius: 0;
-            font-size: 0.8em;
-            color: #adb5bd;
+            font-size: 0.7em;
+            color: #cbd5e0;
         }
 
         .shortcuts strong {
-            color: #6c757d;
+            color: #a0aec0;
             font-weight: 500;
         }
 
         .shortcut-key {
             display: inline-block;
-            padding: 2px 5px;
-            background: #f8f9fa;
-            border: 1px solid #e9ecef;
-            border-radius: 3px;
+            padding: 2px 4px;
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 2px;
             font-family: monospace;
             font-weight: normal;
             margin: 0 1px;
             box-shadow: none;
-            font-size: 0.9em;
+            font-size: 0.85em;
         }
 
         .settings-panel {
@@ -844,9 +878,97 @@
             0%, 100% { opacity: 1; transform: scale(1); }
             50% { opacity: 0.8; transform: scale(1.05); }
         }
+
+        /* Focus Mode */
+        body.focus-mode h1,
+        body.focus-mode .subtitle,
+        body.focus-mode .settings-panel,
+        body.focus-mode .finger-selector,
+        body.focus-mode .keyboard,
+        body.focus-mode .selected-keys {
+            display: none;
+        }
+
+        body.focus-mode .container {
+            padding: 20px;
+        }
+
+        body.focus-mode .practice-area {
+            margin-top: 0;
+            padding: 60px 0;
+        }
+
+        body.focus-mode .practice-area h2 {
+            display: none;
+        }
+
+        body.focus-mode .stats {
+            margin-bottom: 40px;
+        }
+
+        .focus-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 8px 16px;
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            border-radius: 6px;
+            font-size: 0.75em;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .focus-toggle:hover {
+            background: rgba(102, 126, 234, 0.2);
+            border-color: rgba(102, 126, 234, 0.5);
+            transform: translateY(-1px);
+        }
+
+        body.focus-mode .focus-toggle {
+            background: rgba(102, 126, 234, 0.15);
+            border-color: rgba(102, 126, 234, 0.4);
+        }
+
+        .focus-hint {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 6px 12px;
+            background: rgba(0, 0, 0, 0.05);
+            color: #a0aec0;
+            border-radius: 4px;
+            font-size: 0.7em;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        body.focus-mode .focus-hint {
+            opacity: 1;
+        }
+
+        .focus-hint kbd {
+            display: inline-block;
+            padding: 2px 6px;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 0.9em;
+            margin: 0 2px;
+        }
     </style>
 </head>
 <body>
+    <button class="focus-toggle" id="focusToggle">Focus Mode</button>
+    <div class="focus-hint">Press <kbd>Esc</kbd> to exit focus mode</div>
+
     <div class="container">
         <h1>Better Typing</h1>
         <p class="subtitle">Improve your typing skills by practicing specific keys and fingers</p>
@@ -857,11 +979,11 @@
                 <div class="setting-item">
                     <span class="setting-label">Mode:</span>
                     <div class="mode-toggle">
-                        <input type="radio" id="modeWords" name="mode" value="words" checked>
+                        <input type="radio" id="modeWords" name="mode" value="words">
                         <label for="modeWords">Words</label>
                         <input type="radio" id="modeTimed" name="mode" value="timed">
                         <label for="modeTimed">Timed</label>
-                        <input type="radio" id="modeUnlimited" name="mode" value="unlimited">
+                        <input type="radio" id="modeUnlimited" name="mode" value="unlimited" checked>
                         <label for="modeUnlimited">Unlimited</label>
                     </div>
                 </div>
@@ -925,10 +1047,32 @@
                 <div class="setting-item">
                     <span class="setting-label">Words:</span>
                     <div class="mode-toggle">
-                        <input type="radio" id="wordSetGibberish" name="wordSet" value="gibberish" checked>
+                        <input type="radio" id="wordSetGibberish" name="wordSet" value="gibberish">
                         <label for="wordSetGibberish">Gibberish</label>
-                        <input type="radio" id="wordSetReal" name="wordSet" value="real">
+                        <input type="radio" id="wordSetReal" name="wordSet" value="real" checked>
                         <label for="wordSetReal">Real</label>
+                    </div>
+                </div>
+
+                <!-- Capitals Toggle -->
+                <div class="setting-item">
+                    <span class="setting-label">Capitals:</span>
+                    <div class="toggle-option">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="includeCapitals">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Special Characters Toggle -->
+                <div class="setting-item">
+                    <span class="setting-label">Special Chars:</span>
+                    <div class="toggle-option">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="includeSpecialChars">
+                            <span class="toggle-slider"></span>
+                        </label>
                     </div>
                 </div>
             </div>
@@ -1056,32 +1200,6 @@
         <div class="practice-area">
             <h2>Typing Practice</h2>
 
-            <div class="timer-display" id="timerDisplay" style="display: none;">
-                Time: <span id="timeRemaining">--</span>
-            </div>
-
-            <div class="progress-bar-container">
-                <div class="progress-bar" id="progressBar" style="width: 0%;"></div>
-            </div>
-
-            <div class="target-text" id="targetText">
-                Select keys above to generate practice text
-            </div>
-            <div class="input-area">
-                <input type="text" class="typing-input" id="typingInput" placeholder="Start typing here..." disabled>
-            </div>
-            <div class="button-group">
-                <button class="btn-restart" id="restartBtn" disabled>Restart Test</button>
-                <button class="btn-generate" id="generateBtn" disabled>Generate New Exercise</button>
-            </div>
-            <p class="instructions">Select keys and start typing! Use buttons or keyboard shortcuts below.</p>
-            <div class="shortcuts">
-                <strong>Keyboard Shortcuts:</strong>
-                <span class="shortcut-key">Shift</span>+<span class="shortcut-key">Enter</span> Restart Test •
-                <span class="shortcut-key">Cmd</span>+<span class="shortcut-key">N</span> New Exercise •
-                <span class="shortcut-key">Cmd</span>+<span class="shortcut-key">K</span> Focus Input
-            </div>
-
             <div class="stats">
                 <div class="stat-box">
                     <div class="stat-label">WPM</div>
@@ -1104,6 +1222,34 @@
                     <div class="stat-value" id="timeElapsed">0s</div>
                 </div>
             </div>
+
+            <div class="timer-display" id="timerDisplay" style="display: none;">
+                Time: <span id="timeRemaining">--</span>
+            </div>
+
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progressBar" style="width: 0%;"></div>
+            </div>
+
+            <div class="target-text" id="targetText">
+                Select keys above to generate practice text
+            </div>
+            <div class="input-area">
+                <input type="text" class="typing-input" id="typingInput" placeholder="Start typing here..." disabled>
+            </div>
+
+            <div class="button-group">
+                <button class="btn-restart" id="restartBtn" disabled>Restart Test</button>
+                <button class="btn-generate" id="generateBtn" disabled>Generate New Exercise</button>
+            </div>
+            <p class="instructions">Select keys and start typing! Use buttons or keyboard shortcuts below.</p>
+            <div class="shortcuts">
+                <strong>Keyboard Shortcuts:</strong>
+                <span class="shortcut-key">F</span> Focus Mode •
+                <span class="shortcut-key">Shift</span>+<span class="shortcut-key">Enter</span> Restart •
+                <span class="shortcut-key">Cmd</span>+<span class="shortcut-key">N</span> New •
+                <span class="shortcut-key">Cmd</span>+<span class="shortcut-key">K</span> Focus Input
+            </div>
         </div>
     </div>
 
@@ -1119,112 +1265,80 @@
             'right-pinky': ['0', '-', '=', 'p', '[', ']', '\\', ';', "'", '/', 'enter', 'backspace', 'shift-right']
         };
 
-        // Common English words for real word mode
+        // Top 2000 most common English words (frequency-based, public domain)
         const realWords = [
-            'the', 'be', 'to', 'of', 'and', 'a', 'in', 'that', 'have', 'it',
-            'for', 'not', 'on', 'with', 'he', 'as', 'you', 'do', 'at', 'this',
-            'but', 'his', 'by', 'from', 'they', 'we', 'say', 'her', 'she', 'or',
-            'an', 'will', 'my', 'one', 'all', 'would', 'there', 'their', 'what', 'so',
-            'up', 'out', 'if', 'about', 'who', 'get', 'which', 'go', 'me', 'when',
-            'make', 'can', 'like', 'time', 'no', 'just', 'him', 'know', 'take', 'people',
-            'into', 'year', 'your', 'good', 'some', 'could', 'them', 'see', 'other', 'than',
-            'then', 'now', 'look', 'only', 'come', 'its', 'over', 'think', 'also', 'back',
-            'after', 'use', 'two', 'how', 'our', 'work', 'first', 'well', 'way', 'even',
-            'new', 'want', 'because', 'any', 'these', 'give', 'day', 'most', 'us', 'is',
-            'was', 'are', 'been', 'has', 'had', 'were', 'said', 'did', 'having', 'may',
-            'should', 'could', 'being', 'does', 'did', 'doing', 'would', 'should', 'can', 'may',
-            'might', 'must', 'shall', 'will', 'am', 'is', 'are', 'was', 'were', 'be',
-            'able', 'about', 'above', 'across', 'add', 'admit', 'afraid', 'after', 'again', 'against',
-            'age', 'ago', 'agree', 'air', 'all', 'allow', 'almost', 'alone', 'along', 'already',
-            'also', 'always', 'among', 'and', 'angry', 'animal', 'another', 'answer', 'any', 'appear',
-            'apple', 'area', 'arm', 'around', 'arrive', 'art', 'ask', 'atom', 'baby', 'back',
-            'bad', 'ball', 'band', 'bank', 'bar', 'base', 'basic', 'beat', 'beauty', 'bed',
-            'before', 'began', 'begin', 'behind', 'bell', 'below', 'best', 'better', 'between', 'big',
-            'bird', 'black', 'block', 'blood', 'blow', 'blue', 'board', 'boat', 'body', 'bone',
-            'book', 'born', 'both', 'bottom', 'box', 'boy', 'branch', 'bread', 'break', 'bright',
-            'bring', 'broad', 'broke', 'brother', 'brought', 'brown', 'build', 'burn', 'busy', 'call',
-            'came', 'camp', 'captain', 'car', 'card', 'care', 'carry', 'case', 'cat', 'catch',
-            'cause', 'cent', 'center', 'century', 'certain', 'chair', 'chance', 'change', 'character', 'charge',
-            'chart', 'check', 'chick', 'chief', 'child', 'children', 'choose', 'chord', 'circle', 'city',
-            'claim', 'class', 'clean', 'clear', 'climb', 'clock', 'close', 'clothe', 'cloud', 'coast',
-            'coat', 'cold', 'collect', 'colony', 'color', 'column', 'common', 'company', 'compare', 'complete',
-            'condition', 'connect', 'consider', 'consonant', 'contain', 'continent', 'continue', 'control', 'cook', 'cool',
-            'copy', 'corn', 'corner', 'correct', 'cost', 'cotton', 'count', 'country', 'course', 'cover',
-            'cow', 'create', 'crop', 'cross', 'crowd', 'cry', 'current', 'cut', 'dance', 'danger',
-            'dark', 'dead', 'deal', 'dear', 'death', 'decide', 'decimal', 'deep', 'degree', 'depend',
-            'describe', 'desert', 'design', 'determine', 'develop', 'dictionary', 'differ', 'difficult', 'direct', 'discuss',
-            'distant', 'divide', 'division', 'doctor', 'dog', 'dollar', 'done', 'door', 'double', 'down',
-            'draw', 'dream', 'dress', 'drink', 'drive', 'drop', 'dry', 'during', 'each', 'ear',
-            'early', 'earth', 'ease', 'east', 'eat', 'edge', 'effect', 'egg', 'eight', 'either',
-            'electric', 'element', 'else', 'end', 'enemy', 'energy', 'engine', 'enough', 'enter', 'equal',
-            'equation', 'especially', 'evening', 'event', 'ever', 'every', 'exact', 'example', 'except', 'excite',
-            'exercise', 'expect', 'experience', 'experiment', 'eye', 'face', 'fact', 'fair', 'fall', 'family',
-            'famous', 'far', 'farm', 'fast', 'fat', 'father', 'favor', 'fear', 'feed', 'feel',
-            'feet', 'fell', 'felt', 'few', 'field', 'fig', 'fight', 'figure', 'fill', 'final',
-            'find', 'fine', 'finger', 'finish', 'fire', 'fish', 'fit', 'five', 'flat', 'floor',
-            'flow', 'flower', 'fly', 'follow', 'food', 'foot', 'force', 'forest', 'form', 'forward',
-            'found', 'four', 'fraction', 'free', 'fresh', 'friend', 'front', 'fruit', 'full', 'fun',
-            'game', 'garden', 'gas', 'gather', 'gave', 'general', 'gentle', 'girl', 'glad', 'glass',
-            'gold', 'gone', 'got', 'govern', 'grand', 'grass', 'gray', 'great', 'green', 'ground',
-            'group', 'grow', 'guess', 'guide', 'gun', 'hair', 'half', 'hand', 'happen', 'happy',
-            'hard', 'hat', 'have', 'head', 'hear', 'heard', 'heart', 'heat', 'heavy', 'held',
-            'help', 'high', 'hill', 'history', 'hit', 'hold', 'hole', 'home', 'hope', 'horse',
-            'hot', 'hour', 'house', 'huge', 'human', 'hundred', 'hunt', 'hurry', 'idea', 'inch',
-            'include', 'increase', 'indicate', 'industry', 'insect', 'instant', 'instrument', 'interest', 'invent', 'iron',
-            'island', 'job', 'join', 'joy', 'jump', 'keep', 'kept', 'key', 'kill', 'kind',
-            'king', 'kitchen', 'knew', 'knife', 'lake', 'land', 'language', 'large', 'last', 'late',
-            'laugh', 'law', 'lay', 'lead', 'learn', 'least', 'leave', 'led', 'left', 'leg',
-            'length', 'less', 'let', 'letter', 'level', 'lie', 'life', 'lift', 'light', 'line',
-            'liquid', 'list', 'listen', 'little', 'live', 'locate', 'log', 'long', 'lost', 'lot',
-            'loud', 'love', 'low', 'machine', 'made', 'magnet', 'main', 'major', 'man', 'many',
-            'map', 'mark', 'market', 'mass', 'master', 'match', 'material', 'matter', 'mean', 'meant',
-            'measure', 'meat', 'meet', 'melody', 'men', 'metal', 'method', 'middle', 'might', 'mile',
-            'milk', 'mill', 'million', 'mind', 'mine', 'minute', 'miss', 'mix', 'modern', 'molecule',
-            'moment', 'money', 'month', 'moon', 'more', 'morning', 'mother', 'motion', 'mount', 'mountain',
-            'mouth', 'move', 'much', 'multiply', 'music', 'name', 'nation', 'natural', 'nature', 'near',
-            'necessary', 'neck', 'need', 'neighbor', 'never', 'next', 'night', 'nine', 'noise', 'noon',
-            'nor', 'north', 'nose', 'note', 'nothing', 'notice', 'noun', 'number', 'numeral', 'object',
-            'observe', 'occur', 'ocean', 'offer', 'office', 'often', 'oil', 'old', 'once', 'open',
-            'operate', 'opposite', 'order', 'organ', 'original', 'oxygen', 'page', 'paint', 'pair', 'paper',
-            'paragraph', 'parent', 'part', 'particular', 'party', 'pass', 'past', 'path', 'pattern', 'pay',
-            'peace', 'people', 'perhaps', 'period', 'person', 'phrase', 'pick', 'picture', 'piece', 'pitch',
-            'place', 'plain', 'plan', 'plane', 'planet', 'plant', 'play', 'please', 'plural', 'poem',
-            'point', 'poor', 'populate', 'port', 'pose', 'position', 'possible', 'post', 'pound', 'power',
-            'practice', 'prepare', 'present', 'press', 'pretty', 'print', 'probable', 'problem', 'process', 'produce',
-            'product', 'proper', 'property', 'protect', 'prove', 'provide', 'pull', 'push', 'put', 'quart',
-            'question', 'quick', 'quiet', 'quite', 'quotient', 'race', 'radio', 'rail', 'rain', 'raise',
-            'ran', 'range', 'rather', 'reach', 'read', 'ready', 'real', 'reason', 'receive', 'record',
-            'red', 'region', 'remember', 'repeat', 'reply', 'represent', 'require', 'rest', 'result', 'rich',
-            'ride', 'right', 'ring', 'rise', 'river', 'road', 'rock', 'roll', 'room', 'root',
-            'rope', 'rose', 'round', 'row', 'rub', 'rule', 'run', 'safe', 'sail', 'salt',
-            'same', 'sand', 'sat', 'save', 'scale', 'school', 'science', 'score', 'sea', 'search',
-            'season', 'seat', 'second', 'section', 'seed', 'seem', 'segment', 'select', 'self', 'sell',
-            'send', 'sense', 'sent', 'sentence', 'separate', 'serve', 'set', 'settle', 'seven', 'several',
-            'shall', 'shape', 'share', 'sharp', 'sheet', 'shell', 'shine', 'ship', 'shoe', 'shop',
-            'shore', 'short', 'shoulder', 'shout', 'show', 'side', 'sight', 'sign', 'silent', 'silver',
-            'similar', 'simple', 'since', 'sing', 'single', 'sister', 'sit', 'six', 'size', 'skill',
-            'skin', 'sky', 'slave', 'sleep', 'slip', 'slow', 'small', 'smell', 'smile', 'snow',
-            'soft', 'soil', 'soldier', 'solution', 'solve', 'son', 'song', 'soon', 'sound', 'south',
-            'space', 'speak', 'special', 'speech', 'speed', 'spell', 'spend', 'spoke', 'sport', 'spot',
-            'spread', 'spring', 'square', 'stand', 'star', 'start', 'state', 'station', 'stay', 'steady',
-            'steam', 'steel', 'step', 'stick', 'still', 'stone', 'stood', 'stop', 'store', 'story',
-            'straight', 'strange', 'stream', 'street', 'stretch', 'string', 'strong', 'student', 'study', 'subject',
-            'substance', 'subtract', 'success', 'such', 'sudden', 'suffix', 'sugar', 'suggest', 'suit', 'summer',
-            'sun', 'supply', 'support', 'sure', 'surface', 'surprise', 'swim', 'syllable', 'symbol', 'system',
-            'table', 'tail', 'take', 'talk', 'tall', 'teach', 'team', 'teeth', 'tell', 'temperature',
-            'ten', 'term', 'test', 'than', 'thank', 'their', 'them', 'themselves', 'then', 'theory',
-            'there', 'these', 'they', 'thick', 'thin', 'thing', 'think', 'third', 'those', 'though',
-            'thought', 'thousand', 'three', 'through', 'throw', 'thus', 'tie', 'time', 'tiny', 'tire',
-            'together', 'told', 'tone', 'too', 'took', 'tool', 'top', 'total', 'touch', 'toward',
-            'town', 'track', 'trade', 'train', 'travel', 'tree', 'triangle', 'trip', 'trouble', 'truck',
-            'true', 'try', 'tube', 'turn', 'twenty', 'twice', 'two', 'type', 'under', 'unit',
-            'until', 'usual', 'valley', 'value', 'vary', 'verb', 'very', 'view', 'village', 'visit',
-            'voice', 'vowel', 'wait', 'walk', 'wall', 'war', 'warm', 'wash', 'watch', 'water',
-            'wave', 'wear', 'weather', 'week', 'weight', 'went', 'west', 'wheel', 'when', 'where',
-            'whether', 'which', 'while', 'white', 'whole', 'whose', 'why', 'wide', 'wife', 'wild',
-            'will', 'win', 'wind', 'window', 'wing', 'winter', 'wire', 'wish', 'with', 'woman',
-            'women', 'wonder', 'wood', 'word', 'work', 'world', 'would', 'write', 'written', 'wrong',
-            'yard', 'year', 'yellow', 'yes', 'yesterday', 'yet', 'young'
+            'the', 'be', 'to', 'of', 'and', 'a', 'in', 'that', 'have', 'it', 'for', 'not', 'on', 'with', 'he', 'as', 'you', 'do', 'at', 'this',
+            'but', 'his', 'by', 'from', 'they', 'we', 'say', 'her', 'she', 'or', 'an', 'will', 'my', 'one', 'all', 'would', 'there', 'their', 'what', 'so',
+            'up', 'out', 'if', 'about', 'who', 'get', 'which', 'go', 'me', 'when', 'make', 'can', 'like', 'time', 'no', 'just', 'him', 'know', 'take', 'people',
+            'into', 'year', 'your', 'good', 'some', 'could', 'them', 'see', 'other', 'than', 'then', 'now', 'look', 'only', 'come', 'its', 'over', 'think', 'also', 'back',
+            'after', 'use', 'two', 'how', 'our', 'work', 'first', 'well', 'way', 'even', 'new', 'want', 'because', 'any', 'these', 'give', 'day', 'most', 'us', 'is',
+            'was', 'are', 'been', 'has', 'had', 'were', 'said', 'did', 'may', 'should', 'could', 'being', 'does', 'am', 'might', 'must', 'shall', 'having', 'been', 'able',
+            'need', 'man', 'find', 'here', 'thing', 'give', 'many', 'well', 'only', 'those', 'tell', 'very', 'even', 'back', 'good', 'woman', 'through', 'us', 'life', 'child',
+            'there', 'work', 'down', 'call', 'come', 'still', 'try', 'last', 'ask', 'need', 'too', 'feel', 'three', 'when', 'state', 'never', 'become', 'between', 'high', 'really',
+            'something', 'most', 'another', 'much', 'family', 'own', 'leave', 'put', 'old', 'while', 'mean', 'keep', 'student', 'great', 'same', 'big', 'group', 'begin', 'seem', 'country',
+            'help', 'talk', 'where', 'turn', 'problem', 'every', 'start', 'hand', 'might', 'show', 'part', 'against', 'place', 'over', 'such', 'again', 'few', 'case', 'week', 'company',
+            'where', 'system', 'each', 'right', 'program', 'hear', 'question', 'during', 'work', 'play', 'government', 'run', 'small', 'number', 'off', 'always', 'move', 'night', 'live', 'point',
+            'believe', 'hold', 'today', 'bring', 'happen', 'next', 'without', 'before', 'large', 'must', 'home', 'under', 'water', 'room', 'write', 'mother', 'area', 'money', 'story', 'young',
+            'fact', 'month', 'different', 'lot', 'study', 'book', 'eye', 'job', 'word', 'though', 'business', 'issue', 'side', 'kind', 'four', 'head', 'far', 'black', 'long', 'both',
+            'little', 'house', 'yes', 'since', 'provide', 'service', 'around', 'friend', 'important', 'father', 'sit', 'away', 'until', 'power', 'hour', 'game', 'often', 'yet', 'line', 'political',
+            'end', 'among', 'ever', 'stand', 'bad', 'lose', 'however', 'member', 'pay', 'law', 'meet', 'car', 'city', 'almost', 'include', 'continue', 'set', 'later', 'community', 'name',
+            'five', 'once', 'white', 'least', 'president', 'learn', 'real', 'change', 'team', 'minute', 'best', 'several', 'idea', 'kid', 'body', 'information', 'nothing', 'ago', 'lead', 'social',
+            'understand', 'whether', 'watch', 'together', 'follow', 'around', 'parent', 'only', 'stop', 'face', 'anything', 'create', 'public', 'already', 'speak', 'others', 'read', 'level', 'allow', 'add',
+            'office', 'spend', 'door', 'health', 'person', 'art', 'sure', 'war', 'history', 'party', 'within', 'grow', 'result', 'open', 'morning', 'walk', 'reason', 'low', 'win', 'research',
+            'girl', 'guy', 'early', 'food', 'moment', 'himself', 'air', 'teacher', 'force', 'offer', 'enough', 'both', 'across', 'although', 'remember', 'foot', 'second', 'boy', 'maybe', 'toward',
+            'able', 'age', 'policy', 'everything', 'love', 'process', 'music', 'including', 'consider', 'appear', 'actually', 'buy', 'probably', 'human', 'wait', 'serve', 'market', 'die', 'send', 'expect',
+            'sense', 'build', 'stay', 'fall', 'oh', 'nation', 'plan', 'cut', 'college', 'interest', 'death', 'course', 'someone', 'experience', 'behind', 'reach', 'local', 'kill', 'six', 'remain',
+            'effect', 'yeah', 'suggest', 'class', 'control', 'raise', 'care', 'perhaps', 'little', 'late', 'hard', 'field', 'else', 'pass', 'former', 'sell', 'major', 'sometimes', 'require', 'along',
+            'development', 'themselves', 'report', 'role', 'better', 'economic', 'effort', 'decide', 'rate', 'strong', 'possible', 'heart', 'drug', 'leader', 'light', 'voice', 'wife', 'whole', 'police', 'mind',
+            'finally', 'pull', 'return', 'free', 'military', 'price', 'less', 'according', 'decision', 'explain', 'son', 'hope', 'develop', 'view', 'relationship', 'carry', 'town', 'road', 'drive', 'arm',
+            'true', 'federal', 'break', 'difference', 'thank', 'receive', 'value', 'international', 'building', 'action', 'full', 'model', 'join', 'season', 'society', 'tax', 'director', 'position', 'player', 'agree',
+            'especially', 'record', 'pick', 'wear', 'paper', 'special', 'space', 'ground', 'form', 'support', 'event', 'official', 'whose', 'matter', 'everyone', 'center', 'couple', 'site', 'project', 'hit',
+            'base', 'activity', 'star', 'table', 'court', 'produce', 'eat', 'teach', 'half', 'situation', 'easy', 'cost', 'industry', 'figure', 'street', 'image', 'itself', 'phone', 'either', 'data',
+            'cover', 'quite', 'picture', 'clear', 'practice', 'piece', 'land', 'recent', 'describe', 'product', 'doctor', 'wall', 'patient', 'worker', 'news', 'test', 'movie', 'certain', 'north', 'simply',
+            'third', 'technology', 'catch', 'step', 'baby', 'computer', 'type', 'attention', 'draw', 'film', 'Republican', 'tree', 'source', 'red', 'nearly', 'organization', 'choose', 'cause', 'hair', 'century',
+            'evidence', 'window', 'difficult', 'listen', 'soon', 'culture', 'billion', 'chance', 'brother', 'energy', 'period', 'summer', 'realize', 'hundred', 'available', 'plant', 'likely', 'opportunity', 'term', 'short',
+            'letter', 'condition', 'choice', 'place', 'single', 'rule', 'daughter', 'administration', 'south', 'husband', 'Congress', 'floor', 'campaign', 'material', 'population', 'economy', 'medical', 'hospital', 'church', 'close',
+            'thousand', 'risk', 'current', 'fire', 'future', 'wrong', 'involve', 'defense', 'anyone', 'increase', 'security', 'bank', 'myself', 'certainly', 'west', 'sport', 'board', 'seek', 'per', 'subject',
+            'officer', 'private', 'rest', 'behavior', 'deal', 'performance', 'fight', 'throw', 'top', 'quickly', 'past', 'goal', 'bed', 'order', 'author', 'fill', 'represent', 'focus', 'foreign', 'drop',
+            'plan', 'blood', 'upon', 'agency', 'push', 'nature', 'color', 'recently', 'store', 'reduce', 'sound', 'note', 'fine', 'near', 'movement', 'page', 'enter', 'share', 'common', 'poor',
+            'natural', 'race', 'concern', 'series', 'significant', 'similar', 'hot', 'language', 'each', 'usually', 'response', 'dead', 'rise', 'animal', 'factor', 'decade', 'article', 'shoot', 'east', 'save',
+            'seven', 'artist', 'scene', 'stock', 'career', 'despite', 'central', 'eight', 'thus', 'treatment', 'beyond', 'happy', 'exactly', 'protect', 'approach', 'lie', 'size', 'dog', 'fund', 'serious',
+            'occur', 'media', 'ready', 'sign', 'thought', 'list', 'individual', 'simple', 'quality', 'pressure', 'accept', 'answer', 'resource', 'identify', 'left', 'meeting', 'determine', 'prepare', 'disease', 'whatever',
+            'success', 'argue', 'cup', 'particularly', 'amount', 'ability', 'staff', 'recognize', 'indicate', 'character', 'growth', 'loss', 'degree', 'wonder', 'attack', 'herself', 'region', 'television', 'box', 'TV',
+            'training', 'pretty', 'trade', 'election', 'everybody', 'physical', 'lay', 'general', 'feeling', 'standard', 'bill', 'message', 'fail', 'outside', 'arrive', 'analysis', 'benefit', 'sex', 'forward', 'lawyer',
+            'present', 'section', 'environmental', 'glass', 'skill', 'sister', 'PM', 'professor', 'operation', 'financial', 'crime', 'stage', 'compare', 'authority', 'miss', 'design', 'sort', 'act', 'ten', 'knowledge',
+            'gun', 'station', 'blue', 'strategy', 'clearly', 'discuss', 'indeed', 'truth', 'song', 'example', 'democratic', 'check', 'environment', 'leg', 'dark', 'various', 'rather', 'laugh', 'guess', 'executive',
+            'prove', 'hang', 'entire', 'rock', 'forget', 'claim', 'remove', 'manager', 'enjoy', 'network', 'legal', 'religious', 'cold', 'form', 'final', 'main', 'science', 'green', 'memory', 'card',
+            'above', 'seat', 'cell', 'establish', 'nice', 'trial', 'expert', 'spring', 'firm', 'Democrat', 'radio', 'visit', 'management', 'avoid', 'imagine', 'tonight', 'huge', 'ball', 'finish', 'yourself',
+            'theory', 'impact', 'respond', 'statement', 'maintain', 'charge', 'popular', 'traditional', 'onto', 'reveal', 'direction', 'weapon', 'employee', 'cultural', 'contain', 'peace', 'head', 'control', 'base', 'pain',
+            'apply', 'play', 'measure', 'wide', 'shake', 'fly', 'interview', 'manage', 'chair', 'fish', 'particular', 'camera', 'structure', 'politics', 'perform', 'bit', 'weight', 'suddenly', 'discover', 'candidate',
+            'production', 'treat', 'trip', 'evening', 'affect', 'inside', 'conference', 'unit', 'best', 'style', 'adult', 'worry', 'range', 'mention', 'rather', 'deep', 'edge', 'specific', 'writer', 'trouble',
+            'necessary', 'throughout', 'challenge', 'fear', 'shoulder', 'institution', 'middle', 'sea', 'dream', 'bar', 'beautiful', 'property', 'instead', 'improve', 'stuff', 'claim', 'professor', 'else', 'magazine', 'hotel',
+            'soldier', 'reflect', 'heavy', 'sexual', 'bag', 'heat', 'marriage', 'tough', 'sing', 'surface', 'purpose', 'exist', 'pattern', 'whom', 'skin', 'agent', 'owner', 'machine', 'gas', 'ahead',
+            'generation', 'commercial', 'address', 'cancer', 'item', 'reality', 'coach', 'Mrs', 'yard', 'beat', 'violence', 'total', 'tend', 'investment', 'discussion', 'finger', 'garden', 'notice', 'collection', 'modern',
+            'task', 'partner', 'positive', 'civil', 'kitchen', 'consumer', 'shot', 'budget', 'wish', 'painting', 'scientist', 'safe', 'agreement', 'capital', 'mouth', 'nor', 'victim', 'newspaper', 'threat', 'responsibility',
+            'smile', 'attorney', 'score', 'account', 'interesting', 'break', 'audience', 'rich', 'dinner', 'figure', 'vote', 'western', 'relate', 'travel', 'debate', 'prevent', 'citizen', 'majority', 'none', 'front',
+            'born', 'admit', 'senior', 'assume', 'wind', 'key', 'professional', 'mission', 'fast', 'alone', 'customer', 'suffer', 'speech', 'successful', 'option', 'participant', 'southern', 'fresh', 'eventually', 'forest',
+            'video', 'global', 'reform', 'access', 'restaurant', 'judge', 'publish', 'cost', 'relation', 'like', 'release', 'own', 'bird', 'opinion', 'credit', 'critical', 'corner', 'concerned', 'recall', 'version',
+            'stare', 'safety', 'effective', 'neighborhood', 'original', 'act', 'troop', 'income', 'directly', 'hurt', 'species', 'immediately', 'track', 'basic', 'strike', 'hope', 'freedom', 'absolutely', 'plane', 'nobody',
+            'achieve', 'object', 'attitude', 'labor', 'refer', 'concept', 'client', 'powerful', 'perfect', 'nine', 'therefore', 'conduct', 'announce', 'conversation', 'examine', 'touch', 'please', 'attend', 'completely', 'vote',
+            'variety', 'sleep', 'turn', 'involved', 'investigation', 'nuclear', 'researcher', 'press', 'conflict', 'spirit', 'replace', 'British', 'encourage', 'argument', 'by', 'once', 'camp', 'brain', 'feature', 'afternoon',
+            'AM', 'weekend', 'dozen', 'possibility', 'insurance', 'department', 'battle', 'beginning', 'date', 'generally', 'African', 'very', 'sorry', 'crisis', 'complete', 'fan', 'stick', 'define', 'easily', 'through',
+            'hole', 'element', 'vision', 'status', 'normal', 'Chinese', 'ship', 'solution', 'stone', 'slowly', 'scale', 'driver', 'attempt', 'park', 'spot', 'lack', 'ice', 'boat', 'drink', 'sun',
+            'front', 'distance', 'wood', 'handle', 'truck', 'mountain', 'survey', 'supposed', 'tradition', 'winter', 'village', 'Soviet', 'refuse', 'sales', 'roll', 'communication', 'run', 'screen', 'gain', 'resident',
+            'hide', 'gold', 'club', 'farm', 'potential', 'increase', 'middle', 'European', 'presence', 'independent', 'district', 'shape', 'reader', 'Ms', 'contract', 'crowd', 'Christian', 'express', 'apartment', 'willing',
+            'strength', 'previous', 'band', 'obviously', 'horse', 'interested', 'target', 'prison', 'ride', 'guard', 'terms', 'demand', 'reporter', 'deliver', 'text', 'tool', 'wild', 'vehicle', 'observe', 'flight',
+            'facility', 'understanding', 'average', 'emerge', 'advantage', 'quick', 'light', 'leadership', 'earn', 'pound', 'basis', 'bright', 'operate', 'guest', 'sample', 'contribute', 'tiny', 'block', 'protection', 'settle',
+            'feed', 'collect', 'additional', 'while', 'highly', 'identity', 'title', 'mostly', 'lesson', 'faith', 'river', 'promote', 'living', 'count', 'unless', 'marry', 'tomorrow', 'technique', 'path', 'ear',
+            'shop', 'folk', 'principle', 'survive', 'lift', 'border', 'competition', 'jump', 'gather', 'limit', 'fit', 'claim', 'cry', 'equipment', 'worth', 'associate', 'critic', 'warm', 'aspect', 'result',
+            'insist', 'failure', 'annual', 'French', 'Christmas', 'comment', 'responsible', 'affair', 'procedure', 'regular', 'spread', 'chairman', 'baseball', 'soft', 'ignore', 'egg', 'belief', 'demonstrate', 'anybody', 'murder',
+            'gift', 'religion', 'review', 'editor', 'engage', 'coffee', 'document', 'speed', 'cross', 'influence', 'anyway', 'threaten', 'commit', 'female', 'youth', 'wave', 'afraid', 'quarter', 'background', 'native',
+            'broad', 'wonderful', 'deny', 'apparently', 'slightly', 'reaction', 'twice', 'suit', 'perspective', 'growing', 'blow', 'construction', 'kind', 'intelligence', 'destroy', 'cook', 'connection', 'burn', 'shoe', 'grade',
+            'context', 'committee', 'hey', 'mistake', 'focus', 'smile', 'location', 'clothes', 'Indian', 'quiet', 'dress', 'promise', 'aware', 'neighbor', 'function', 'bone', 'active', 'extend', 'chief', 'combine',
+            'wine', 'below', 'cool', 'voter', 'learning', 'bus', 'hell', 'dangerous', 'remind', 'moral', 'United', 'category', 'relatively', 'victory', 'academic', 'Internet', 'healthy', 'negative', 'following', 'historical',
+            'medicine', 'tour', 'depend', 'photo', 'finding', 'grab', 'direct', 'classroom', 'contact', 'justice', 'participate', 'daily', 'fair', 'pair', 'famous', 'separate', 'quote', 'German', 'pound', 'double',
+            'conversation', 'develop', 'seek', 'connection', 'works', 'brown', 'lead', 'trouble', 'action', 'propose', 'next', 'careful', 'driver', 'conservative', 'present', 'liberal', 'lip', 'launch', 'accurate', 'career',
+            'dog', 'scene', 'peace', 'citizen', 'weapon', 'perspective', 'advantage', 'tone', 'ocean', 'signal', 'sentence', 'discipline', 'elsewhere', 'iron', 'perception', 'pack', 'contempor'
         ];
 
         let selectedKeys = new Set();
@@ -1236,14 +1350,16 @@
         let timerInterval = null;
         let timeLimit = 30;
         let isTimedMode = false;
-        let isUnlimitedMode = false;
+        let isUnlimitedMode = true;
 
         // Settings
         let wordCount = 15;
         let minWordLength = 3;
         let maxWordLength = 6;
         let includeNumbers = false;
-        let useRealWords = false;
+        let useRealWords = true;
+        let useCapitals = false;
+        let includeSpecialChars = false;
 
         const keys = document.querySelectorAll('.key');
         const fingerBtns = document.querySelectorAll('.finger-btn');
@@ -1278,6 +1394,8 @@
         const includeNumbersCheckbox = document.getElementById('includeNumbers');
         const wordSetGibberish = document.getElementById('wordSetGibberish');
         const wordSetReal = document.getElementById('wordSetReal');
+        const includeCapitalsCheckbox = document.getElementById('includeCapitals');
+        const includeSpecialCharsCheckbox = document.getElementById('includeSpecialChars');
 
         // Handle individual key selection
         keys.forEach(key => {
@@ -1405,6 +1523,16 @@
             if (selectedKeys.size > 0) generatePracticeText();
         });
 
+        includeCapitalsCheckbox.addEventListener('change', (e) => {
+            useCapitals = e.target.checked;
+            if (selectedKeys.size > 0) generatePracticeText();
+        });
+
+        includeSpecialCharsCheckbox.addEventListener('change', (e) => {
+            includeSpecialChars = e.target.checked;
+            if (selectedKeys.size > 0) generatePracticeText();
+        });
+
         function updateSelectedKeysList() {
             if (selectedKeys.size === 0) {
                 selectedKeysList.textContent = 'None - Click keys above or use finger shortcuts';
@@ -1503,8 +1631,14 @@
 
             // Filter out numbers if setting is disabled
             if (!includeNumbers) {
-                const numberKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '`', '-', '='];
+                const numberKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
                 keysArray = keysArray.filter(key => !numberKeys.includes(key));
+            }
+
+            // Filter out special characters if setting is disabled
+            if (!includeSpecialChars) {
+                const specialChars = ['`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '=', '+', '[', ']', '{', '}', '\\', '|', ';', ':', "'", '"', ',', '<', '.', '>', '/', '?'];
+                keysArray = keysArray.filter(key => !specialChars.includes(key));
             }
 
             return keysArray;
@@ -1524,17 +1658,58 @@
             });
         }
 
+        function capitalizeWord(word) {
+            if (word.length === 0) return word;
+            return word.charAt(0).toUpperCase() + word.slice(1);
+        }
+
+        function applyCapitalization(text) {
+            if (!useCapitals) return text;
+
+            const words = text.split(' ');
+            let wordsSinceCapital = 0;
+
+            for (let i = 0; i < words.length; i++) {
+                // Capitalize first word, or randomly every 8-12 words (simulating sentences)
+                if (i === 0 || (wordsSinceCapital >= 8 && Math.random() < 0.3)) {
+                    words[i] = capitalizeWord(words[i]);
+                    wordsSinceCapital = 0;
+                } else {
+                    wordsSinceCapital++;
+                }
+            }
+
+            return words.join(' ');
+        }
+
         function generateGibberishText(keysArray, numWords) {
+            // Separate letters and special characters
+            const specialChars = ['`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '=', '+', '[', ']', '{', '}', '\\', '|', ';', ':', "'", '"', ',', '<', '.', '>', '/', '?'];
+            const letters = keysArray.filter(key => !specialChars.includes(key));
+            const availableSpecials = keysArray.filter(key => specialChars.includes(key));
+
             let text = '';
             for (let i = 0; i < numWords; i++) {
                 const wordLength = Math.floor(Math.random() * (maxWordLength - minWordLength + 1)) + minWordLength;
+
+                // Generate word primarily from letters
+                const useLettersForWord = letters.length > 0;
+                const sourceArray = useLettersForWord ? letters : keysArray;
+
                 for (let j = 0; j < wordLength; j++) {
-                    const randomKey = keysArray[Math.floor(Math.random() * keysArray.length)];
+                    const randomKey = sourceArray[Math.floor(Math.random() * sourceArray.length)];
                     text += randomKey;
                 }
+
+                // Occasionally add special characters at word boundaries if enabled
+                if (includeSpecialChars && availableSpecials.length > 0 && Math.random() < 0.3) {
+                    const randomSpecial = availableSpecials[Math.floor(Math.random() * availableSpecials.length)];
+                    text += randomSpecial;
+                }
+
                 if (i < numWords - 1) text += ' ';
             }
-            return text;
+            return applyCapitalization(text);
         }
 
         function generateRealWordsText(keysArray, numWords) {
@@ -1545,13 +1720,25 @@
                 return generateGibberishText(keysArray, numWords);
             }
 
+            // Get available special characters for punctuation
+            const specialChars = ['`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '=', '+', '[', ']', '{', '}', '\\', '|', ';', ':', "'", '"', ',', '<', '.', '>', '/', '?'];
+            const availableSpecials = keysArray.filter(key => specialChars.includes(key));
+            const punctuation = availableSpecials.filter(char => [',', '.', '!', '?', ';', ':'].includes(char));
+
             let text = '';
             for (let i = 0; i < numWords; i++) {
                 const randomWord = availableWords[Math.floor(Math.random() * availableWords.length)];
                 text += randomWord;
+
+                // Add punctuation occasionally if special chars are enabled
+                if (includeSpecialChars && punctuation.length > 0 && Math.random() < 0.15) {
+                    const randomPunct = punctuation[Math.floor(Math.random() * punctuation.length)];
+                    text += randomPunct;
+                }
+
                 if (i < numWords - 1) text += ' ';
             }
-            return text;
+            return applyCapitalization(text);
         }
 
         function appendMoreText() {
@@ -1618,7 +1805,6 @@
 
             typingInput.value = '';
             typingInput.disabled = false;
-            typingInput.focus();
         }
 
         function renderText() {
@@ -1633,9 +1819,28 @@
                     className = 'current';
                 }
 
-                html += `<span class="${className}">${char === ' ' ? '␣' : char}</span>`;
+                html += `<span class="${className}" data-index="${i}">${char === ' ' ? '␣' : char}</span>`;
             }
             targetText.innerHTML = html;
+
+            // Auto-scroll to keep current character visible
+            setTimeout(() => {
+                const currentSpan = targetText.querySelector('.current');
+                if (currentSpan) {
+                    const container = targetText;
+                    const spanTop = currentSpan.offsetTop;
+                    const spanHeight = currentSpan.offsetHeight;
+                    const containerHeight = container.clientHeight;
+                    const scrollTop = container.scrollTop;
+
+                    // Keep current character in view, preferably in the top half
+                    if (spanTop < scrollTop + spanHeight) {
+                        container.scrollTop = Math.max(0, spanTop - spanHeight);
+                    } else if (spanTop > scrollTop + containerHeight - spanHeight * 3) {
+                        container.scrollTop = spanTop - spanHeight * 2;
+                    }
+                }
+            }, 0);
         }
 
         function updateStats() {
@@ -1745,8 +1950,34 @@
             }
         }, 100);
 
+        // Focus Mode
+        const focusToggle = document.getElementById('focusToggle');
+        let isFocusMode = false;
+
+        function toggleFocusMode() {
+            isFocusMode = !isFocusMode;
+            document.body.classList.toggle('focus-mode', isFocusMode);
+            focusToggle.textContent = isFocusMode ? 'Exit Focus' : 'Focus Mode';
+        }
+
+        focusToggle.addEventListener('click', toggleFocusMode);
+
         // Keyboard shortcuts
         document.addEventListener('keydown', (e) => {
+            // Escape - Toggle focus mode
+            if (e.key === 'Escape') {
+                e.preventDefault();
+                if (isFocusMode) {
+                    toggleFocusMode();
+                }
+            }
+
+            // F key - Toggle focus mode
+            if (e.key === 'f' && !typingInput.disabled && document.activeElement !== typingInput) {
+                e.preventDefault();
+                toggleFocusMode();
+            }
+
             // Shift+Enter - Restart test
             if (e.shiftKey && e.key === 'Enter') {
                 e.preventDefault();
@@ -1777,6 +2008,20 @@
             if (e.key === 'Backspace') {
                 e.preventDefault();
             }
+        });
+
+        // Initialize: Auto-select all fingers on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            fingerBtns.forEach(btn => {
+                const finger = btn.dataset.finger;
+                btn.classList.add('active');
+                fingerMap[finger].forEach(key => {
+                    selectedKeys.add(key);
+                    const keyEl = document.querySelector(`.key[data-key="${key}"]`);
+                    if (keyEl) keyEl.classList.add('selected');
+                });
+            });
+            updateSelectedKeysList();
         });
     </script>
 </body>
