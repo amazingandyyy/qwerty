@@ -1,0 +1,1783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Better Typing - Improve Your Typing Skills</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .finger-selector {
+            margin-bottom: 20px;
+            padding: 15px 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 3px solid #667eea;
+        }
+
+        .finger-buttons {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .hand-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .hand-label {
+            font-weight: 600;
+            color: #495057;
+            font-size: 0.9em;
+            white-space: nowrap;
+        }
+
+        .fingers-visual {
+            display: flex;
+            gap: 5px;
+            align-items: flex-end;
+        }
+
+        .keyboard {
+            margin: 30px auto;
+            padding: 30px;
+            background: #2c3e50;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: fit-content;
+        }
+
+        .keyboard-row {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 5px;
+        }
+
+        .keyboard-row:nth-child(2) {
+            margin-left: 30px;
+        }
+
+        .keyboard-row:nth-child(3) {
+            margin-left: 45px;
+        }
+
+        .keyboard-row:nth-child(4) {
+            margin-left: 60px;
+        }
+
+        .key {
+            width: 55px;
+            height: 55px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #3a4e63 0%, #2c3e50 100%);
+            border: 2px solid #34495e;
+            border-radius: 6px;
+            color: #ecf0f1;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            user-select: none;
+            position: relative;
+        }
+
+        .key:hover {
+            background: linear-gradient(135deg, #4a5e73 0%, #3c4e60 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        .key.selected {
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+            border-color: #d68910;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(243, 156, 18, 0.5);
+        }
+
+        .key.space {
+            width: 350px;
+        }
+
+        .key.tab {
+            width: 80px;
+        }
+
+        .key.caps {
+            width: 90px;
+        }
+
+        .key.shift-left {
+            width: 105px;
+        }
+
+        .key.shift-right {
+            width: 120px;
+        }
+
+        .key.backspace {
+            width: 90px;
+        }
+
+        .key.enter {
+            width: 100px;
+        }
+
+        .key-label {
+            font-size: 0.7em;
+            position: absolute;
+            top: 5px;
+            left: 8px;
+            opacity: 0.6;
+        }
+
+        .key-main {
+            font-size: 1.15em;
+            margin-top: 10px;
+        }
+
+        .key.tab, .key.caps, .key.shift-left, .key.shift-right,
+        .key.backspace, .key.enter {
+            font-size: 0.85em;
+            background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%);
+        }
+
+        .key.tab:hover, .key.caps:hover, .key.shift-left:hover,
+        .key.shift-right:hover, .key.backspace:hover, .key.enter:hover {
+            background: linear-gradient(135deg, #445e75 0%, #3c4e60 100%);
+        }
+
+        .key.tab.selected, .key.caps.selected, .key.shift-left.selected,
+        .key.shift-right.selected, .key.backspace.selected, .key.enter.selected {
+            background: linear-gradient(135deg, #e67e22 0%, #d35400 100%);
+        }
+
+        .key.home-row {
+            position: relative;
+        }
+
+        .key.home-row::after {
+            content: '';
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 3px;
+            background: #95a5a6;
+            border-radius: 2px;
+        }
+
+        .key.home-row.selected::after {
+            background: white;
+        }
+
+        /* Finger color coding - ONLY when selected */
+        .key.selected[data-finger="left-pinky"] {
+            background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
+            border-color: #c44569;
+        }
+
+        .key.selected[data-finger="left-ring"] {
+            background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%);
+            border-color: #6c5ce7;
+        }
+
+        .key.selected[data-finger="left-middle"] {
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            border-color: #0984e3;
+        }
+
+        .key.selected[data-finger="left-index"] {
+            background: linear-gradient(135deg, #55efc4 0%, #00b894 100%);
+            border-color: #00b894;
+        }
+
+        .key.selected[data-finger="right-index"] {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            border-color: #fdcb6e;
+        }
+
+        .key.selected[data-finger="right-middle"] {
+            background: linear-gradient(135deg, #fab1a0 0%, #e17055 100%);
+            border-color: #e17055;
+        }
+
+        .key.selected[data-finger="right-ring"] {
+            background: linear-gradient(135deg, #fd79a8 0%, #e84393 100%);
+            border-color: #e84393;
+        }
+
+        .key.selected[data-finger="right-pinky"] {
+            background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%);
+            border-color: #6c5ce7;
+        }
+
+        .key.selected[data-finger] {
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+            transform: translateY(-3px) scale(1.05);
+            filter: brightness(1.2);
+        }
+
+        .finger-btn {
+            width: 28px;
+            border: none;
+            border-radius: 14px 14px 4px 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0;
+            overflow: visible;
+        }
+
+        .finger-visual {
+            width: 100%;
+            border-radius: 14px 14px 4px 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 0;
+            transition: all 0.2s;
+        }
+
+        .finger-label {
+            display: none;
+        }
+
+        /* Compact finger heights */
+        .finger-btn[data-finger="left-pinky"] .finger-visual,
+        .finger-btn[data-finger="right-pinky"] .finger-visual {
+            height: 35px;
+        }
+
+        .finger-btn[data-finger="left-ring"] .finger-visual,
+        .finger-btn[data-finger="right-ring"] .finger-visual {
+            height: 45px;
+        }
+
+        .finger-btn[data-finger="left-middle"] .finger-visual,
+        .finger-btn[data-finger="right-middle"] .finger-visual {
+            height: 50px;
+        }
+
+        .finger-btn[data-finger="left-index"] .finger-visual,
+        .finger-btn[data-finger="right-index"] .finger-visual {
+            height: 42px;
+        }
+
+        /* Finger colors */
+        .finger-btn[data-finger="left-pinky"] .finger-visual {
+            background: linear-gradient(180deg, #ff6b9d 0%, #c44569 100%);
+        }
+
+        .finger-btn[data-finger="left-ring"] .finger-visual {
+            background: linear-gradient(180deg, #a29bfe 0%, #6c5ce7 100%);
+        }
+
+        .finger-btn[data-finger="left-middle"] .finger-visual {
+            background: linear-gradient(180deg, #74b9ff 0%, #0984e3 100%);
+        }
+
+        .finger-btn[data-finger="left-index"] .finger-visual {
+            background: linear-gradient(180deg, #55efc4 0%, #00b894 100%);
+        }
+
+        .finger-btn[data-finger="right-index"] .finger-visual {
+            background: linear-gradient(180deg, #ffeaa7 0%, #fdcb6e 100%);
+            color: #333;
+        }
+
+        .finger-btn[data-finger="right-middle"] .finger-visual {
+            background: linear-gradient(180deg, #fab1a0 0%, #e17055 100%);
+        }
+
+        .finger-btn[data-finger="right-ring"] .finger-visual {
+            background: linear-gradient(180deg, #fd79a8 0%, #e84393 100%);
+        }
+
+        .finger-btn[data-finger="right-pinky"] .finger-visual {
+            background: linear-gradient(180deg, #a29bfe 0%, #6c5ce7 100%);
+        }
+
+        .finger-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .finger-btn:hover .finger-visual {
+            filter: brightness(1.1);
+        }
+
+        .finger-btn.active {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+        }
+
+        .finger-btn.active .finger-visual {
+            filter: brightness(1.2);
+        }
+
+        .finger-btn.active::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            width: 10px;
+            height: 10px;
+            background: #2ecc71;
+            border: 2px solid white;
+            border-radius: 50%;
+            z-index: 10;
+        }
+
+        .selected-keys {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background: #e8f5e9;
+            border-radius: 10px;
+            font-size: 1.1em;
+        }
+
+        .selected-keys strong {
+            color: #2e7d32;
+        }
+
+        .practice-area {
+            margin-top: 30px;
+            padding: 0;
+            background: transparent;
+            border-radius: 0;
+        }
+
+        .practice-area h2 {
+            color: #495057;
+            margin-bottom: 15px;
+            font-size: 0.95em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            opacity: 0.7;
+        }
+
+        .target-text {
+            font-size: 1.5em;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            margin-bottom: 8px;
+            padding: 0;
+            background: transparent;
+            border-radius: 0;
+            line-height: 2;
+            min-height: 60px;
+            letter-spacing: 0.5px;
+            word-wrap: break-word;
+            word-break: break-word;
+            overflow-wrap: break-word;
+            white-space: pre-wrap;
+            text-align: left;
+            color: #495057;
+        }
+
+        .target-text span {
+            transition: all 0.1s;
+        }
+
+        .target-text .correct {
+            color: #95a5a6;
+            font-weight: normal;
+        }
+
+        .target-text .error {
+            color: #e74c3c;
+            font-weight: normal;
+            background: transparent;
+            text-decoration: underline;
+            text-decoration-color: #e74c3c;
+            text-decoration-thickness: 2px;
+        }
+
+        .target-text .current {
+            background: transparent;
+            color: #212529;
+            font-weight: 600;
+            border-bottom: 3px solid #667eea;
+            padding: 0;
+            border-radius: 0;
+            animation: blink-cursor 1s infinite;
+        }
+
+        @keyframes blink-cursor {
+            0%, 49% { border-bottom-color: #667eea; }
+            50%, 100% { border-bottom-color: transparent; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .practice-area {
+            cursor: text;
+        }
+
+        .input-area {
+            position: relative;
+        }
+
+        .typing-input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+            width: 0;
+            height: 0;
+            border: none;
+            padding: 0;
+        }
+
+        .typing-input:focus {
+            outline: none;
+        }
+
+        .stats {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+            padding: 12px 0;
+            border-top: 1px solid #e9ecef;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .stat-box {
+            padding: 0;
+            background: transparent;
+            border-radius: 0;
+            text-align: left;
+            box-shadow: none;
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+        }
+
+        .stat-label {
+            color: #6c757d;
+            font-size: 0.85em;
+            margin-bottom: 0;
+            font-weight: 500;
+        }
+
+        .stat-value {
+            color: #212529;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-start;
+            margin-top: 15px;
+        }
+
+        .btn-generate, .btn-restart {
+            padding: 6px 14px;
+            background: transparent;
+            color: #667eea;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            font-size: 0.85em;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+            box-shadow: none;
+        }
+
+        .btn-restart {
+            color: #6c757d;
+        }
+
+        .btn-generate:hover {
+            background: #f8f9fa;
+            border-color: #667eea;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-restart:hover {
+            background: #f8f9fa;
+            border-color: #6c757d;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-generate:disabled, .btn-restart:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .instructions {
+            text-align: left;
+            color: #adb5bd;
+            margin-top: 10px;
+            font-style: normal;
+            font-size: 0.85em;
+        }
+
+        .shortcuts {
+            text-align: left;
+            margin-top: 8px;
+            padding: 0;
+            background: transparent;
+            border-radius: 0;
+            font-size: 0.8em;
+            color: #adb5bd;
+        }
+
+        .shortcuts strong {
+            color: #6c757d;
+            font-weight: 500;
+        }
+
+        .shortcut-key {
+            display: inline-block;
+            padding: 2px 5px;
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 3px;
+            font-family: monospace;
+            font-weight: normal;
+            margin: 0 1px;
+            box-shadow: none;
+            font-size: 0.9em;
+        }
+
+        .settings-panel {
+            margin-bottom: 20px;
+            padding: 15px 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 3px solid #667eea;
+        }
+
+        .settings-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .setting-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .setting-label {
+            font-weight: 600;
+            color: #495057;
+            font-size: 0.9em;
+            white-space: nowrap;
+        }
+
+        .setting-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Compact Mode Toggle */
+        .mode-toggle {
+            display: flex;
+            background: #dee2e6;
+            border-radius: 6px;
+            padding: 2px;
+            gap: 2px;
+        }
+
+        .mode-toggle input[type="radio"] {
+            display: none;
+        }
+
+        .mode-toggle label {
+            padding: 6px 14px;
+            text-align: center;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85em;
+            transition: all 0.2s;
+            color: #6c757d;
+            user-select: none;
+        }
+
+        .mode-toggle input[type="radio"]:checked + label {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Compact Slider */
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .slider {
+            width: 100px;
+            height: 4px;
+            border-radius: 2px;
+            background: #dee2e6;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+        }
+
+        .slider::-moz-range-thumb {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+            border: none;
+        }
+
+        .slider-value {
+            min-width: 30px;
+            text-align: center;
+            font-weight: 600;
+            color: #667eea;
+            font-size: 0.85em;
+        }
+
+        /* Compact Radio Buttons */
+        .radio-group {
+            display: flex;
+            gap: 6px;
+        }
+
+        .radio-option {
+            position: relative;
+        }
+
+        .radio-option input[type="radio"] {
+            display: none;
+        }
+
+        .radio-option label {
+            display: block;
+            padding: 6px 12px;
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85em;
+            color: #6c757d;
+            transition: all 0.2s;
+            user-select: none;
+        }
+
+        .radio-option input[type="radio"]:checked + label {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        /* Compact Toggle Switch */
+        .toggle-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #dee2e6;
+            transition: .2s;
+            border-radius: 20px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 14px;
+            width: 14px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .2s;
+            border-radius: 50%;
+        }
+
+        .toggle-switch input:checked + .toggle-slider {
+            background: #667eea;
+        }
+
+        .toggle-switch input:checked + .toggle-slider:before {
+            transform: translateX(20px);
+        }
+
+        .toggle-label {
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 2px;
+            background: #e9ecef;
+            border-radius: 0;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #667eea;
+            transition: width 0.3s ease;
+            border-radius: 0;
+        }
+
+        .timer-display {
+            font-size: 0.9em;
+            font-weight: 500;
+            color: #6c757d;
+            text-align: left;
+            margin-bottom: 8px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        .timer-display.warning {
+            color: #f39c12;
+            animation: none;
+        }
+
+        .timer-display.danger {
+            color: #e74c3c;
+            animation: none;
+        }
+
+        @keyframes pulse-warning {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        @keyframes pulse-danger {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Better Typing</h1>
+        <p class="subtitle">Improve your typing skills by practicing specific keys and fingers</p>
+
+        <div class="settings-panel">
+            <div class="settings-grid">
+                <!-- Mode -->
+                <div class="setting-item">
+                    <span class="setting-label">Mode:</span>
+                    <div class="mode-toggle">
+                        <input type="radio" id="modeWords" name="mode" value="words" checked>
+                        <label for="modeWords">Words</label>
+                        <input type="radio" id="modeTimed" name="mode" value="timed">
+                        <label for="modeTimed">Timed</label>
+                        <input type="radio" id="modeUnlimited" name="mode" value="unlimited">
+                        <label for="modeUnlimited">Unlimited</label>
+                    </div>
+                </div>
+
+                <!-- Word Count -->
+                <div class="setting-item" id="wordCountSetting">
+                    <span class="setting-label">Words:</span>
+                    <div class="slider-container">
+                        <input type="range" min="5" max="50" value="15" class="slider" id="wordCountSlider">
+                        <span class="slider-value" id="wordCountValue">15</span>
+                    </div>
+                </div>
+
+                <!-- Time Limit -->
+                <div class="setting-item" id="timeLimitSetting" style="display: none;">
+                    <span class="setting-label">Time:</span>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="time30" name="timeLimit" value="30" checked>
+                            <label for="time30">30s</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="time60" name="timeLimit" value="60">
+                            <label for="time60">60s</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="time120" name="timeLimit" value="120">
+                            <label for="time120">2min</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Word Length -->
+                <div class="setting-item">
+                    <span class="setting-label">Length:</span>
+                    <div class="setting-control">
+                        <div class="slider-container">
+                            <input type="range" min="2" max="12" value="3" class="slider" id="minWordLengthSlider">
+                            <span class="slider-value" id="minWordLengthValue">3</span>
+                        </div>
+                        <span style="color: #adb5bd; font-size: 0.85em;">-</span>
+                        <div class="slider-container">
+                            <input type="range" min="2" max="12" value="6" class="slider" id="maxWordLengthSlider">
+                            <span class="slider-value" id="maxWordLengthValue">6</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Numbers Toggle -->
+                <div class="setting-item">
+                    <span class="setting-label">Numbers:</span>
+                    <div class="toggle-option">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="includeNumbers">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Word Set Toggle -->
+                <div class="setting-item">
+                    <span class="setting-label">Words:</span>
+                    <div class="mode-toggle">
+                        <input type="radio" id="wordSetGibberish" name="wordSet" value="gibberish" checked>
+                        <label for="wordSetGibberish">Gibberish</label>
+                        <input type="radio" id="wordSetReal" name="wordSet" value="real">
+                        <label for="wordSetReal">Real</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="finger-selector">
+            <div class="finger-buttons">
+                <div class="hand-section">
+                    <span class="hand-label">Left:</span>
+                    <div class="fingers-visual">
+                        <button class="finger-btn" data-finger="left-pinky" title="Pinky: 1, Q, A, Z">
+                            <div class="finger-visual"></div>
+                        </button>
+                        <button class="finger-btn" data-finger="left-ring" title="Ring: 2, W, S, X">
+                            <div class="finger-visual"></div>
+                        </button>
+                        <button class="finger-btn" data-finger="left-middle" title="Middle: 3, E, D, C">
+                            <div class="finger-visual"></div>
+                        </button>
+                        <button class="finger-btn" data-finger="left-index" title="Index: 4, 5, R, T, F, G, V, B">
+                            <div class="finger-visual"></div>
+                        </button>
+                    </div>
+                </div>
+                <div class="hand-section">
+                    <span class="hand-label">Right:</span>
+                    <div class="fingers-visual">
+                        <button class="finger-btn" data-finger="right-index" title="Index: 6, 7, Y, U, H, J, N, M">
+                            <div class="finger-visual"></div>
+                        </button>
+                        <button class="finger-btn" data-finger="right-middle" title="Middle: 8, I, K, ,">
+                            <div class="finger-visual"></div>
+                        </button>
+                        <button class="finger-btn" data-finger="right-ring" title="Ring: 9, O, L, .">
+                            <div class="finger-visual"></div>
+                        </button>
+                        <button class="finger-btn" data-finger="right-pinky" title="Pinky: 0, -, =, P, [, ], \, ;, '">
+                            <div class="finger-visual"></div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="keyboard">
+            <!-- Number Row -->
+            <div class="keyboard-row">
+                <div class="key" data-key="`" data-finger="left-pinky"><span class="key-label">~</span><span class="key-main">`</span></div>
+                <div class="key" data-key="1" data-finger="left-pinky"><span class="key-label">!</span><span class="key-main">1</span></div>
+                <div class="key" data-key="2" data-finger="left-ring"><span class="key-label">@</span><span class="key-main">2</span></div>
+                <div class="key" data-key="3" data-finger="left-middle"><span class="key-label">#</span><span class="key-main">3</span></div>
+                <div class="key" data-key="4" data-finger="left-index"><span class="key-label">$</span><span class="key-main">4</span></div>
+                <div class="key" data-key="5" data-finger="left-index"><span class="key-label">%</span><span class="key-main">5</span></div>
+                <div class="key" data-key="6" data-finger="right-index"><span class="key-label">^</span><span class="key-main">6</span></div>
+                <div class="key" data-key="7" data-finger="right-index"><span class="key-label">&</span><span class="key-main">7</span></div>
+                <div class="key" data-key="8" data-finger="right-middle"><span class="key-label">*</span><span class="key-main">8</span></div>
+                <div class="key" data-key="9" data-finger="right-ring"><span class="key-label">(</span><span class="key-main">9</span></div>
+                <div class="key" data-key="0" data-finger="right-pinky"><span class="key-label">)</span><span class="key-main">0</span></div>
+                <div class="key" data-key="-" data-finger="right-pinky"><span class="key-label">_</span><span class="key-main">-</span></div>
+                <div class="key" data-key="=" data-finger="right-pinky"><span class="key-label">+</span><span class="key-main">=</span></div>
+                <div class="key backspace" data-key="backspace" data-finger="right-pinky">⌫</div>
+            </div>
+
+            <!-- QWERTY Row -->
+            <div class="keyboard-row">
+                <div class="key tab" data-key="tab" data-finger="left-pinky">Tab</div>
+                <div class="key" data-key="q" data-finger="left-pinky">Q</div>
+                <div class="key" data-key="w" data-finger="left-ring">W</div>
+                <div class="key" data-key="e" data-finger="left-middle">E</div>
+                <div class="key" data-key="r" data-finger="left-index">R</div>
+                <div class="key" data-key="t" data-finger="left-index">T</div>
+                <div class="key" data-key="y" data-finger="right-index">Y</div>
+                <div class="key" data-key="u" data-finger="right-index">U</div>
+                <div class="key" data-key="i" data-finger="right-middle">I</div>
+                <div class="key" data-key="o" data-finger="right-ring">O</div>
+                <div class="key" data-key="p" data-finger="right-pinky">P</div>
+                <div class="key" data-key="[" data-finger="right-pinky"><span class="key-label">{</span><span class="key-main">[</span></div>
+                <div class="key" data-key="]" data-finger="right-pinky"><span class="key-label">}</span><span class="key-main">]</span></div>
+                <div class="key" data-key="\" data-finger="right-pinky"><span class="key-label">|</span><span class="key-main">\</span></div>
+            </div>
+
+            <!-- ASDF Row (Home Row) -->
+            <div class="keyboard-row">
+                <div class="key caps" data-key="caps" data-finger="left-pinky">Caps</div>
+                <div class="key" data-key="a" data-finger="left-pinky">A</div>
+                <div class="key" data-key="s" data-finger="left-ring">S</div>
+                <div class="key" data-key="d" data-finger="left-middle">D</div>
+                <div class="key home-row" data-key="f" data-finger="left-index">F</div>
+                <div class="key" data-key="g" data-finger="left-index">G</div>
+                <div class="key" data-key="h" data-finger="right-index">H</div>
+                <div class="key home-row" data-key="j" data-finger="right-index">J</div>
+                <div class="key" data-key="k" data-finger="right-middle">K</div>
+                <div class="key" data-key="l" data-finger="right-ring">L</div>
+                <div class="key" data-key=";" data-finger="right-pinky"><span class="key-label">:</span><span class="key-main">;</span></div>
+                <div class="key" data-key="'" data-finger="right-pinky"><span class="key-label">"</span><span class="key-main">'</span></div>
+                <div class="key enter" data-key="enter" data-finger="right-pinky">Enter</div>
+            </div>
+
+            <!-- ZXCV Row -->
+            <div class="keyboard-row">
+                <div class="key shift-left" data-key="shift" data-finger="left-pinky">Shift</div>
+                <div class="key" data-key="z" data-finger="left-pinky">Z</div>
+                <div class="key" data-key="x" data-finger="left-ring">X</div>
+                <div class="key" data-key="c" data-finger="left-middle">C</div>
+                <div class="key" data-key="v" data-finger="left-index">V</div>
+                <div class="key" data-key="b" data-finger="left-index">B</div>
+                <div class="key" data-key="n" data-finger="right-index">N</div>
+                <div class="key" data-key="m" data-finger="right-index">M</div>
+                <div class="key" data-key="," data-finger="right-middle"><span class="key-label">&lt;</span><span class="key-main">,</span></div>
+                <div class="key" data-key="." data-finger="right-ring"><span class="key-label">&gt;</span><span class="key-main">.</span></div>
+                <div class="key" data-key="/" data-finger="right-pinky"><span class="key-label">?</span><span class="key-main">/</span></div>
+                <div class="key shift-right" data-key="shift-right" data-finger="right-pinky">Shift</div>
+            </div>
+
+            <!-- Space Row -->
+            <div class="keyboard-row" style="justify-content: center; margin-left: 0;">
+                <div class="key space" data-key=" " style="background: linear-gradient(135deg, #dfe6e9 0%, #b2bec3 100%); border-color: #b2bec3;">SPACE</div>
+            </div>
+        </div>
+
+        <div class="selected-keys">
+            <strong>Selected Keys:</strong> <span id="selectedKeysList">None - Click keys above or use finger shortcuts</span>
+        </div>
+
+        <div class="practice-area">
+            <h2>Typing Practice</h2>
+
+            <div class="timer-display" id="timerDisplay" style="display: none;">
+                Time: <span id="timeRemaining">--</span>
+            </div>
+
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progressBar" style="width: 0%;"></div>
+            </div>
+
+            <div class="target-text" id="targetText">
+                Select keys above to generate practice text
+            </div>
+            <div class="input-area">
+                <input type="text" class="typing-input" id="typingInput" placeholder="Start typing here..." disabled>
+            </div>
+            <div class="button-group">
+                <button class="btn-restart" id="restartBtn" disabled>Restart Test</button>
+                <button class="btn-generate" id="generateBtn" disabled>Generate New Exercise</button>
+            </div>
+            <p class="instructions">Select keys and start typing! Use buttons or keyboard shortcuts below.</p>
+            <div class="shortcuts">
+                <strong>Keyboard Shortcuts:</strong>
+                <span class="shortcut-key">Shift</span>+<span class="shortcut-key">Enter</span> Restart Test •
+                <span class="shortcut-key">Cmd</span>+<span class="shortcut-key">N</span> New Exercise •
+                <span class="shortcut-key">Cmd</span>+<span class="shortcut-key">K</span> Focus Input
+            </div>
+
+            <div class="stats">
+                <div class="stat-box">
+                    <div class="stat-label">WPM</div>
+                    <div class="stat-value" id="wpm">0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Accuracy</div>
+                    <div class="stat-value" id="accuracy">100%</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Progress</div>
+                    <div class="stat-value" id="progress">0/0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Errors</div>
+                    <div class="stat-value" id="errors">0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Time</div>
+                    <div class="stat-value" id="timeElapsed">0s</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const fingerMap = {
+            'left-pinky': ['`', '1', 'q', 'a', 'z', 'tab', 'caps', 'shift'],
+            'left-ring': ['2', 'w', 's', 'x'],
+            'left-middle': ['3', 'e', 'd', 'c'],
+            'left-index': ['4', '5', 'r', 't', 'f', 'g', 'v', 'b'],
+            'right-index': ['6', '7', 'y', 'u', 'h', 'j', 'n', 'm'],
+            'right-middle': ['8', 'i', 'k', ','],
+            'right-ring': ['9', 'o', 'l', '.'],
+            'right-pinky': ['0', '-', '=', 'p', '[', ']', '\\', ';', "'", '/', 'enter', 'backspace', 'shift-right']
+        };
+
+        // Common English words for real word mode
+        const realWords = [
+            'the', 'be', 'to', 'of', 'and', 'a', 'in', 'that', 'have', 'it',
+            'for', 'not', 'on', 'with', 'he', 'as', 'you', 'do', 'at', 'this',
+            'but', 'his', 'by', 'from', 'they', 'we', 'say', 'her', 'she', 'or',
+            'an', 'will', 'my', 'one', 'all', 'would', 'there', 'their', 'what', 'so',
+            'up', 'out', 'if', 'about', 'who', 'get', 'which', 'go', 'me', 'when',
+            'make', 'can', 'like', 'time', 'no', 'just', 'him', 'know', 'take', 'people',
+            'into', 'year', 'your', 'good', 'some', 'could', 'them', 'see', 'other', 'than',
+            'then', 'now', 'look', 'only', 'come', 'its', 'over', 'think', 'also', 'back',
+            'after', 'use', 'two', 'how', 'our', 'work', 'first', 'well', 'way', 'even',
+            'new', 'want', 'because', 'any', 'these', 'give', 'day', 'most', 'us', 'is',
+            'was', 'are', 'been', 'has', 'had', 'were', 'said', 'did', 'having', 'may',
+            'should', 'could', 'being', 'does', 'did', 'doing', 'would', 'should', 'can', 'may',
+            'might', 'must', 'shall', 'will', 'am', 'is', 'are', 'was', 'were', 'be',
+            'able', 'about', 'above', 'across', 'add', 'admit', 'afraid', 'after', 'again', 'against',
+            'age', 'ago', 'agree', 'air', 'all', 'allow', 'almost', 'alone', 'along', 'already',
+            'also', 'always', 'among', 'and', 'angry', 'animal', 'another', 'answer', 'any', 'appear',
+            'apple', 'area', 'arm', 'around', 'arrive', 'art', 'ask', 'atom', 'baby', 'back',
+            'bad', 'ball', 'band', 'bank', 'bar', 'base', 'basic', 'beat', 'beauty', 'bed',
+            'before', 'began', 'begin', 'behind', 'bell', 'below', 'best', 'better', 'between', 'big',
+            'bird', 'black', 'block', 'blood', 'blow', 'blue', 'board', 'boat', 'body', 'bone',
+            'book', 'born', 'both', 'bottom', 'box', 'boy', 'branch', 'bread', 'break', 'bright',
+            'bring', 'broad', 'broke', 'brother', 'brought', 'brown', 'build', 'burn', 'busy', 'call',
+            'came', 'camp', 'captain', 'car', 'card', 'care', 'carry', 'case', 'cat', 'catch',
+            'cause', 'cent', 'center', 'century', 'certain', 'chair', 'chance', 'change', 'character', 'charge',
+            'chart', 'check', 'chick', 'chief', 'child', 'children', 'choose', 'chord', 'circle', 'city',
+            'claim', 'class', 'clean', 'clear', 'climb', 'clock', 'close', 'clothe', 'cloud', 'coast',
+            'coat', 'cold', 'collect', 'colony', 'color', 'column', 'common', 'company', 'compare', 'complete',
+            'condition', 'connect', 'consider', 'consonant', 'contain', 'continent', 'continue', 'control', 'cook', 'cool',
+            'copy', 'corn', 'corner', 'correct', 'cost', 'cotton', 'count', 'country', 'course', 'cover',
+            'cow', 'create', 'crop', 'cross', 'crowd', 'cry', 'current', 'cut', 'dance', 'danger',
+            'dark', 'dead', 'deal', 'dear', 'death', 'decide', 'decimal', 'deep', 'degree', 'depend',
+            'describe', 'desert', 'design', 'determine', 'develop', 'dictionary', 'differ', 'difficult', 'direct', 'discuss',
+            'distant', 'divide', 'division', 'doctor', 'dog', 'dollar', 'done', 'door', 'double', 'down',
+            'draw', 'dream', 'dress', 'drink', 'drive', 'drop', 'dry', 'during', 'each', 'ear',
+            'early', 'earth', 'ease', 'east', 'eat', 'edge', 'effect', 'egg', 'eight', 'either',
+            'electric', 'element', 'else', 'end', 'enemy', 'energy', 'engine', 'enough', 'enter', 'equal',
+            'equation', 'especially', 'evening', 'event', 'ever', 'every', 'exact', 'example', 'except', 'excite',
+            'exercise', 'expect', 'experience', 'experiment', 'eye', 'face', 'fact', 'fair', 'fall', 'family',
+            'famous', 'far', 'farm', 'fast', 'fat', 'father', 'favor', 'fear', 'feed', 'feel',
+            'feet', 'fell', 'felt', 'few', 'field', 'fig', 'fight', 'figure', 'fill', 'final',
+            'find', 'fine', 'finger', 'finish', 'fire', 'fish', 'fit', 'five', 'flat', 'floor',
+            'flow', 'flower', 'fly', 'follow', 'food', 'foot', 'force', 'forest', 'form', 'forward',
+            'found', 'four', 'fraction', 'free', 'fresh', 'friend', 'front', 'fruit', 'full', 'fun',
+            'game', 'garden', 'gas', 'gather', 'gave', 'general', 'gentle', 'girl', 'glad', 'glass',
+            'gold', 'gone', 'got', 'govern', 'grand', 'grass', 'gray', 'great', 'green', 'ground',
+            'group', 'grow', 'guess', 'guide', 'gun', 'hair', 'half', 'hand', 'happen', 'happy',
+            'hard', 'hat', 'have', 'head', 'hear', 'heard', 'heart', 'heat', 'heavy', 'held',
+            'help', 'high', 'hill', 'history', 'hit', 'hold', 'hole', 'home', 'hope', 'horse',
+            'hot', 'hour', 'house', 'huge', 'human', 'hundred', 'hunt', 'hurry', 'idea', 'inch',
+            'include', 'increase', 'indicate', 'industry', 'insect', 'instant', 'instrument', 'interest', 'invent', 'iron',
+            'island', 'job', 'join', 'joy', 'jump', 'keep', 'kept', 'key', 'kill', 'kind',
+            'king', 'kitchen', 'knew', 'knife', 'lake', 'land', 'language', 'large', 'last', 'late',
+            'laugh', 'law', 'lay', 'lead', 'learn', 'least', 'leave', 'led', 'left', 'leg',
+            'length', 'less', 'let', 'letter', 'level', 'lie', 'life', 'lift', 'light', 'line',
+            'liquid', 'list', 'listen', 'little', 'live', 'locate', 'log', 'long', 'lost', 'lot',
+            'loud', 'love', 'low', 'machine', 'made', 'magnet', 'main', 'major', 'man', 'many',
+            'map', 'mark', 'market', 'mass', 'master', 'match', 'material', 'matter', 'mean', 'meant',
+            'measure', 'meat', 'meet', 'melody', 'men', 'metal', 'method', 'middle', 'might', 'mile',
+            'milk', 'mill', 'million', 'mind', 'mine', 'minute', 'miss', 'mix', 'modern', 'molecule',
+            'moment', 'money', 'month', 'moon', 'more', 'morning', 'mother', 'motion', 'mount', 'mountain',
+            'mouth', 'move', 'much', 'multiply', 'music', 'name', 'nation', 'natural', 'nature', 'near',
+            'necessary', 'neck', 'need', 'neighbor', 'never', 'next', 'night', 'nine', 'noise', 'noon',
+            'nor', 'north', 'nose', 'note', 'nothing', 'notice', 'noun', 'number', 'numeral', 'object',
+            'observe', 'occur', 'ocean', 'offer', 'office', 'often', 'oil', 'old', 'once', 'open',
+            'operate', 'opposite', 'order', 'organ', 'original', 'oxygen', 'page', 'paint', 'pair', 'paper',
+            'paragraph', 'parent', 'part', 'particular', 'party', 'pass', 'past', 'path', 'pattern', 'pay',
+            'peace', 'people', 'perhaps', 'period', 'person', 'phrase', 'pick', 'picture', 'piece', 'pitch',
+            'place', 'plain', 'plan', 'plane', 'planet', 'plant', 'play', 'please', 'plural', 'poem',
+            'point', 'poor', 'populate', 'port', 'pose', 'position', 'possible', 'post', 'pound', 'power',
+            'practice', 'prepare', 'present', 'press', 'pretty', 'print', 'probable', 'problem', 'process', 'produce',
+            'product', 'proper', 'property', 'protect', 'prove', 'provide', 'pull', 'push', 'put', 'quart',
+            'question', 'quick', 'quiet', 'quite', 'quotient', 'race', 'radio', 'rail', 'rain', 'raise',
+            'ran', 'range', 'rather', 'reach', 'read', 'ready', 'real', 'reason', 'receive', 'record',
+            'red', 'region', 'remember', 'repeat', 'reply', 'represent', 'require', 'rest', 'result', 'rich',
+            'ride', 'right', 'ring', 'rise', 'river', 'road', 'rock', 'roll', 'room', 'root',
+            'rope', 'rose', 'round', 'row', 'rub', 'rule', 'run', 'safe', 'sail', 'salt',
+            'same', 'sand', 'sat', 'save', 'scale', 'school', 'science', 'score', 'sea', 'search',
+            'season', 'seat', 'second', 'section', 'seed', 'seem', 'segment', 'select', 'self', 'sell',
+            'send', 'sense', 'sent', 'sentence', 'separate', 'serve', 'set', 'settle', 'seven', 'several',
+            'shall', 'shape', 'share', 'sharp', 'sheet', 'shell', 'shine', 'ship', 'shoe', 'shop',
+            'shore', 'short', 'shoulder', 'shout', 'show', 'side', 'sight', 'sign', 'silent', 'silver',
+            'similar', 'simple', 'since', 'sing', 'single', 'sister', 'sit', 'six', 'size', 'skill',
+            'skin', 'sky', 'slave', 'sleep', 'slip', 'slow', 'small', 'smell', 'smile', 'snow',
+            'soft', 'soil', 'soldier', 'solution', 'solve', 'son', 'song', 'soon', 'sound', 'south',
+            'space', 'speak', 'special', 'speech', 'speed', 'spell', 'spend', 'spoke', 'sport', 'spot',
+            'spread', 'spring', 'square', 'stand', 'star', 'start', 'state', 'station', 'stay', 'steady',
+            'steam', 'steel', 'step', 'stick', 'still', 'stone', 'stood', 'stop', 'store', 'story',
+            'straight', 'strange', 'stream', 'street', 'stretch', 'string', 'strong', 'student', 'study', 'subject',
+            'substance', 'subtract', 'success', 'such', 'sudden', 'suffix', 'sugar', 'suggest', 'suit', 'summer',
+            'sun', 'supply', 'support', 'sure', 'surface', 'surprise', 'swim', 'syllable', 'symbol', 'system',
+            'table', 'tail', 'take', 'talk', 'tall', 'teach', 'team', 'teeth', 'tell', 'temperature',
+            'ten', 'term', 'test', 'than', 'thank', 'their', 'them', 'themselves', 'then', 'theory',
+            'there', 'these', 'they', 'thick', 'thin', 'thing', 'think', 'third', 'those', 'though',
+            'thought', 'thousand', 'three', 'through', 'throw', 'thus', 'tie', 'time', 'tiny', 'tire',
+            'together', 'told', 'tone', 'too', 'took', 'tool', 'top', 'total', 'touch', 'toward',
+            'town', 'track', 'trade', 'train', 'travel', 'tree', 'triangle', 'trip', 'trouble', 'truck',
+            'true', 'try', 'tube', 'turn', 'twenty', 'twice', 'two', 'type', 'under', 'unit',
+            'until', 'usual', 'valley', 'value', 'vary', 'verb', 'very', 'view', 'village', 'visit',
+            'voice', 'vowel', 'wait', 'walk', 'wall', 'war', 'warm', 'wash', 'watch', 'water',
+            'wave', 'wear', 'weather', 'week', 'weight', 'went', 'west', 'wheel', 'when', 'where',
+            'whether', 'which', 'while', 'white', 'whole', 'whose', 'why', 'wide', 'wife', 'wild',
+            'will', 'win', 'wind', 'window', 'wing', 'winter', 'wire', 'wish', 'with', 'woman',
+            'women', 'wonder', 'wood', 'word', 'work', 'world', 'would', 'write', 'written', 'wrong',
+            'yard', 'year', 'yellow', 'yes', 'yesterday', 'yet', 'young'
+        ];
+
+        let selectedKeys = new Set();
+        let currentText = '';
+        let currentPosition = 0;
+        let errorCount = 0;
+        let totalTyped = 0;
+        let startTime = null;
+        let timerInterval = null;
+        let timeLimit = 30;
+        let isTimedMode = false;
+        let isUnlimitedMode = false;
+
+        // Settings
+        let wordCount = 15;
+        let minWordLength = 3;
+        let maxWordLength = 6;
+        let includeNumbers = false;
+        let useRealWords = false;
+
+        const keys = document.querySelectorAll('.key');
+        const fingerBtns = document.querySelectorAll('.finger-btn');
+        const selectedKeysList = document.getElementById('selectedKeysList');
+        const generateBtn = document.getElementById('generateBtn');
+        const restartBtn = document.getElementById('restartBtn');
+        const targetText = document.getElementById('targetText');
+        const typingInput = document.getElementById('typingInput');
+        const accuracyEl = document.getElementById('accuracy');
+        const progressEl = document.getElementById('progress');
+        const errorsEl = document.getElementById('errors');
+        const wpmEl = document.getElementById('wpm');
+        const timeElapsedEl = document.getElementById('timeElapsed');
+        const progressBar = document.getElementById('progressBar');
+        const timerDisplay = document.getElementById('timerDisplay');
+        const timeRemaining = document.getElementById('timeRemaining');
+
+        // Settings elements
+        const modeWords = document.getElementById('modeWords');
+        const modeTimed = document.getElementById('modeTimed');
+        const modeUnlimited = document.getElementById('modeUnlimited');
+        const wordCountSetting = document.getElementById('wordCountSetting');
+        const timeLimitSetting = document.getElementById('timeLimitSetting');
+        const wordCountSlider = document.getElementById('wordCountSlider');
+        const wordCountValue = document.getElementById('wordCountValue');
+        const minWordLengthSlider = document.getElementById('minWordLengthSlider');
+        const minWordLengthValue = document.getElementById('minWordLengthValue');
+        const maxWordLengthSlider = document.getElementById('maxWordLengthSlider');
+        const maxWordLengthValue = document.getElementById('maxWordLengthValue');
+        const minDisplay = document.getElementById('minDisplay');
+        const maxDisplay = document.getElementById('maxDisplay');
+        const includeNumbersCheckbox = document.getElementById('includeNumbers');
+        const wordSetGibberish = document.getElementById('wordSetGibberish');
+        const wordSetReal = document.getElementById('wordSetReal');
+
+        // Handle individual key selection
+        keys.forEach(key => {
+            key.addEventListener('click', () => {
+                const keyValue = key.dataset.key;
+
+                if (selectedKeys.has(keyValue)) {
+                    selectedKeys.delete(keyValue);
+                    key.classList.remove('selected');
+                } else {
+                    selectedKeys.add(keyValue);
+                    key.classList.add('selected');
+                }
+
+                updateSelectedKeysList();
+            });
+        });
+
+        // Handle finger button selection
+        fingerBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const finger = btn.dataset.finger;
+                const isActive = btn.classList.contains('active');
+
+                if (isActive) {
+                    // Deselect this finger's keys
+                    btn.classList.remove('active');
+                    fingerMap[finger].forEach(key => {
+                        selectedKeys.delete(key);
+                        const keyEl = document.querySelector(`.key[data-key="${key}"]`);
+                        if (keyEl) keyEl.classList.remove('selected');
+                    });
+                } else {
+                    // Select this finger's keys
+                    btn.classList.add('active');
+                    fingerMap[finger].forEach(key => {
+                        selectedKeys.add(key);
+                        const keyEl = document.querySelector(`.key[data-key="${key}"]`);
+                        if (keyEl) keyEl.classList.add('selected');
+                    });
+                }
+
+                updateSelectedKeysList();
+            });
+        });
+
+        // Settings event listeners
+        modeWords.addEventListener('change', () => {
+            isTimedMode = false;
+            isUnlimitedMode = false;
+            wordCountSetting.style.display = 'flex';
+            timeLimitSetting.style.display = 'none';
+            if (selectedKeys.size > 0) generatePracticeText();
+        });
+
+        modeTimed.addEventListener('change', () => {
+            isTimedMode = true;
+            isUnlimitedMode = false;
+            wordCountSetting.style.display = 'none';
+            timeLimitSetting.style.display = 'flex';
+            const selectedTime = document.querySelector('input[name="timeLimit"]:checked');
+            timeLimit = parseInt(selectedTime.value);
+            if (selectedKeys.size > 0) generatePracticeText();
+        });
+
+        modeUnlimited.addEventListener('change', () => {
+            isTimedMode = false;
+            isUnlimitedMode = true;
+            wordCountSetting.style.display = 'none';
+            timeLimitSetting.style.display = 'none';
+            if (selectedKeys.size > 0) generatePracticeText();
+        });
+
+        document.querySelectorAll('input[name="timeLimit"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                timeLimit = parseInt(e.target.value);
+                if (isTimedMode && selectedKeys.size > 0) generatePracticeText();
+            });
+        });
+
+        wordCountSlider.addEventListener('input', (e) => {
+            wordCount = parseInt(e.target.value);
+            wordCountValue.textContent = wordCount;
+            if (!isTimedMode && selectedKeys.size > 0) generatePracticeText();
+        });
+
+        minWordLengthSlider.addEventListener('input', (e) => {
+            minWordLength = parseInt(e.target.value);
+            if (minWordLength > maxWordLength) {
+                maxWordLength = minWordLength;
+                maxWordLengthSlider.value = maxWordLength;
+                maxWordLengthValue.textContent = maxWordLength;
+            }
+            minWordLengthValue.textContent = minWordLength;
+            minDisplay.textContent = minWordLength;
+            maxDisplay.textContent = maxWordLength;
+            if (selectedKeys.size > 0) generatePracticeText();
+        });
+
+        maxWordLengthSlider.addEventListener('input', (e) => {
+            maxWordLength = parseInt(e.target.value);
+            if (maxWordLength < minWordLength) {
+                minWordLength = maxWordLength;
+                minWordLengthSlider.value = minWordLength;
+                minWordLengthValue.textContent = minWordLength;
+            }
+            maxWordLengthValue.textContent = maxWordLength;
+            minDisplay.textContent = minWordLength;
+            maxDisplay.textContent = maxWordLength;
+            if (selectedKeys.size > 0) generatePracticeText();
+        });
+
+        includeNumbersCheckbox.addEventListener('change', (e) => {
+            includeNumbers = e.target.checked;
+            if (selectedKeys.size > 0) generatePracticeText();
+        });
+
+        wordSetGibberish.addEventListener('change', () => {
+            useRealWords = false;
+            if (selectedKeys.size > 0) generatePracticeText();
+        });
+
+        wordSetReal.addEventListener('change', () => {
+            useRealWords = true;
+            if (selectedKeys.size > 0) generatePracticeText();
+        });
+
+        function updateSelectedKeysList() {
+            if (selectedKeys.size === 0) {
+                selectedKeysList.textContent = 'None - Click keys above or use finger shortcuts';
+                generateBtn.disabled = true;
+                restartBtn.disabled = true;
+                targetText.innerHTML = 'Select keys above to generate practice text';
+                typingInput.disabled = true;
+                typingInput.value = '';
+            } else {
+                const nonTypeableKeys = ['tab', 'caps', 'shift', 'shift-right', 'enter', 'backspace'];
+                const typeableKeys = Array.from(selectedKeys).filter(k => !nonTypeableKeys.includes(k));
+                const keysArray = typeableKeys.map(k => k === ' ' ? 'SPACE' : k.toUpperCase());
+                selectedKeysList.textContent = keysArray.length > 0 ? keysArray.join(', ') : 'Only non-typeable keys selected';
+                generateBtn.disabled = typeableKeys.length === 0;
+                restartBtn.disabled = typeableKeys.length === 0;
+
+                // Auto-generate practice text when keys are selected
+                if (typeableKeys.length > 0) {
+                    generatePracticeText();
+                }
+            }
+        }
+
+        function restartTest() {
+            if (!currentText) return;
+
+            currentPosition = 0;
+            errorCount = 0;
+            totalTyped = 0;
+            startTime = null;
+
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+
+            if (isTimedMode) {
+                timeRemaining.textContent = timeLimit + 's';
+                timerDisplay.classList.remove('warning', 'danger');
+            }
+
+            renderText();
+            updateStats();
+
+            typingInput.value = '';
+            typingInput.disabled = false;
+            typingInput.focus();
+        }
+
+        function startTimer() {
+            if (!isTimedMode) return;
+
+            let elapsed = 0;
+            timerInterval = setInterval(() => {
+                elapsed++;
+                const remaining = timeLimit - elapsed;
+                timeRemaining.textContent = remaining + 's';
+
+                if (remaining <= 10 && remaining > 5) {
+                    timerDisplay.classList.add('warning');
+                    timerDisplay.classList.remove('danger');
+                } else if (remaining <= 5) {
+                    timerDisplay.classList.add('danger');
+                    timerDisplay.classList.remove('warning');
+                }
+
+                if (remaining <= 0) {
+                    clearInterval(timerInterval);
+                    timerInterval = null;
+                    endTest();
+                }
+            }, 1000);
+        }
+
+        function endTest() {
+            typingInput.disabled = true;
+            const finalWPM = calculateWPM();
+            const finalAccuracy = totalTyped === 0 ? 100 : Math.round(((totalTyped - errorCount) / totalTyped) * 100);
+
+            setTimeout(() => {
+                alert(`Time's up!\n\nWPM: ${finalWPM}\nAccuracy: ${finalAccuracy}%\nErrors: ${errorCount}\n\nClick "Generate New Exercise" to try again!`);
+            }, 100);
+        }
+
+        function calculateWPM() {
+            if (!startTime) return 0;
+            const timeElapsed = (Date.now() - startTime) / 1000 / 60; // minutes
+            const wordsTyped = currentPosition / 5; // standard: 5 characters = 1 word
+            return Math.round(wordsTyped / timeElapsed) || 0;
+        }
+
+        function getFilteredKeys() {
+            // Filter out non-typeable keys
+            const nonTypeableKeys = ['tab', 'caps', 'shift', 'shift-right', 'enter', 'backspace'];
+            let keysArray = Array.from(selectedKeys).filter(key => !nonTypeableKeys.includes(key));
+
+            // Filter out numbers if setting is disabled
+            if (!includeNumbers) {
+                const numberKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '`', '-', '='];
+                keysArray = keysArray.filter(key => !numberKeys.includes(key));
+            }
+
+            return keysArray;
+        }
+
+        function getFilteredRealWords(keysArray) {
+            // Filter real words to only include words that can be typed with selected keys
+            const keySet = new Set(keysArray);
+            return realWords.filter(word => {
+                // Check if all characters in the word are available in selected keys
+                for (let char of word) {
+                    if (!keySet.has(char.toLowerCase())) {
+                        return false;
+                    }
+                }
+                return true;
+            });
+        }
+
+        function generateGibberishText(keysArray, numWords) {
+            let text = '';
+            for (let i = 0; i < numWords; i++) {
+                const wordLength = Math.floor(Math.random() * (maxWordLength - minWordLength + 1)) + minWordLength;
+                for (let j = 0; j < wordLength; j++) {
+                    const randomKey = keysArray[Math.floor(Math.random() * keysArray.length)];
+                    text += randomKey;
+                }
+                if (i < numWords - 1) text += ' ';
+            }
+            return text;
+        }
+
+        function generateRealWordsText(keysArray, numWords) {
+            const availableWords = getFilteredRealWords(keysArray);
+
+            if (availableWords.length === 0) {
+                // Fall back to gibberish if no real words available
+                return generateGibberishText(keysArray, numWords);
+            }
+
+            let text = '';
+            for (let i = 0; i < numWords; i++) {
+                const randomWord = availableWords[Math.floor(Math.random() * availableWords.length)];
+                text += randomWord;
+                if (i < numWords - 1) text += ' ';
+            }
+            return text;
+        }
+
+        function appendMoreText() {
+            // Append more words to the current text for unlimited mode
+            const keysArray = getFilteredKeys();
+            if (keysArray.length === 0) return;
+
+            const numWords = 50; // Add 50 more words at a time
+            let newText = ' '; // Add space before new words
+
+            if (useRealWords) {
+                newText += generateRealWordsText(keysArray, numWords);
+            } else {
+                newText += generateGibberishText(keysArray, numWords);
+            }
+
+            currentText += newText;
+            renderText();
+        }
+
+        function generatePracticeText() {
+            if (selectedKeys.size === 0) return;
+
+            // Clear any existing timer
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+
+            const keysArray = getFilteredKeys();
+
+            if (keysArray.length === 0) {
+                alert('Please select some typeable keys (letters, numbers, symbols)');
+                return;
+            }
+
+            // Generate more words for timed/unlimited modes
+            const numWords = isUnlimitedMode ? 200 : (isTimedMode ? 100 : wordCount);
+
+            let text = '';
+            if (useRealWords) {
+                text = generateRealWordsText(keysArray, numWords);
+            } else {
+                text = generateGibberishText(keysArray, numWords);
+            }
+
+            currentText = text;
+            currentPosition = 0;
+            errorCount = 0;
+            totalTyped = 0;
+            startTime = null;
+
+            // Setup timer display
+            if (isTimedMode) {
+                timerDisplay.style.display = 'block';
+                timeRemaining.textContent = timeLimit + 's';
+                timerDisplay.classList.remove('warning', 'danger');
+            } else {
+                timerDisplay.style.display = 'none';
+            }
+
+            renderText();
+            updateStats();
+
+            typingInput.value = '';
+            typingInput.disabled = false;
+            typingInput.focus();
+        }
+
+        function renderText() {
+            let html = '';
+            for (let i = 0; i < currentText.length; i++) {
+                const char = currentText[i];
+                let className = '';
+
+                if (i < currentPosition) {
+                    className = 'correct';
+                } else if (i === currentPosition) {
+                    className = 'current';
+                }
+
+                html += `<span class="${className}">${char === ' ' ? '␣' : char}</span>`;
+            }
+            targetText.innerHTML = html;
+        }
+
+        function updateStats() {
+            const accuracy = totalTyped === 0 ? 100 : Math.round(((totalTyped - errorCount) / totalTyped) * 100);
+            accuracyEl.textContent = accuracy + '%';
+            progressEl.textContent = `${currentPosition}/${currentText.length}`;
+            errorsEl.textContent = errorCount;
+
+            // Update WPM
+            const wpm = calculateWPM();
+            wpmEl.textContent = wpm;
+
+            // Update time elapsed
+            if (startTime) {
+                const elapsed = Math.floor((Date.now() - startTime) / 1000);
+                timeElapsedEl.textContent = elapsed + 's';
+            } else {
+                timeElapsedEl.textContent = '0s';
+            }
+
+            // Update progress bar
+            const progressPercent = currentText.length > 0 ? (currentPosition / currentText.length) * 100 : 0;
+            progressBar.style.width = progressPercent + '%';
+        }
+
+        typingInput.addEventListener('input', (e) => {
+            const typedValue = e.target.value;
+            const typedChar = typedValue[typedValue.length - 1];
+
+            // Start timer on first keystroke
+            if (!startTime && typedValue.length === 1) {
+                startTime = Date.now();
+                if (isTimedMode) {
+                    startTimer();
+                }
+            }
+
+            if (typedValue.length > currentPosition) {
+                totalTyped++;
+
+                if (typedChar === currentText[currentPosition]) {
+                    currentPosition++;
+
+                    // In unlimited mode, append more text when getting close to the end
+                    if (isUnlimitedMode && currentPosition > currentText.length - 100) {
+                        appendMoreText();
+                    }
+
+                    if (currentPosition === currentText.length) {
+                        // Completed!
+                        if (timerInterval) {
+                            clearInterval(timerInterval);
+                            timerInterval = null;
+                        }
+
+                        if (isUnlimitedMode) {
+                            // Unlimited mode - just append more text
+                            appendMoreText();
+                        } else if (!isTimedMode) {
+                            // Word count mode - auto-generate new exercise
+                            setTimeout(() => {
+                                generatePracticeText();
+                            }, 500);
+                        } else {
+                            // Timed mode - show completion message
+                            typingInput.disabled = true;
+                            const finalWPM = calculateWPM();
+                            const finalAccuracy = totalTyped === 0 ? 100 : Math.round(((totalTyped - errorCount) / totalTyped) * 100);
+                            setTimeout(() => {
+                                alert(`Great job!\n\nWPM: ${finalWPM}\nAccuracy: ${finalAccuracy}%\nErrors: ${errorCount}\n\nClick "Generate New Exercise" for another round!`);
+                            }, 100);
+                        }
+                    }
+                } else {
+                    errorCount++;
+                    // Don't advance position on error, let them try again
+                    e.target.value = typedValue.slice(0, -1);
+                }
+
+                renderText();
+                updateStats();
+            }
+        });
+
+        generateBtn.addEventListener('click', generatePracticeText);
+        restartBtn.addEventListener('click', restartTest);
+
+        // Click on target text to focus input and start typing
+        targetText.addEventListener('click', () => {
+            if (!typingInput.disabled) {
+                typingInput.focus();
+            }
+        });
+
+        // Make the entire practice area focusable - click anywhere to start typing
+        document.addEventListener('click', (e) => {
+            // Only auto-focus if we have text and input is enabled
+            if (currentText && !typingInput.disabled && !e.target.closest('button') && !e.target.closest('input') && !e.target.closest('.key') && !e.target.closest('.finger-btn')) {
+                typingInput.focus();
+            }
+        });
+
+        // Update stats continuously for real-time WPM and time display
+        setInterval(() => {
+            if (startTime && !typingInput.disabled) {
+                updateStats();
+            }
+        }, 100);
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            // Shift+Enter - Restart test
+            if (e.shiftKey && e.key === 'Enter') {
+                e.preventDefault();
+                if (!restartBtn.disabled) {
+                    restartTest();
+                }
+            }
+
+            // Cmd+N (or Ctrl+N on Windows) - Generate new exercise
+            if ((e.metaKey || e.ctrlKey) && e.key === 'n') {
+                e.preventDefault();
+                if (!generateBtn.disabled) {
+                    generatePracticeText();
+                }
+            }
+
+            // Cmd+K (or Ctrl+K on Windows) - Focus input
+            if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+                e.preventDefault();
+                if (!typingInput.disabled) {
+                    typingInput.focus();
+                }
+            }
+        });
+
+        // Prevent backspace in typing input
+        typingInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Backspace') {
+                e.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>
