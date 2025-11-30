@@ -138,6 +138,13 @@
 
         .key.space {
             width: 350px;
+            opacity: 0.6;
+            cursor: default;
+        }
+
+        .key.space:hover {
+            transform: none;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .key.tab {
@@ -258,6 +265,12 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
             transform: translateY(-2px);
             filter: none;
+        }
+
+        .key.selected[data-finger]:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+            filter: brightness(1.1);
         }
 
         .finger-btn {
@@ -983,6 +996,53 @@
                         0 3px 8px rgba(0, 0, 0, 0.12);
         }
 
+        .dark-mode-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.95);
+            color: #2d3748;
+            border: none;
+            border-radius: 20px;
+            font-size: 0.8em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08),
+                        0 1px 3px rgba(0, 0, 0, 0.06);
+            letter-spacing: 0.3px;
+        }
+
+        .dark-mode-toggle:hover {
+            background: white;
+            color: #1a202c;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12),
+                        0 2px 6px rgba(0, 0, 0, 0.08);
+        }
+
+        .dark-mode-toggle:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        body.dark-mode .dark-mode-toggle {
+            background: #2d3748;
+            color: white;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3),
+                        0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        body.dark-mode .dark-mode-toggle:hover {
+            background: #1a202c;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35),
+                        0 3px 8px rgba(0, 0, 0, 0.12);
+        }
+
         .focus-hint {
             position: fixed;
             bottom: 20px;
@@ -1012,16 +1072,302 @@
             font-size: 0.9em;
             margin: 0 2px;
         }
+
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background: #1a1a1a;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode h1 {
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .subtitle {
+            color: #a0a0a0;
+        }
+
+        body.dark-mode .settings-panel {
+            background: #2a2a2a;
+            border-color: #3a3a3a;
+        }
+
+        body.dark-mode .finger-selector {
+            background: #2a2a2a;
+            border-color: #3a3a3a;
+        }
+
+        body.dark-mode .setting-label {
+            color: #b0b0b0;
+        }
+
+        body.dark-mode .mode-toggle label {
+            background: #3a3a3a;
+            color: #b0b0b0;
+            border-color: #4a4a4a;
+        }
+
+        body.dark-mode .mode-toggle label:hover {
+            background: #4a4a4a;
+            color: #e0e0e0;
+            border-color: #5a5a5a;
+        }
+
+        body.dark-mode .mode-toggle input:checked + label {
+            background: #e2b714;
+            color: white;
+            border-color: #e2b714;
+        }
+
+        body.dark-mode .mode-toggle input:checked + label:hover {
+            background: #f0c520;
+            border-color: #f0c520;
+        }
+
+        body.dark-mode .radio-option label {
+            background: #3a3a3a;
+            color: #b0b0b0;
+            border-color: #4a4a4a;
+        }
+
+        body.dark-mode .radio-option label:hover {
+            background: #4a4a4a;
+            color: #e0e0e0;
+            border-color: #5a5a5a;
+        }
+
+        body.dark-mode .radio-option input:checked + label {
+            background: #e2b714;
+            color: white;
+            border-color: #e2b714;
+        }
+
+        body.dark-mode .radio-option input:checked + label:hover {
+            background: #f0c520;
+            border-color: #f0c520;
+        }
+
+        body.dark-mode .toggle-slider {
+            background-color: #3a3a3a;
+        }
+
+        body.dark-mode input:checked + .toggle-slider {
+            background-color: #e2b714;
+        }
+
+        body.dark-mode .slider {
+            background: #3a3a3a;
+        }
+
+        body.dark-mode .slider::-webkit-slider-thumb {
+            background: #e2b714;
+        }
+
+        body.dark-mode .slider::-moz-range-thumb {
+            background: #e2b714;
+        }
+
+        body.dark-mode .slider-value {
+            color: #e0e0e0;
+            background: #3a3a3a;
+            border-color: #4a4a4a;
+        }
+
+        body.dark-mode .finger-btn {
+            background: #3a3a3a;
+            color: #b0b0b0;
+            border-color: #4a4a4a;
+        }
+
+        body.dark-mode .finger-btn:hover {
+            background: #4f4f4f;
+            border-color: #6a6a6a;
+            color: #e0e0e0;
+            transform: translateY(-1px);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        body.dark-mode .finger-btn.active {
+            color: white;
+        }
+
+        body.dark-mode .finger-btn.active:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        body.dark-mode .selected-keys {
+            background: #2a2a2a;
+            border-color: #3a3a3a;
+        }
+
+        body.dark-mode .selected-keys strong {
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .selected-keys-list {
+            color: #b0b0b0;
+        }
+
+        body.dark-mode .key-chip {
+            background: #3a3a3a;
+            color: #e0e0e0;
+            border-color: #4a4a4a;
+        }
+
+        body.dark-mode .keyboard {
+            background: #2a2a2a;
+            border-color: #3a3a3a;
+        }
+
+        body.dark-mode .key {
+            background: #3a3a3a;
+            color: #b0b0b0;
+            border-color: #4a4a4a;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark-mode .key:hover {
+            background: #4f4f4f;
+            color: #e0e0e0;
+            border-color: #6a6a6a;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            transform: translateY(-2px);
+        }
+
+        body.dark-mode .key.disabled {
+            background: #252525;
+            color: #505050;
+        }
+
+        body.dark-mode .key.disabled:hover {
+            transform: none;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark-mode .typing-area {
+            background: #2a2a2a;
+            border-color: #3a3a3a;
+        }
+
+        body.dark-mode .target-text {
+            color: #808080;
+        }
+
+        body.dark-mode .target-text .correct {
+            color: #60d060;
+        }
+
+        body.dark-mode .target-text .incorrect {
+            color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.2);
+        }
+
+        body.dark-mode .target-text .current {
+            color: #909090;
+            border-left-color: #e2b714;
+            animation: blink-cursor-dark 1.2s ease-in-out infinite;
+        }
+
+        @keyframes blink-cursor-dark {
+            0%, 49% { border-left-color: #e2b714; }
+            50%, 100% { border-left-color: transparent; }
+        }
+
+        body.dark-mode .typing-input {
+            background: #2a2a2a;
+            color: #e0e0e0;
+            border-color: #3a3a3a;
+        }
+
+        body.dark-mode .stats {
+            background: #2a2a2a;
+            border-color: #3a3a3a;
+        }
+
+        body.dark-mode .stats h3 {
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .stat-item {
+            color: #b0b0b0;
+        }
+
+        body.dark-mode .stat-value {
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .restart-btn {
+            background: #e2b714;
+            color: white;
+            border-color: #e2b714;
+        }
+
+        body.dark-mode .restart-btn:hover {
+            background: #c29a12;
+            border-color: #c29a12;
+        }
+
+        body.dark-mode .btn-generate,
+        body.dark-mode .btn-restart {
+            background: transparent;
+            color: #b0b0b0;
+            border-color: #4a4a4a;
+        }
+
+        body.dark-mode .btn-generate:hover,
+        body.dark-mode .btn-restart:hover {
+            background: #3a3a3a;
+            border-color: #6a6a6a;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .btn-generate:disabled,
+        body.dark-mode .btn-restart:disabled {
+            opacity: 0.3;
+            color: #505050;
+        }
+
+        body.dark-mode .instructions {
+            color: #a0a0a0;
+        }
+
+        body.dark-mode .shortcuts {
+            color: #a0a0a0;
+        }
+
+        body.dark-mode .shortcuts strong {
+            color: #c0c0c0;
+        }
+
+        body.dark-mode .shortcut-key {
+            background: #3a3a3a;
+            border-color: #5a5a5a;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .focus-hint {
+            background: rgba(255, 255, 255, 0.1);
+            color: #808080;
+        }
+
+        body.dark-mode .focus-hint kbd {
+            background: #3a3a3a;
+            border-color: #4a4a4a;
+            color: #e0e0e0;
+        }
     </style>
 </head>
 <body>
     <button class="focus-toggle" id="focusToggle">Focus Mode</button>
+    <button class="dark-mode-toggle" id="darkModeToggle">Dark Mode</button>
     <div class="focus-hint">Press <kbd>Esc</kbd> to exit focus mode</div>
 
     <div class="container">
         <h1>Better QWERTY</h1>
         <p class="subtitle">Improve your typing skills by practicing specific keys and fingers</p>
 
+        <!-- Mode Settings Panel -->
         <div class="settings-panel">
             <div class="settings-grid">
                 <!-- Mode -->
@@ -1033,12 +1379,12 @@
                         <input type="radio" id="modeTimed" name="mode" value="timed">
                         <label for="modeTimed">Timed</label>
                         <input type="radio" id="modeUnlimited" name="mode" value="unlimited" checked>
-                        <label for="modeUnlimited">Unlimited</label>
+                        <label for="modeUnlimited">Infinited</label>
                     </div>
                 </div>
 
                 <!-- Word Count -->
-                <div class="setting-item" id="wordCountSetting">
+                <div class="setting-item" id="wordCountSetting" style="display: none;">
                     <span class="setting-label">Words:</span>
                     <div class="slider-container">
                         <input type="range" min="5" max="50" value="15" class="slider" id="wordCountSlider">
@@ -1066,7 +1412,7 @@
                 </div>
 
                 <!-- Word Length -->
-                <div class="setting-item">
+                <div class="setting-item" id="wordLengthSetting" style="display: none;">
                     <span class="setting-label">Length:</span>
                     <div class="setting-control">
                         <div class="slider-container">
@@ -1080,7 +1426,12 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
 
+        <!-- Content Toggles Panel -->
+        <div class="settings-panel">
+            <div class="settings-grid">
                 <!-- Numbers Toggle -->
                 <div class="setting-item">
                     <span class="setting-label">Numbers:</span>
@@ -1296,13 +1647,23 @@
                 <strong>Keyboard Shortcuts:</strong>
                 <span class="shortcut-key">F</span> Focus Mode •
                 <span class="shortcut-key">Shift</span>+<span class="shortcut-key">Enter</span> Restart •
-                <span class="shortcut-key">Cmd</span>+<span class="shortcut-key">N</span> New •
-                <span class="shortcut-key">Cmd</span>+<span class="shortcut-key">K</span> Focus Input
+                <span class="shortcut-key" id="modKey1">Cmd</span>+<span class="shortcut-key">N</span> New •
+                <span class="shortcut-key" id="modKey2">Cmd</span>+<span class="shortcut-key">K</span> Focus Input
             </div>
         </div>
     </div>
 
     <script>
+        // Detect platform and update modifier key display
+        const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+        const modifierKeyName = isMac ? 'Cmd' : 'Alt';
+
+        // Update modifier key displays on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('modKey1').textContent = modifierKeyName;
+            document.getElementById('modKey2').textContent = modifierKeyName;
+        });
+
         const fingerMap = {
             'left-pinky': ['`', '1', 'q', 'a', 'z', 'tab', 'caps', 'shift'],
             'left-ring': ['2', 'w', 's', 'x'],
@@ -1432,6 +1793,7 @@
         const modeUnlimited = document.getElementById('modeUnlimited');
         const wordCountSetting = document.getElementById('wordCountSetting');
         const timeLimitSetting = document.getElementById('timeLimitSetting');
+        const wordLengthSetting = document.getElementById('wordLengthSetting');
         const wordCountSlider = document.getElementById('wordCountSlider');
         const wordCountValue = document.getElementById('wordCountValue');
         const minWordLengthSlider = document.getElementById('minWordLengthSlider');
@@ -1498,6 +1860,7 @@
                     btn.classList.add('active');
                     const numberKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
                     const specialChars = ['`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '=', '+', '[', ']', '{', '}', '\\', '|', ';', ':', "'", '"', ',', '<', '.', '>', '/', '?'];
+                    const capitalKeys = ['caps', 'shift', 'shift-right'];
 
                     fingerMap[finger].forEach(key => {
                         // Skip space - it's always available
@@ -1506,6 +1869,8 @@
                         if (!includeNumbers && numberKeys.includes(key)) return;
                         // Skip special chars if disabled
                         if (!includeSpecialChars && specialChars.includes(key)) return;
+                        // Skip caps/shift if capitals are disabled
+                        if (!useCapitals && capitalKeys.includes(key)) return;
 
                         selectedKeys.add(key);
                         const keyEl = document.querySelector(`.key[data-key="${key}"]`);
@@ -1523,6 +1888,7 @@
             isUnlimitedMode = false;
             wordCountSetting.style.display = 'flex';
             timeLimitSetting.style.display = 'none';
+            wordLengthSetting.style.display = 'flex';
             if (selectedKeys.size > 0) generatePracticeText();
         });
 
@@ -1531,6 +1897,7 @@
             isUnlimitedMode = false;
             wordCountSetting.style.display = 'none';
             timeLimitSetting.style.display = 'flex';
+            wordLengthSetting.style.display = 'flex';
             const selectedTime = document.querySelector('input[name="timeLimit"]:checked');
             timeLimit = parseInt(selectedTime.value);
             if (selectedKeys.size > 0) generatePracticeText();
@@ -1541,6 +1908,7 @@
             isUnlimitedMode = true;
             wordCountSetting.style.display = 'none';
             timeLimitSetting.style.display = 'none';
+            wordLengthSetting.style.display = 'none';
             if (selectedKeys.size > 0) generatePracticeText();
         });
 
@@ -2161,6 +2529,28 @@
 
         focusToggle.addEventListener('click', toggleFocusMode);
 
+        // Dark Mode
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        // Default to dark mode if not set in localStorage
+        let isDarkMode = localStorage.getItem('darkMode') !== null
+            ? localStorage.getItem('darkMode') === 'true'
+            : true;
+
+        function toggleDarkMode() {
+            isDarkMode = !isDarkMode;
+            document.body.classList.toggle('dark-mode', isDarkMode);
+            darkModeToggle.textContent = isDarkMode ? 'Light Mode' : 'Dark Mode';
+            localStorage.setItem('darkMode', isDarkMode);
+        }
+
+        // Initialize dark mode
+        if (isDarkMode) {
+            document.body.classList.add('dark-mode');
+            darkModeToggle.textContent = 'Light Mode';
+        }
+
+        darkModeToggle.addEventListener('click', toggleDarkMode);
+
         // Keyboard shortcuts
         document.addEventListener('keydown', (e) => {
             // Escape - Toggle focus mode
@@ -2185,16 +2575,16 @@
                 }
             }
 
-            // Cmd+N (or Ctrl+N on Windows) - Generate new exercise
-            if ((e.metaKey || e.ctrlKey) && e.key === 'n') {
+            // Cmd+N (Mac) or Alt+N (Windows) - Generate new exercise
+            if ((e.metaKey || e.altKey) && e.key === 'n') {
                 e.preventDefault();
                 if (!generateBtn.disabled) {
                     generatePracticeText();
                 }
             }
 
-            // Cmd+K (or Ctrl+K on Windows) - Focus input
-            if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+            // Cmd+K (Mac) or Alt+K (Windows) - Focus input
+            if ((e.metaKey || e.altKey) && e.key === 'k') {
                 e.preventDefault();
                 if (!typingInput.disabled) {
                     typingInput.focus();
@@ -2209,10 +2599,32 @@
             }
         });
 
+        // Initialize settings display based on defaults
+        function initializeSettingsDisplay() {
+            // Set up display based on default mode (Infinited)
+            if (isUnlimitedMode) {
+                wordCountSetting.style.display = 'none';
+                timeLimitSetting.style.display = 'none';
+                wordLengthSetting.style.display = 'none';
+            } else if (isTimedMode) {
+                wordCountSetting.style.display = 'none';
+                timeLimitSetting.style.display = 'flex';
+                wordLengthSetting.style.display = 'flex';
+            } else {
+                wordCountSetting.style.display = 'flex';
+                timeLimitSetting.style.display = 'none';
+                wordLengthSetting.style.display = 'flex';
+            }
+        }
+
         // Initialize: Auto-select all fingers on page load
         window.addEventListener('DOMContentLoaded', () => {
+            // Initialize settings display first
+            initializeSettingsDisplay();
+
             const numberKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
             const specialChars = ['`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '=', '+', '[', ']', '{', '}', '\\', '|', ';', ':', "'", '"', ',', '<', '.', '>', '/', '?'];
+            const capitalKeys = ['caps', 'shift', 'shift-right'];
 
             fingerBtns.forEach(btn => {
                 const finger = btn.dataset.finger;
@@ -2224,6 +2636,8 @@
                     if (!includeNumbers && numberKeys.includes(key)) return;
                     // Skip special chars if disabled
                     if (!includeSpecialChars && specialChars.includes(key)) return;
+                    // Skip caps/shift if capitals are disabled
+                    if (!useCapitals && capitalKeys.includes(key)) return;
 
                     selectedKeys.add(key);
                     const keyEl = document.querySelector(`.key[data-key="${key}"]`);
