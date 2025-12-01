@@ -416,6 +416,7 @@
             font-size: 2.8em;
             font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', 'Roboto Mono', 'Courier New', monospace;
             margin-bottom: 30px;
+            transition: font-size 0.3s ease;
             padding: 0;
             padding-left: 5px;
             padding-right: 10px;
@@ -451,6 +452,22 @@
 
         .target-text::-webkit-scrollbar-thumb:hover {
             background: rgba(0, 0, 0, 0.2);
+        }
+
+        .target-text.font-small {
+            font-size: 1.8em;
+        }
+
+        .target-text.font-medium {
+            font-size: 2.2em;
+        }
+
+        .target-text.font-large {
+            font-size: 2.6em;
+        }
+
+        .target-text.font-xlarge {
+            font-size: 3.0em;
         }
 
         .target-text span {
@@ -657,18 +674,18 @@
 
         .floating-save-btn {
             position: absolute;
-            bottom: 12px;
-            left: 50%;
-            transform: translateX(-50%) translateY(10px);
+            top: 12px;
+            right: 12px;
+            transform: translateY(-10px);
             display: flex;
             align-items: center;
-            gap: 8px;
-            padding: 12px 20px;
+            gap: 6px;
+            padding: 8px 14px;
             background: #e2b714;
             color: #2d3748;
             border: none;
-            border-radius: 28px;
-            font-size: 0.9em;
+            border-radius: 8px;
+            font-size: 0.8em;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -680,21 +697,21 @@
         .floating-save-btn.visible {
             opacity: 1;
             pointer-events: auto;
-            transform: translateX(-50%) translateY(0);
+            transform: translateY(0);
         }
 
         .floating-save-btn.visible:hover {
             background: #d1a513;
-            transform: translateX(-50%) translateY(-2px) scale(1.05);
+            transform: translateY(-2px) scale(1.05);
         }
 
         .floating-save-btn.visible:active {
-            transform: translateX(-50%) translateY(0) scale(1);
+            transform: translateY(0) scale(1);
         }
 
         .floating-save-btn svg {
-            width: 20px;
-            height: 20px;
+            width: 16px;
+            height: 16px;
             stroke: currentColor;
         }
 
@@ -1901,6 +1918,21 @@
                         <label for="wordBank450k">450K</label>
                     </div>
                 </div>
+
+                <!-- Font Size -->
+                <div class="setting-item">
+                    <span class="setting-label">Font Size:</span>
+                    <div class="mode-toggle">
+                        <input type="radio" id="fontSizeSmall" name="fontSize" value="small">
+                        <label for="fontSizeSmall">S</label>
+                        <input type="radio" id="fontSizeMedium" name="fontSize" value="medium" checked>
+                        <label for="fontSizeMedium">M</label>
+                        <input type="radio" id="fontSizeLarge" name="fontSize" value="large">
+                        <label for="fontSizeLarge">L</label>
+                        <input type="radio" id="fontSizeXLarge" name="fontSize" value="xlarge">
+                        <label for="fontSizeXLarge">XL</label>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -2254,6 +2286,7 @@
         let useCapitals = false;
         let includeSpecialChars = false;
         let errorMode = 'block'; // 'block', 'skip', 'backspace'
+        let fontSize = 'medium'; // 'small', 'medium', 'large', 'xlarge'
 
         const keys = document.querySelectorAll('.key');
         const fingerBtns = document.querySelectorAll('.finger-btn');
@@ -2495,6 +2528,18 @@
                 if (selectedKeys.size > 0 && currentText) {
                     generatePracticeText();
                 }
+            });
+        });
+
+        // Font size change
+        document.querySelectorAll('input[name="fontSize"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                fontSize = e.target.value;
+                showSaveButton();
+                // Remove all font size classes
+                targetText.classList.remove('font-small', 'font-medium', 'font-large', 'font-xlarge');
+                // Add the selected font size class
+                targetText.classList.add(`font-${fontSize}`);
             });
         });
 
@@ -3262,6 +3307,13 @@
             }
         });
 
+        // Close modal on Enter key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && customModal.classList.contains('show')) {
+                hideModal();
+            }
+        });
+
         // Save button visibility
         function showSaveButton() {
             saveSettingsBtn.classList.add('visible');
@@ -3282,7 +3334,8 @@
                 includeCapitals: useCapitals,
                 includeSpecialChars: includeSpecialChars,
                 errorMode: errorMode,
-                wordBankSize: wordBankSize
+                wordBankSize: wordBankSize,
+                fontSize: fontSize
             };
             localStorage.setItem('typingPracticeSettings', JSON.stringify(settings));
         }
@@ -3364,6 +3417,16 @@
                     const wordBankRadio = document.getElementById(`wordBank${settings.wordBankSize}`);
                     if (wordBankRadio) wordBankRadio.checked = true;
                 }
+
+                // Apply font size
+                if (settings.fontSize !== undefined) {
+                    fontSize = settings.fontSize;
+                    const fontSizeRadio = document.getElementById(`fontSize${settings.fontSize.charAt(0).toUpperCase() + settings.fontSize.slice(1)}`);
+                    if (fontSizeRadio) fontSizeRadio.checked = true;
+                    // Remove all font size classes and add the selected one
+                    targetText.classList.remove('font-small', 'font-medium', 'font-large', 'font-xlarge');
+                    targetText.classList.add(`font-${fontSize}`);
+                }
             } catch (error) {
                 console.error('Error loading settings:', error);
             }
@@ -3386,6 +3449,9 @@
 
         // Initialize: Auto-select all fingers on page load
         window.addEventListener('DOMContentLoaded', () => {
+            // Initialize default font size
+            targetText.classList.add('font-medium');
+
             // Load saved settings first
             loadSettings();
 
