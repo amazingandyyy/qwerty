@@ -1745,6 +1745,116 @@
             color: #d1d0c5;
         }
 
+        /* Streaks Section */
+        .streaks-section {
+            margin-bottom: 32px;
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+            border-radius: 16px;
+            padding: 24px;
+            border: 2px solid #e2b714;
+        }
+
+        body.dark-mode .streaks-section {
+            background: linear-gradient(135deg, #2a2415 0%, #3a3020 100%);
+            border-color: #d1a513;
+        }
+
+        .streaks-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .streaks-header h3 {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0 0 8px 0;
+            color: #92400e;
+        }
+
+        body.dark-mode .streaks-header h3 {
+            color: #d1a513;
+        }
+
+        .streaks-subtitle {
+            margin: 0;
+            font-size: 14px;
+            color: #78350f;
+            opacity: 0.8;
+        }
+
+        body.dark-mode .streaks-subtitle {
+            color: #d1a513;
+        }
+
+        .streaks-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .streak-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(226, 183, 20, 0.15);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .streak-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(226, 183, 20, 0.25);
+        }
+
+        body.dark-mode .streak-card {
+            background: #1e2023;
+            box-shadow: 0 2px 8px rgba(209, 165, 19, 0.2);
+        }
+
+        body.dark-mode .streak-card:hover {
+            box-shadow: 0 4px 12px rgba(209, 165, 19, 0.3);
+        }
+
+        .streak-icon {
+            font-size: 48px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .streak-value {
+            font-size: 36px;
+            font-weight: 700;
+            color: #d97706;
+            margin-bottom: 4px;
+        }
+
+        body.dark-mode .streak-value {
+            color: #e2b714;
+        }
+
+        .streak-label {
+            font-size: 14px;
+            color: #78350f;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        body.dark-mode .streak-label {
+            color: #92400e;
+        }
+
+        .streak-message {
+            margin-top: 12px;
+            font-size: 13px;
+            color: #92400e;
+            font-style: italic;
+        }
+
+        body.dark-mode .streak-message {
+            color: #a16207;
+        }
+
         .error-keys-list {
             display: flex;
             flex-direction: column;
@@ -2699,6 +2809,17 @@
                 <!-- Stats cards will be dynamically inserted here -->
             </div>
 
+            <!-- Streaks Section -->
+            <div class="streaks-section" id="streaksSection">
+                <div class="streaks-header">
+                    <h3>🔥 Daily Streaks</h3>
+                    <p class="streaks-subtitle">Keep your momentum going!</p>
+                </div>
+                <div class="streaks-container" id="streaksContainer">
+                    <!-- Streaks will be dynamically inserted here -->
+                </div>
+            </div>
+
             <!-- Insights Section -->
             <div class="stats-section" id="insightsSection">
                 <h3>Insights & Recommendations</h3>
@@ -2885,7 +3006,9 @@
             keyErrorCounts: {}, // { 'a': 5, 'b': 3, ... }
             sessionHistory: [], // Array of session objects
             bestWPM: 0,
-            bestAccuracy: 0
+            bestAccuracy: 0,
+            practiceDates: [], // Array of date strings (YYYY-MM-DD) when user practiced
+            longestStreak: 0 // Longest consecutive days streak
         };
         let sessionKeyErrors = {}; // Track errors for current session
 
@@ -4228,6 +4351,83 @@
             localStorage.setItem('typingStats', JSON.stringify(typingStats));
         }
 
+        function getTodayDateString() {
+            const today = new Date();
+            return today.toISOString().split('T')[0]; // Format: YYYY-MM-DD
+        }
+
+        function calculateCurrentStreak() {
+            if (!typingStats.practiceDates || typingStats.practiceDates.length === 0) {
+                return 0;
+            }
+
+            // Sort dates in descending order (newest first)
+            const sortedDates = [...new Set(typingStats.practiceDates)].sort((a, b) =>
+                new Date(b) - new Date(a)
+            );
+
+            const today = getTodayDateString();
+            const yesterday = new Date();
+            yesterday.setDate(yesterday.getDate() - 1);
+            const yesterdayStr = yesterday.toISOString().split('T')[0];
+
+            // Check if user practiced today or yesterday
+            const mostRecentDate = sortedDates[0];
+            if (mostRecentDate !== today && mostRecentDate !== yesterdayStr) {
+                return 0; // Streak broken
+            }
+
+            // Count consecutive days
+            let streak = 0;
+            let currentDate = new Date(mostRecentDate);
+
+            for (const dateStr of sortedDates) {
+                const expectedDateStr = currentDate.toISOString().split('T')[0];
+                if (dateStr === expectedDateStr) {
+                    streak++;
+                    currentDate.setDate(currentDate.getDate() - 1);
+                } else {
+                    break;
+                }
+            }
+
+            return streak;
+        }
+
+        function calculateLongestStreak() {
+            if (!typingStats.practiceDates || typingStats.practiceDates.length === 0) {
+                return 0;
+            }
+
+            // Get unique dates and sort ascending
+            const sortedDates = [...new Set(typingStats.practiceDates)].sort((a, b) =>
+                new Date(a) - new Date(b)
+            );
+
+            let longestStreak = 1;
+            let currentStreak = 1;
+
+            for (let i = 1; i < sortedDates.length; i++) {
+                const prevDate = new Date(sortedDates[i - 1]);
+                const currDate = new Date(sortedDates[i]);
+
+                // Calculate day difference
+                const diffTime = currDate - prevDate;
+                const diffDays = diffTime / (1000 * 60 * 60 * 24);
+
+                if (diffDays === 1) {
+                    // Consecutive day
+                    currentStreak++;
+                    longestStreak = Math.max(longestStreak, currentStreak);
+                } else {
+                    // Streak broken
+                    currentStreak = 1;
+                }
+            }
+
+            return longestStreak;
+        }
+
         function saveSessionStats(wpm, accuracy) {
             if (!startTime) return; // No session to save
 
@@ -4270,6 +4470,21 @@
                 typingStats.sessionHistory = typingStats.sessionHistory.slice(-100);
             }
 
+            // Track practice date for streaks
+            const today = getTodayDateString();
+            if (!typingStats.practiceDates) {
+                typingStats.practiceDates = [];
+            }
+            if (!typingStats.practiceDates.includes(today)) {
+                typingStats.practiceDates.push(today);
+            }
+
+            // Update longest streak
+            const newLongest = calculateLongestStreak();
+            if (newLongest > typingStats.longestStreak) {
+                typingStats.longestStreak = newLongest;
+            }
+
             // Reset session tracking
             sessionKeyErrors = {};
 
@@ -4291,6 +4506,7 @@
                 : 0;
             const totalHours = Math.floor(typingStats.totalTimeSeconds / 3600);
             const totalMinutes = Math.floor((typingStats.totalTimeSeconds % 3600) / 60);
+            const currentStreak = calculateCurrentStreak();
 
             // Display main stats
             statsGrid.innerHTML = `
@@ -4324,7 +4540,38 @@
                 </div>
                 <div class="stat-card">
                     <div class="stat-value">${totalHours}h ${totalMinutes}m</div>
-                    <div class="stat-label">Practice Time</div>
+                    <div class="stat-label">Time Spent</div>
+                </div>
+            `;
+
+            // Display streaks
+            const streaksContainer = document.getElementById('streaksContainer');
+            let streakMessage = '';
+
+            if (currentStreak === 0) {
+                streakMessage = 'Start your streak today!';
+            } else if (currentStreak === 1) {
+                streakMessage = 'Great start! Come back tomorrow!';
+            } else if (currentStreak < 7) {
+                streakMessage = 'Keep going strong!';
+            } else if (currentStreak < 30) {
+                streakMessage = 'You\'re on fire!';
+            } else {
+                streakMessage = 'Legendary dedication!';
+            }
+
+            streaksContainer.innerHTML = `
+                <div class="streak-card">
+                    <span class="streak-icon">🔥</span>
+                    <div class="streak-value">${currentStreak}</div>
+                    <div class="streak-label">Current Streak</div>
+                    <div class="streak-message">${streakMessage}</div>
+                </div>
+                <div class="streak-card">
+                    <span class="streak-icon">🏆</span>
+                    <div class="streak-value">${typingStats.longestStreak}</div>
+                    <div class="streak-label">Longest Streak</div>
+                    <div class="streak-message">${currentStreak === typingStats.longestStreak && currentStreak > 0 ? 'New record!' : 'Your best!'}</div>
                 </div>
             `;
 
@@ -4425,6 +4672,35 @@
                 insights.push(`💪 Your best speed is ${typingStats.bestWPM} WPM. You're above average! Push to 80+ for expert level.`);
             }
 
+            // Streak insights
+            const currentStreak = calculateCurrentStreak();
+            const today = getTodayDateString();
+            const practicedToday = typingStats.practiceDates && typingStats.practiceDates.includes(today);
+
+            if (currentStreak >= 30) {
+                insights.push(`🔥 Incredible! ${currentStreak}-day streak! You're a dedicated typing master!`);
+            } else if (currentStreak >= 14) {
+                insights.push(`🔥 Amazing! ${currentStreak}-day streak! Two weeks of consistent practice!`);
+            } else if (currentStreak >= 7) {
+                insights.push(`🔥 Great streak! ${currentStreak} days in a row! Keep the momentum going!`);
+            } else if (currentStreak >= 3) {
+                insights.push(`🔥 Nice! ${currentStreak}-day streak. You're building a habit!`);
+            } else if (currentStreak === 0 && !practicedToday) {
+                insights.push(`💡 Your streak ended. Start a new one today by practicing!`);
+            }
+
+            // Longest streak achievement
+            if (typingStats.longestStreak >= 30) {
+                insights.push(`👑 Your longest streak is ${typingStats.longestStreak} days! That's legendary consistency!`);
+            } else if (typingStats.longestStreak >= 14) {
+                insights.push(`🏅 Your longest streak is ${typingStats.longestStreak} days! Can you beat it?`);
+            }
+
+            // Streak motivation
+            if (currentStreak > 0 && currentStreak === typingStats.longestStreak) {
+                insights.push(`⭐ You're on your longest streak ever! Keep going!`);
+            }
+
             return insights;
         }
 
@@ -4438,7 +4714,9 @@
                     keyErrorCounts: {},
                     sessionHistory: [],
                     bestWPM: 0,
-                    bestAccuracy: 0
+                    bestAccuracy: 0,
+                    practiceDates: [],
+                    longestStreak: 0
                 };
                 sessionKeyErrors = {};
                 saveStats();
