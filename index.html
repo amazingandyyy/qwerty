@@ -3361,6 +3361,13 @@
         function restartTest() {
             if (!currentText) return;
 
+            // Save stats for the current session before restarting (especially important for infinite mode)
+            if (startTime && currentPosition > 0) {
+                const finalWPM = calculateWPM();
+                const finalAccuracy = totalTyped === 0 ? 100 : Math.round(((totalTyped - errorCount) / totalTyped) * 100);
+                saveSessionStats(finalWPM, finalAccuracy);
+            }
+
             currentPosition = 0;
             errorCount = 0;
             totalTyped = 0;
@@ -3641,6 +3648,13 @@
 
         function generatePracticeText() {
             if (selectedKeys.size === 0) return;
+
+            // Save stats for the current session before generating new exercise
+            if (startTime && currentPosition > 0) {
+                const finalWPM = calculateWPM();
+                const finalAccuracy = totalTyped === 0 ? 100 : Math.round(((totalTyped - errorCount) / totalTyped) * 100);
+                saveSessionStats(finalWPM, finalAccuracy);
+            }
 
             // Clear any existing timer
             if (timerInterval) {
