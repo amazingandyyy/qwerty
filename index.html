@@ -238,8 +238,8 @@
         }
 
         .key.selected[data-finger="right-index"] {
-            background: #f59e0b;
-            border-color: #d97706;
+            background: #e2b714;
+            border-color: #d1a513;
         }
 
         .key.selected[data-finger="right-middle"] {
@@ -336,7 +336,7 @@
         }
 
         .finger-btn[data-finger="right-index"] .finger-visual {
-            background: #f59e0b;
+            background: #e2b714;
         }
 
         .finger-btn[data-finger="right-middle"] .finger-visual {
@@ -672,53 +672,6 @@
             position: relative;
         }
 
-        .floating-save-btn {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            transform: translateY(-10px);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 8px 14px;
-            background: #e2b714;
-            color: #2d3748;
-            border: none;
-            border-radius: 8px;
-            font-size: 0.8em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 100;
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .floating-save-btn.visible {
-            opacity: 1;
-            pointer-events: auto;
-            transform: translateY(0);
-        }
-
-        .floating-save-btn.visible:hover {
-            background: #d1a513;
-            transform: translateY(-2px) scale(1.05);
-        }
-
-        .floating-save-btn.visible:active {
-            transform: translateY(0) scale(1);
-        }
-
-        .floating-save-btn svg {
-            width: 16px;
-            height: 16px;
-            stroke: currentColor;
-        }
-
-        .floating-save-btn span {
-            font-size: 0.95em;
-        }
-
         .instructions {
             text-align: left;
             color: #cbd5e0;
@@ -821,9 +774,15 @@
         }
 
         .mode-toggle input[type="radio"]:checked + label {
-            background: #2d3748;
-            color: white;
-            border-color: #2d3748;
+            background: #fefce8;
+            color: #92400e;
+            border-color: #e2b714;
+        }
+
+        .mode-toggle input[type="radio"]:checked + label:hover {
+            background: #fef9c3;
+            color: #78350f;
+            border-color: #d1a513;
         }
 
         /* Compact Slider */
@@ -898,9 +857,15 @@
         }
 
         .radio-option input[type="radio"]:checked + label {
-            background: #2d3748;
-            color: white;
-            border-color: #2d3748;
+            background: #fefce8;
+            color: #92400e;
+            border-color: #e2b714;
+        }
+
+        .radio-option input[type="radio"]:checked + label:hover {
+            background: #fef9c3;
+            color: #78350f;
+            border-color: #d1a513;
         }
 
         /* Compact Toggle Switch */
@@ -913,8 +878,8 @@
         .toggle-switch {
             position: relative;
             display: inline-block;
-            width: 44px;
-            height: 24px;
+            width: 42px;
+            height: 22px;
             flex-shrink: 0;
         }
 
@@ -934,14 +899,14 @@
             background-color: #e0e0e0;
             border: none;
             transition: background 0.3s;
-            border-radius: 12px;
+            border-radius: 11px;
         }
 
         .toggle-slider:before {
             position: absolute;
             content: "";
-            height: 18px;
-            width: 18px;
+            height: 16px;
+            width: 16px;
             left: 3px;
             bottom: 3px;
             background-color: white;
@@ -1217,6 +1182,58 @@
             flex-shrink: 0;
         }
 
+        /* Settings header */
+        .settings-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .settings-header h3 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .save-btn-dropdown {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: #e2b714;
+            color: #78350f;
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .save-btn-dropdown.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .save-btn-dropdown:hover {
+            background: #d1a513;
+            color: #451a03;
+            transform: translateY(-1px);
+        }
+
+        .save-btn-dropdown:active {
+            transform: translateY(0);
+        }
+
+        .save-btn-dropdown svg {
+            flex-shrink: 0;
+        }
+
         /* Settings sections and items */
         .settings-section {
             margin-bottom: 8px;
@@ -1257,9 +1274,10 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: #ccc;
-            transition: 0.3s;
-            border-radius: 22px;
+            background-color: #e0e0e0;
+            border: none;
+            transition: background 0.3s;
+            border-radius: 11px;
         }
 
         .toggle-slider-small::before {
@@ -1269,13 +1287,13 @@
             width: 16px;
             left: 3px;
             bottom: 3px;
-            background: white;
-            transition: 0.3s;
+            background-color: white;
+            transition: transform 0.3s;
             border-radius: 50%;
         }
 
         .toggle-switch-small input:checked + .toggle-slider-small {
-            background: #3b82f6;
+            background: #e2b714;
         }
 
         .toggle-switch-small input:checked + .toggle-slider-small::before {
@@ -1359,6 +1377,24 @@
             background: #3a2626;
         }
 
+        body.dark-mode .settings-header {
+            border-bottom-color: #464749;
+        }
+
+        body.dark-mode .settings-header h3 {
+            color: #d1d0c5;
+        }
+
+        body.dark-mode .save-btn-dropdown {
+            background: #e2b714;
+            color: #78350f;
+        }
+
+        body.dark-mode .save-btn-dropdown:hover {
+            background: #d1a513;
+            color: #451a03;
+        }
+
         body.dark-mode .setting-label-dropdown {
             color: #d1d0c5;
         }
@@ -1368,7 +1404,7 @@
         }
 
         body.dark-mode .toggle-switch-small input:checked + .toggle-slider-small {
-            background: #3b82f6;
+            background: #e2b714;
         }
 
         body.dark-mode .settings-slider {
@@ -1574,14 +1610,15 @@
         }
 
         body.dark-mode .mode-toggle input:checked + label {
-            background: #e2b714;
-            color: white;
+            background: #2c2e31;
+            color: #fbbf24;
             border-color: #e2b714;
         }
 
         body.dark-mode .mode-toggle input:checked + label:hover {
-            background: #f0c520;
-            border-color: #f0c520;
+            background: #3a3c3f;
+            color: #fcd34d;
+            border-color: #e2b714;
         }
 
         body.dark-mode .radio-option label {
@@ -1816,18 +1853,6 @@
             color: #3a3a3d;
         }
 
-        body.dark-mode .floating-save-btn {
-            background: #e2b714;
-            color: #323437;
-        }
-
-        body.dark-mode .floating-save-btn.visible:hover {
-            background: #d1a513;
-        }
-
-        body.dark-mode .floating-save-btn.visible:active {
-        }
-
         body.dark-mode .instructions {
             color: #646669;
         }
@@ -1897,7 +1922,17 @@
             </svg>
         </button>
         <div class="settings-menu" id="settingsMenu">
-            <h3 style="margin: 0 0 15px 0; font-size: 16px; font-weight: 600;">Settings</h3>
+            <div class="settings-header">
+                <h3>Settings</h3>
+                <button class="save-btn-dropdown" id="saveSettingsBtn" title="Save Settings">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+                    </svg>
+                    Save
+                </button>
+            </div>
 
             <!-- App Settings -->
             <div class="settings-section">
@@ -2066,16 +2101,6 @@
     <div class="container">
         <h1>Better QWERTY</h1>
         <p class="subtitle">Improve your typing skills by practicing specific keys and fingers</p>
-
-        <!-- Floating Save Button -->
-        <button class="floating-save-btn" id="saveSettingsBtn" title="Save Settings">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
-                <polyline points="17 21 17 13 7 13 7 21"></polyline>
-                <polyline points="7 3 7 8 15 8"></polyline>
-            </svg>
-            <span>Save</span>
-        </button>
 
         <div class="finger-selector">
             <div class="finger-buttons">
