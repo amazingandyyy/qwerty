@@ -710,6 +710,9 @@
             transition: all 0.15s ease;
             font-weight: 500;
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .btn-restart {
@@ -1570,6 +1573,255 @@
             position: relative;
         }
 
+        /* Stats Button */
+        .stats-btn {
+            padding: 10px;
+            background: white;
+            color: #2d3748;
+            border: none;
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: fixed;
+            top: 20px;
+            right: 80px;
+            z-index: 1000;
+        }
+
+        .stats-btn:hover {
+            background: #f5f5f5;
+            transform: translateY(-1px) scale(1.05);
+        }
+
+        .stats-btn:active {
+            transform: translateY(0) scale(1);
+        }
+
+        body.dark-mode .stats-btn {
+            background: #2c2e31;
+            color: #d1d0c5;
+        }
+
+        body.dark-mode .stats-btn:hover {
+            background: #3a3c3f;
+        }
+
+        /* Stats Modal */
+        .stats-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+
+        .stats-modal.show {
+            display: flex;
+        }
+
+        .stats-content {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            max-width: 700px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark-mode .stats-content {
+            background: #2c2e31;
+            color: #d1d0c5;
+        }
+
+        .stats-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid #e8e8e8;
+        }
+
+        body.dark-mode .stats-header {
+            border-bottom-color: #3a3c3f;
+        }
+
+        .stats-header h2 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .stats-close {
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #999;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .stats-close:hover {
+            background: #f5f5f5;
+            color: #666;
+        }
+
+        body.dark-mode .stats-close:hover {
+            background: #3a3c3f;
+            color: #d1d0c5;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            background: #f8f8f8;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        body.dark-mode .stat-card {
+            background: #1e2023;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+
+        body.dark-mode .stat-value {
+            color: #d1d0c5;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: #666;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        body.dark-mode .stat-label {
+            color: #888;
+        }
+
+        .stats-section {
+            margin-bottom: 32px;
+        }
+
+        .stats-section h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #2d3748;
+        }
+
+        body.dark-mode .stats-section h3 {
+            color: #d1d0c5;
+        }
+
+        .error-keys-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .error-key-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            background: #f8f8f8;
+            border-radius: 8px;
+        }
+
+        body.dark-mode .error-key-item {
+            background: #1e2023;
+        }
+
+        .error-key-name {
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-weight: 600;
+            font-size: 18px;
+            color: #e2b714;
+        }
+
+        .error-key-count {
+            font-size: 16px;
+            font-weight: 600;
+            color: #666;
+        }
+
+        body.dark-mode .error-key-count {
+            color: #888;
+        }
+
+        .insight-card {
+            background: #fffbeb;
+            border-left: 4px solid #e2b714;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+
+        body.dark-mode .insight-card {
+            background: #2a2415;
+            border-left-color: #e2b714;
+        }
+
+        .insight-card p {
+            margin: 0;
+            color: #78350f;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        body.dark-mode .insight-card p {
+            color: #d1a513;
+        }
+
+        .reset-stats-btn {
+            width: 100%;
+            padding: 12px;
+            background: #ef4444;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 16px;
+        }
+
+        .reset-stats-btn:hover {
+            background: #dc2626;
+        }
+
         /* Custom Modal */
         .custom-modal {
             position: fixed;
@@ -2037,6 +2289,15 @@
     </style>
 </head>
 <body>
+    <!-- Stats Button -->
+    <button class="stats-btn" id="statsBtn" title="View Statistics">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="20" x2="18" y2="10"></line>
+            <line x1="12" y1="20" x2="12" y2="4"></line>
+            <line x1="6" y1="20" x2="6" y2="14"></line>
+        </svg>
+    </button>
+
     <!-- Settings Dropdown -->
     <div class="settings-dropdown">
         <button class="settings-btn" id="settingsBtn">
@@ -2357,8 +2618,14 @@
             <div class="practice-header">
                 <h2>Typing Practice</h2>
                 <div class="button-group">
-                    <button class="btn-restart" id="restartBtn" disabled>Restart Test</button>
-                    <button class="btn-generate" id="generateBtn" disabled>Generate New Exercise</button>
+                    <button class="btn-restart" id="restartBtn" disabled>Restart</button>
+                    <button class="btn-generate" id="generateBtn" disabled>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;">
+                            <polyline points="23 4 23 10 17 10"></polyline>
+                            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                        </svg>
+                        New Exercise
+                    </button>
                 </div>
             </div>
 
@@ -2416,6 +2683,40 @@
                 <span class="shortcut-key" id="modKey1">Cmd</span>+<span class="shortcut-key">N</span> New •
                 <span class="shortcut-key" id="modKey2">Cmd</span>+<span class="shortcut-key">K</span> Focus Input
             </div>
+        </div>
+    </div>
+
+    <!-- Stats Modal -->
+    <div class="stats-modal" id="statsModal">
+        <div class="stats-content">
+            <div class="stats-header">
+                <h2>Typing Statistics</h2>
+                <button class="stats-close" id="statsClose">&times;</button>
+            </div>
+
+            <!-- Main Stats Grid -->
+            <div class="stats-grid" id="statsGrid">
+                <!-- Stats cards will be dynamically inserted here -->
+            </div>
+
+            <!-- Insights Section -->
+            <div class="stats-section" id="insightsSection">
+                <h3>Insights & Recommendations</h3>
+                <div id="insightsContainer">
+                    <!-- Insights will be dynamically inserted here -->
+                </div>
+            </div>
+
+            <!-- Most Frequent Errors -->
+            <div class="stats-section" id="errorsSection">
+                <h3>Most Frequent Error Keys</h3>
+                <div class="error-keys-list" id="errorKeysList">
+                    <!-- Error keys will be dynamically inserted here -->
+                </div>
+            </div>
+
+            <!-- Reset Button -->
+            <button class="reset-stats-btn" id="resetStatsBtn">Reset All Statistics</button>
         </div>
     </div>
 
@@ -2574,6 +2875,19 @@
         let includeSpaces = true;
         let errorMode = 'block'; // 'block', 'skip', 'backspace'
         let fontSize = 'medium'; // 'small', 'medium', 'large', 'xlarge'
+
+        // Stats tracking
+        let typingStats = {
+            totalSessions: 0,
+            totalCharactersTyped: 0,
+            totalErrors: 0,
+            totalTimeSeconds: 0,
+            keyErrorCounts: {}, // { 'a': 5, 'b': 3, ... }
+            sessionHistory: [], // Array of session objects
+            bestWPM: 0,
+            bestAccuracy: 0
+        };
+        let sessionKeyErrors = {}; // Track errors for current session
 
         const keys = document.querySelectorAll('.key');
         const fingerBtns = document.querySelectorAll('.finger-btn');
@@ -2979,8 +3293,11 @@
             const finalWPM = calculateWPM();
             const finalAccuracy = totalTyped === 0 ? 100 : Math.round(((totalTyped - errorCount) / totalTyped) * 100);
 
+            // Save session stats
+            saveSessionStats(finalWPM, finalAccuracy);
+
             setTimeout(() => {
-                showModal(`Time's up!\n\nWPM: ${finalWPM}\nAccuracy: ${finalAccuracy}%\nErrors: ${errorCount}\n\nClick "Generate New Exercise" to try again!`);
+                showModal(`Time's up!\n\nWPM: ${finalWPM}\nAccuracy: ${finalAccuracy}%\nErrors: ${errorCount}\n\nClick "New Exercise" to try again!`);
             }, 100);
         }
 
@@ -3395,7 +3712,11 @@
                             // Unlimited mode - just append more text
                             appendMoreText();
                         } else if (!isTimedMode) {
-                            // Word count mode - auto-generate new exercise
+                            // Word count mode - save stats and auto-generate new exercise
+                            const finalWPM = calculateWPM();
+                            const finalAccuracy = totalTyped === 0 ? 100 : Math.round(((totalTyped - errorCount) / totalTyped) * 100);
+                            saveSessionStats(finalWPM, finalAccuracy);
+
                             setTimeout(() => {
                                 generatePracticeText();
                             }, 500);
@@ -3404,13 +3725,24 @@
                             typingInput.disabled = true;
                             const finalWPM = calculateWPM();
                             const finalAccuracy = totalTyped === 0 ? 100 : Math.round(((totalTyped - errorCount) / totalTyped) * 100);
+
+                            // Save session stats
+                            saveSessionStats(finalWPM, finalAccuracy);
+
                             setTimeout(() => {
-                                showModal(`Great job!\n\nWPM: ${finalWPM}\nAccuracy: ${finalAccuracy}%\nErrors: ${errorCount}\n\nClick "Generate New Exercise" for another round!`);
+                                showModal(`Great job!\n\nWPM: ${finalWPM}\nAccuracy: ${finalAccuracy}%\nErrors: ${errorCount}\n\nClick "New Exercise" for another round!`);
                             }, 100);
                         }
                     }
                 } else {
                     errorCount++;
+
+                    // Track which key had the error
+                    const expectedKey = currentText[currentPosition].toLowerCase();
+                    if (!sessionKeyErrors[expectedKey]) {
+                        sessionKeyErrors[expectedKey] = 0;
+                    }
+                    sessionKeyErrors[expectedKey]++;
 
                     // Handle different error modes
                     if (errorMode === 'block') {
@@ -3486,6 +3818,31 @@
             if (!settingsMenu.contains(e.target) && !settingsBtn.contains(e.target)) {
                 settingsMenu.classList.remove('show');
             }
+        });
+
+        // Stats Modal
+        const statsModal = document.getElementById('statsModal');
+        const statsBtn = document.getElementById('statsBtn');
+        const statsClose = document.getElementById('statsClose');
+        const resetStatsBtn = document.getElementById('resetStatsBtn');
+
+        statsBtn.addEventListener('click', () => {
+            displayStats();
+            statsModal.classList.add('show');
+        });
+
+        statsClose.addEventListener('click', () => {
+            statsModal.classList.remove('show');
+        });
+
+        statsModal.addEventListener('click', (e) => {
+            if (e.target === statsModal) {
+                statsModal.classList.remove('show');
+            }
+        });
+
+        resetStatsBtn.addEventListener('click', () => {
+            resetStats();
         });
 
         // Focus Mode
@@ -3855,6 +4212,240 @@
             }
         }
 
+        // Stats Functions
+        function loadStats() {
+            const saved = localStorage.getItem('typingStats');
+            if (saved) {
+                try {
+                    typingStats = JSON.parse(saved);
+                } catch (error) {
+                    console.error('Error loading stats:', error);
+                }
+            }
+        }
+
+        function saveStats() {
+            localStorage.setItem('typingStats', JSON.stringify(typingStats));
+        }
+
+        function saveSessionStats(wpm, accuracy) {
+            if (!startTime) return; // No session to save
+
+            const timeElapsed = (Date.now() - startTime) / 1000; // seconds
+
+            // Update totals
+            typingStats.totalSessions++;
+            typingStats.totalCharactersTyped += currentPosition;
+            typingStats.totalErrors += errorCount;
+            typingStats.totalTimeSeconds += timeElapsed;
+
+            // Update bests
+            if (wpm > typingStats.bestWPM) {
+                typingStats.bestWPM = wpm;
+            }
+            if (accuracy > typingStats.bestAccuracy) {
+                typingStats.bestAccuracy = accuracy;
+            }
+
+            // Merge session key errors into global key error counts
+            for (const [key, count] of Object.entries(sessionKeyErrors)) {
+                if (!typingStats.keyErrorCounts[key]) {
+                    typingStats.keyErrorCounts[key] = 0;
+                }
+                typingStats.keyErrorCounts[key] += count;
+            }
+
+            // Add to session history (keep last 100 sessions)
+            typingStats.sessionHistory.push({
+                date: new Date().toISOString(),
+                wpm: wpm,
+                accuracy: accuracy,
+                characters: currentPosition,
+                errors: errorCount,
+                timeSeconds: timeElapsed
+            });
+
+            // Keep only last 100 sessions
+            if (typingStats.sessionHistory.length > 100) {
+                typingStats.sessionHistory = typingStats.sessionHistory.slice(-100);
+            }
+
+            // Reset session tracking
+            sessionKeyErrors = {};
+
+            // Save to localStorage
+            saveStats();
+        }
+
+        function displayStats() {
+            const statsGrid = document.getElementById('statsGrid');
+            const insightsContainer = document.getElementById('insightsContainer');
+            const errorKeysList = document.getElementById('errorKeysList');
+
+            // Calculate average stats
+            const avgWPM = typingStats.sessionHistory.length > 0
+                ? Math.round(typingStats.sessionHistory.reduce((sum, s) => sum + s.wpm, 0) / typingStats.sessionHistory.length)
+                : 0;
+            const avgAccuracy = typingStats.sessionHistory.length > 0
+                ? Math.round(typingStats.sessionHistory.reduce((sum, s) => sum + s.accuracy, 0) / typingStats.sessionHistory.length)
+                : 0;
+            const totalHours = Math.floor(typingStats.totalTimeSeconds / 3600);
+            const totalMinutes = Math.floor((typingStats.totalTimeSeconds % 3600) / 60);
+
+            // Display main stats
+            statsGrid.innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-value">${typingStats.totalSessions}</div>
+                    <div class="stat-label">Total Sessions</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${typingStats.bestWPM}</div>
+                    <div class="stat-label">Best WPM</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${typingStats.bestAccuracy}%</div>
+                    <div class="stat-label">Best Accuracy</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${avgWPM}</div>
+                    <div class="stat-label">Avg WPM</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${avgAccuracy}%</div>
+                    <div class="stat-label">Avg Accuracy</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${typingStats.totalCharactersTyped.toLocaleString()}</div>
+                    <div class="stat-label">Chars Typed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${typingStats.totalErrors.toLocaleString()}</div>
+                    <div class="stat-label">Total Errors</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${totalHours}h ${totalMinutes}m</div>
+                    <div class="stat-label">Practice Time</div>
+                </div>
+            `;
+
+            // Generate insights
+            const insights = generateInsights();
+            if (insights.length > 0) {
+                insightsContainer.innerHTML = insights.map(insight =>
+                    `<div class="insight-card"><p>${insight}</p></div>`
+                ).join('');
+                document.getElementById('insightsSection').style.display = 'block';
+            } else {
+                document.getElementById('insightsSection').style.display = 'none';
+            }
+
+            // Display most frequent error keys
+            const errorKeys = Object.entries(typingStats.keyErrorCounts)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 10);
+
+            if (errorKeys.length > 0) {
+                errorKeysList.innerHTML = errorKeys.map(([key, count]) => {
+                    const displayKey = key === ' ' ? 'Space' : key.toUpperCase();
+                    return `
+                        <div class="error-key-item">
+                            <span class="error-key-name">${displayKey}</span>
+                            <span class="error-key-count">${count} errors</span>
+                        </div>
+                    `;
+                }).join('');
+                document.getElementById('errorsSection').style.display = 'block';
+            } else {
+                document.getElementById('errorsSection').style.display = 'none';
+            }
+        }
+
+        function generateInsights() {
+            const insights = [];
+
+            if (typingStats.totalSessions === 0) {
+                insights.push("Complete your first session to see personalized insights!");
+                return insights;
+            }
+
+            // Improvement insights
+            if (typingStats.sessionHistory.length >= 5) {
+                const recent5 = typingStats.sessionHistory.slice(-5);
+                const older5 = typingStats.sessionHistory.slice(-10, -5);
+                if (older5.length === 5) {
+                    const recentAvgWPM = recent5.reduce((sum, s) => sum + s.wpm, 0) / 5;
+                    const olderAvgWPM = older5.reduce((sum, s) => sum + s.wpm, 0) / 5;
+                    const improvement = ((recentAvgWPM - olderAvgWPM) / olderAvgWPM * 100).toFixed(1);
+
+                    if (improvement > 5) {
+                        insights.push(`🚀 You're improving! Your WPM has increased by ${improvement}% in recent sessions.`);
+                    } else if (improvement < -5) {
+                        insights.push(`🎯 Your WPM has decreased by ${Math.abs(improvement)}% recently. Take a break or slow down to focus on accuracy.`);
+                    } else {
+                        insights.push(`📊 Your typing speed is consistent. Keep practicing to push past plateaus!`);
+                    }
+                }
+            }
+
+            // Accuracy insight
+            const avgAccuracy = typingStats.sessionHistory.length > 0
+                ? typingStats.sessionHistory.reduce((sum, s) => sum + s.accuracy, 0) / typingStats.sessionHistory.length
+                : 0;
+
+            if (avgAccuracy < 90) {
+                insights.push(`⚠️ Your average accuracy is ${avgAccuracy.toFixed(1)}%. Slow down and focus on accuracy before speed!`);
+            } else if (avgAccuracy >= 95) {
+                insights.push(`✨ Excellent accuracy at ${avgAccuracy.toFixed(1)}%! You're a precision typist.`);
+            }
+
+            // Error patterns
+            const topErrors = Object.entries(typingStats.keyErrorCounts)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 3);
+
+            if (topErrors.length > 0) {
+                const topKey = topErrors[0][0] === ' ' ? 'Space' : topErrors[0][0].toUpperCase();
+                const errorRate = ((topErrors[0][1] / typingStats.totalCharactersTyped) * 100).toFixed(1);
+                insights.push(`🎯 Your most problematic key is "${topKey}" with ${topErrors[0][1]} errors (${errorRate}% error rate). Practice words containing this key!`);
+            }
+
+            // Milestone celebrations
+            if (typingStats.totalSessions === 10) {
+                insights.push(`🎉 Milestone achieved! You've completed 10 sessions. Keep up the great work!`);
+            } else if (typingStats.totalSessions === 50) {
+                insights.push(`🏆 Amazing! 50 sessions completed. You're dedicated to improving your typing!`);
+            } else if (typingStats.totalSessions === 100) {
+                insights.push(`🌟 Century club! 100 sessions completed. You're a typing champion!`);
+            }
+
+            // WPM milestones
+            if (typingStats.bestWPM >= 100) {
+                insights.push(`⚡ You've reached ${typingStats.bestWPM} WPM! That's professional-level typing speed!`);
+            } else if (typingStats.bestWPM >= 60) {
+                insights.push(`💪 Your best speed is ${typingStats.bestWPM} WPM. You're above average! Push to 80+ for expert level.`);
+            }
+
+            return insights;
+        }
+
+        function resetStats() {
+            if (confirm('Are you sure you want to reset all statistics? This cannot be undone.')) {
+                typingStats = {
+                    totalSessions: 0,
+                    totalCharactersTyped: 0,
+                    totalErrors: 0,
+                    totalTimeSeconds: 0,
+                    keyErrorCounts: {},
+                    sessionHistory: [],
+                    bestWPM: 0,
+                    bestAccuracy: 0
+                };
+                sessionKeyErrors = {};
+                saveStats();
+                displayStats();
+            }
+        }
+
         // Initialize settings display based on defaults
         function initializeSettingsDisplay() {
             // Set up display based on default mode (Infinited)
@@ -3875,8 +4466,9 @@
             // Initialize default font size
             targetText.classList.add('font-medium');
 
-            // Load saved settings first
+            // Load saved settings and stats
             loadSettings();
+            loadStats();
 
             // Initialize settings display based on loaded settings
             initializeSettingsDisplay();
