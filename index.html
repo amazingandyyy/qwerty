@@ -1159,12 +1159,16 @@
             right: 0;
             background: white;
             border-radius: 12px;
-            padding: 8px;
-            min-width: 180px;
+            padding: 16px;
+            min-width: 320px;
+            max-width: 400px;
+            max-height: 70vh;
+            overflow-y: auto;
             opacity: 0;
             pointer-events: none;
             transform: translateY(-10px);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
         }
 
         .settings-menu.show {
@@ -1211,6 +1215,71 @@
 
         .reset-btn svg {
             flex-shrink: 0;
+        }
+
+        /* Settings sections and items */
+        .settings-section {
+            margin-bottom: 8px;
+        }
+
+        .setting-item-dropdown {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 0;
+            gap: 12px;
+        }
+
+        .setting-label-dropdown {
+            font-size: 13px;
+            font-weight: 500;
+            min-width: 90px;
+            flex-shrink: 0;
+        }
+
+        .toggle-switch-small {
+            position: relative;
+            width: 42px;
+            height: 22px;
+            flex-shrink: 0;
+        }
+
+        .toggle-switch-small input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider-small {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #ccc;
+            transition: 0.3s;
+            border-radius: 22px;
+        }
+
+        .toggle-slider-small::before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 3px;
+            bottom: 3px;
+            background: white;
+            transition: 0.3s;
+            border-radius: 50%;
+        }
+
+        .toggle-switch-small input:checked + .toggle-slider-small {
+            background: #3b82f6;
+        }
+
+        .toggle-switch-small input:checked + .toggle-slider-small::before {
+            transform: translateX(20px);
         }
 
         .settings-switch {
@@ -1288,6 +1357,18 @@
 
         body.dark-mode .reset-btn:hover {
             background: #3a2626;
+        }
+
+        body.dark-mode .setting-label-dropdown {
+            color: #d1d0c5;
+        }
+
+        body.dark-mode .toggle-slider-small {
+            background: #646669;
+        }
+
+        body.dark-mode .toggle-switch-small input:checked + .toggle-slider-small {
+            background: #3b82f6;
         }
 
         body.dark-mode .settings-slider {
@@ -1816,21 +1897,158 @@
             </svg>
         </button>
         <div class="settings-menu" id="settingsMenu">
-            <div class="settings-menu-item">
-                <label class="settings-switch">
-                    <input type="checkbox" id="darkModeToggle">
-                    <span class="settings-slider"></span>
-                    <span class="settings-label">Dark Mode</span>
-                </label>
+            <h3 style="margin: 0 0 15px 0; font-size: 16px; font-weight: 600;">Settings</h3>
+
+            <!-- App Settings -->
+            <div class="settings-section">
+                <div class="settings-menu-item">
+                    <label class="settings-switch">
+                        <input type="checkbox" id="darkModeToggle">
+                        <span class="settings-slider"></span>
+                        <span class="settings-label">Dark Mode</span>
+                    </label>
+                </div>
+                <div class="settings-menu-item">
+                    <label class="settings-switch">
+                        <input type="checkbox" id="focusToggle">
+                        <span class="settings-slider"></span>
+                        <span class="settings-label">Focus Mode</span>
+                    </label>
+                </div>
             </div>
-            <div class="settings-menu-item">
-                <label class="settings-switch">
-                    <input type="checkbox" id="focusToggle">
-                    <span class="settings-slider"></span>
-                    <span class="settings-label">Focus Mode</span>
-                </label>
-            </div>
+
             <div class="settings-menu-divider"></div>
+
+            <!-- Practice Settings -->
+            <div class="settings-section">
+                <h4 style="margin: 8px 0; font-size: 13px; font-weight: 600; opacity: 0.7;">Practice Settings</h4>
+
+                <!-- Mode -->
+                <div class="setting-item-dropdown">
+                    <span class="setting-label-dropdown">Mode:</span>
+                    <div class="mode-toggle">
+                        <input type="radio" id="modeWords" name="mode" value="words">
+                        <label for="modeWords">Words</label>
+                        <input type="radio" id="modeTimed" name="mode" value="timed">
+                        <label for="modeTimed">Time</label>
+                        <input type="radio" id="modeUnlimited" name="mode" value="unlimited" checked>
+                        <label for="modeUnlimited">Infinited</label>
+                    </div>
+                </div>
+
+                <!-- Word Count -->
+                <div class="setting-item-dropdown" id="wordCountSetting" style="display: none;">
+                    <span class="setting-label-dropdown">Words:</span>
+                    <div class="mode-toggle">
+                        <input type="radio" id="wordCount10" name="wordCount" value="10" checked>
+                        <label for="wordCount10">10</label>
+                        <input type="radio" id="wordCount25" name="wordCount" value="25">
+                        <label for="wordCount25">25</label>
+                        <input type="radio" id="wordCount50" name="wordCount" value="50">
+                        <label for="wordCount50">50</label>
+                        <input type="radio" id="wordCount100" name="wordCount" value="100">
+                        <label for="wordCount100">100</label>
+                    </div>
+                </div>
+
+                <!-- Time Limit -->
+                <div class="setting-item-dropdown" id="timeLimitSetting" style="display: none;">
+                    <span class="setting-label-dropdown">Time:</span>
+                    <div class="mode-toggle">
+                        <input type="radio" id="time15" name="timeLimit" value="15">
+                        <label for="time15">15</label>
+                        <input type="radio" id="time30" name="timeLimit" value="30" checked>
+                        <label for="time30">30</label>
+                        <input type="radio" id="time60" name="timeLimit" value="60">
+                        <label for="time60">60</label>
+                        <input type="radio" id="time120" name="timeLimit" value="120">
+                        <label for="time120">120</label>
+                    </div>
+                </div>
+
+                <!-- Numbers Toggle -->
+                <div class="setting-item-dropdown">
+                    <span class="setting-label-dropdown">Numbers:</span>
+                    <label class="toggle-switch-small">
+                        <input type="checkbox" id="includeNumbers">
+                        <span class="toggle-slider-small"></span>
+                    </label>
+                </div>
+
+                <!-- Word Set -->
+                <div class="setting-item-dropdown">
+                    <span class="setting-label-dropdown">Words:</span>
+                    <div class="mode-toggle">
+                        <input type="radio" id="wordSetGibberish" name="wordSet" value="gibberish">
+                        <label for="wordSetGibberish">Gibberish</label>
+                        <input type="radio" id="wordSetReal" name="wordSet" value="real" checked>
+                        <label for="wordSetReal">Real</label>
+                    </div>
+                </div>
+
+                <!-- Capitals Toggle -->
+                <div class="setting-item-dropdown">
+                    <span class="setting-label-dropdown">Capitals:</span>
+                    <label class="toggle-switch-small">
+                        <input type="checkbox" id="includeCapitals">
+                        <span class="toggle-slider-small"></span>
+                    </label>
+                </div>
+
+                <!-- Special Characters Toggle -->
+                <div class="setting-item-dropdown">
+                    <span class="setting-label-dropdown">Special Chars:</span>
+                    <label class="toggle-switch-small">
+                        <input type="checkbox" id="includeSpecialChars">
+                        <span class="toggle-slider-small"></span>
+                    </label>
+                </div>
+
+                <!-- Error Mode -->
+                <div class="setting-item-dropdown">
+                    <span class="setting-label-dropdown">Error Mode:</span>
+                    <div class="mode-toggle">
+                        <input type="radio" id="errorModeBlock" name="errorMode" value="block" checked>
+                        <label for="errorModeBlock">Block</label>
+                        <input type="radio" id="errorModeBackspace" name="errorMode" value="backspace">
+                        <label for="errorModeBackspace">Continue</label>
+                    </div>
+                </div>
+
+                <!-- Word Bank -->
+                <div class="setting-item-dropdown">
+                    <span class="setting-label-dropdown">Word Bank:</span>
+                    <div class="mode-toggle">
+                        <input type="radio" id="wordBank1k" name="wordBank" value="1k">
+                        <label for="wordBank1k">1K</label>
+                        <input type="radio" id="wordBank10k" name="wordBank" value="10k" checked>
+                        <label for="wordBank10k">10K</label>
+                        <input type="radio" id="wordBank25k" name="wordBank" value="25k">
+                        <label for="wordBank25k">25K</label>
+                        <input type="radio" id="wordBank450k" name="wordBank" value="450k">
+                        <label for="wordBank450k">450K</label>
+                    </div>
+                </div>
+
+                <!-- Font Size -->
+                <div class="setting-item-dropdown">
+                    <span class="setting-label-dropdown">Font Size:</span>
+                    <div class="mode-toggle">
+                        <input type="radio" id="fontSizeSmall" name="fontSize" value="small">
+                        <label for="fontSizeSmall">S</label>
+                        <input type="radio" id="fontSizeMedium" name="fontSize" value="medium" checked>
+                        <label for="fontSizeMedium">M</label>
+                        <input type="radio" id="fontSizeLarge" name="fontSize" value="large">
+                        <label for="fontSizeLarge">L</label>
+                        <input type="radio" id="fontSizeXLarge" name="fontSize" value="xlarge">
+                        <label for="fontSizeXLarge">XL</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="settings-menu-divider"></div>
+
+            <!-- Reset -->
             <div class="settings-menu-item">
                 <button class="reset-btn" id="resetBtn">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1849,146 +2067,6 @@
         <h1>Better QWERTY</h1>
         <p class="subtitle">Improve your typing skills by practicing specific keys and fingers</p>
 
-        <!-- Settings Container -->
-        <div class="settings-container">
-        <!-- Mode Settings Panel -->
-        <div class="settings-panel">
-            <div class="settings-grid">
-                <!-- Mode -->
-                <div class="setting-item">
-                    <span class="setting-label">Mode:</span>
-                    <div class="mode-toggle">
-                        <input type="radio" id="modeWords" name="mode" value="words">
-                        <label for="modeWords">Words</label>
-                        <input type="radio" id="modeTimed" name="mode" value="timed">
-                        <label for="modeTimed">Time</label>
-                        <input type="radio" id="modeUnlimited" name="mode" value="unlimited" checked>
-                        <label for="modeUnlimited">Infinited</label>
-                    </div>
-                </div>
-
-                <!-- Word Count -->
-                <div class="setting-item" id="wordCountSetting" style="display: none;">
-                    <span class="setting-label">Words:</span>
-                    <div class="mode-toggle">
-                        <input type="radio" id="wordCount10" name="wordCount" value="10" checked>
-                        <label for="wordCount10">10</label>
-                        <input type="radio" id="wordCount25" name="wordCount" value="25">
-                        <label for="wordCount25">25</label>
-                        <input type="radio" id="wordCount50" name="wordCount" value="50">
-                        <label for="wordCount50">50</label>
-                        <input type="radio" id="wordCount100" name="wordCount" value="100">
-                        <label for="wordCount100">100</label>
-                    </div>
-                </div>
-
-                <!-- Time Limit -->
-                <div class="setting-item" id="timeLimitSetting" style="display: none;">
-                    <span class="setting-label">Time:</span>
-                    <div class="mode-toggle">
-                        <input type="radio" id="time15" name="timeLimit" value="15">
-                        <label for="time15">15</label>
-                        <input type="radio" id="time30" name="timeLimit" value="30" checked>
-                        <label for="time30">30</label>
-                        <input type="radio" id="time60" name="timeLimit" value="60">
-                        <label for="time60">60</label>
-                        <input type="radio" id="time120" name="timeLimit" value="120">
-                        <label for="time120">120</label>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Content Toggles Panel -->
-        <div class="settings-panel">
-            <div class="settings-grid">
-                <!-- Numbers Toggle -->
-                <div class="setting-item">
-                    <span class="setting-label">Numbers:</span>
-                    <div class="toggle-option">
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="includeNumbers">
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
-                </div>
-
-                <!-- Word Set Toggle -->
-                <div class="setting-item">
-                    <span class="setting-label">Words:</span>
-                    <div class="mode-toggle">
-                        <input type="radio" id="wordSetGibberish" name="wordSet" value="gibberish">
-                        <label for="wordSetGibberish">Gibberish</label>
-                        <input type="radio" id="wordSetReal" name="wordSet" value="real" checked>
-                        <label for="wordSetReal">Real</label>
-                    </div>
-                </div>
-
-                <!-- Capitals Toggle -->
-                <div class="setting-item">
-                    <span class="setting-label">Capitals:</span>
-                    <div class="toggle-option">
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="includeCapitals">
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
-                </div>
-
-                <!-- Special Characters Toggle -->
-                <div class="setting-item">
-                    <span class="setting-label">Special Chars:</span>
-                    <div class="toggle-option">
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="includeSpecialChars">
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
-                </div>
-
-                <!-- Error Mode -->
-                <div class="setting-item">
-                    <span class="setting-label">Error Mode:</span>
-                    <div class="mode-toggle">
-                        <input type="radio" id="errorModeBlock" name="errorMode" value="block" checked>
-                        <label for="errorModeBlock">Block</label>
-                        <input type="radio" id="errorModeBackspace" name="errorMode" value="backspace">
-                        <label for="errorModeBackspace">Continue</label>
-                    </div>
-                </div>
-
-                <!-- Word Bank -->
-                <div class="setting-item">
-                    <span class="setting-label">Word Bank:</span>
-                    <div class="mode-toggle">
-                        <input type="radio" id="wordBank1k" name="wordBank" value="1k">
-                        <label for="wordBank1k">1K</label>
-                        <input type="radio" id="wordBank10k" name="wordBank" value="10k" checked>
-                        <label for="wordBank10k">10K</label>
-                        <input type="radio" id="wordBank25k" name="wordBank" value="25k">
-                        <label for="wordBank25k">25K</label>
-                        <input type="radio" id="wordBank450k" name="wordBank" value="450k">
-                        <label for="wordBank450k">450K</label>
-                    </div>
-                </div>
-
-                <!-- Font Size -->
-                <div class="setting-item">
-                    <span class="setting-label">Font Size:</span>
-                    <div class="mode-toggle">
-                        <input type="radio" id="fontSizeSmall" name="fontSize" value="small">
-                        <label for="fontSizeSmall">S</label>
-                        <input type="radio" id="fontSizeMedium" name="fontSize" value="medium" checked>
-                        <label for="fontSizeMedium">M</label>
-                        <input type="radio" id="fontSizeLarge" name="fontSize" value="large">
-                        <label for="fontSizeLarge">L</label>
-                        <input type="radio" id="fontSizeXLarge" name="fontSize" value="xlarge">
-                        <label for="fontSizeXLarge">XL</label>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <!-- Floating Save Button -->
         <button class="floating-save-btn" id="saveSettingsBtn" title="Save Settings">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -1998,8 +2076,6 @@
             </svg>
             <span>Save</span>
         </button>
-        </div>
-        <!-- End Settings Container -->
 
         <div class="finger-selector">
             <div class="finger-buttons">
