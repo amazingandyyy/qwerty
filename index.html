@@ -1183,6 +1183,36 @@
             background: #f5f5f5;
         }
 
+        .settings-menu-divider {
+            height: 1px;
+            background: #e5e5e5;
+            margin: 8px 0;
+        }
+
+        .reset-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+            padding: 8px 12px;
+            background: none;
+            border: none;
+            border-radius: 6px;
+            color: #e74c3c;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .reset-btn:hover {
+            background: #fee;
+        }
+
+        .reset-btn svg {
+            flex-shrink: 0;
+        }
+
         .settings-switch {
             display: flex;
             align-items: center;
@@ -1246,6 +1276,18 @@
 
         body.dark-mode .settings-menu-item:hover {
             background: #3a3c3f;
+        }
+
+        body.dark-mode .settings-menu-divider {
+            background: #464749;
+        }
+
+        body.dark-mode .reset-btn {
+            color: #ff6b6b;
+        }
+
+        body.dark-mode .reset-btn:hover {
+            background: #3a2626;
         }
 
         body.dark-mode .settings-slider {
@@ -1787,6 +1829,17 @@
                     <span class="settings-slider"></span>
                     <span class="settings-label">Focus Mode</span>
                 </label>
+            </div>
+            <div class="settings-menu-divider"></div>
+            <div class="settings-menu-item">
+                <button class="reset-btn" id="resetBtn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="1 4 1 10 7 10"></polyline>
+                        <polyline points="23 20 23 14 17 14"></polyline>
+                        <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"></path>
+                    </svg>
+                    Reset All Settings
+                </button>
             </div>
         </div>
     </div>
@@ -2347,6 +2400,7 @@
                 }
 
                 updateSelectedKeysList();
+                showSaveButton();
             });
         });
 
@@ -2388,6 +2442,7 @@
                 }
 
                 updateSelectedKeysList();
+                showSaveButton();
             });
         });
 
@@ -3167,6 +3222,15 @@
             toggleFocusMode();
         });
 
+        // Reset Button
+        const resetBtn = document.getElementById('resetBtn');
+        resetBtn.addEventListener('click', () => {
+            if (confirm('Reset all settings? This will clear your saved preferences and selected keys, then refresh the page.')) {
+                localStorage.clear();
+                location.reload();
+            }
+        });
+
         // Dark Mode
         const darkModeToggle = document.getElementById('darkModeToggle');
         // Default to dark mode if not set in localStorage
@@ -3335,7 +3399,8 @@
                 includeSpecialChars: includeSpecialChars,
                 errorMode: errorMode,
                 wordBankSize: wordBankSize,
-                fontSize: fontSize
+                fontSize: fontSize,
+                selectedKeys: Array.from(selectedKeys)
             };
             localStorage.setItem('typingPracticeSettings', JSON.stringify(settings));
         }
@@ -3427,6 +3492,40 @@
                     targetText.classList.remove('font-small', 'font-medium', 'font-large', 'font-xlarge');
                     targetText.classList.add(`font-${fontSize}`);
                 }
+
+                // Restore selected keys
+                if (settings.selectedKeys && Array.isArray(settings.selectedKeys)) {
+                    // Clear current selection
+                    selectedKeys.clear();
+                    document.querySelectorAll('.key.selected').forEach(key => {
+                        key.classList.remove('selected');
+                    });
+                    document.querySelectorAll('.finger-btn.active').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+
+                    // Restore selected keys
+                    settings.selectedKeys.forEach(key => {
+                        selectedKeys.add(key);
+                        const keyEl = document.querySelector(`.key[data-key="${key}"]`);
+                        if (keyEl) keyEl.classList.add('selected');
+                    });
+
+                    // Activate finger buttons based on selected keys
+                    const fingerBtns = document.querySelectorAll('.finger-btn');
+                    fingerBtns.forEach(btn => {
+                        const finger = btn.dataset.finger;
+                        const fingerKeys = fingerMap[finger];
+                        // Check if any key from this finger is selected
+                        const hasSelectedKeys = fingerKeys.some(key => selectedKeys.has(key));
+                        if (hasSelectedKeys) {
+                            btn.classList.add('active');
+                        }
+                    });
+
+                    // Update the selected keys list display
+                    updateSelectedKeysList();
+                }
             } catch (error) {
                 console.error('Error loading settings:', error);
             }
@@ -3447,7 +3546,7 @@
             }
         }
 
-        // Initialize: Auto-select all fingers on page load
+        // Initialize: Auto-select all fingers on page load (only if no saved selection)
         window.addEventListener('DOMContentLoaded', () => {
             // Initialize default font size
             targetText.classList.add('font-medium');
@@ -3458,29 +3557,32 @@
             // Initialize settings display based on loaded settings
             initializeSettingsDisplay();
 
-            const numberKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-            const specialChars = ['`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '=', '+', '[', ']', '{', '}', '\\', '|', ';', ':', "'", '"', ',', '<', '.', '>', '/', '?'];
-            const capitalKeys = ['caps', 'shift', 'shift-right'];
+            // Only auto-select all fingers if there are no saved keys
+            if (selectedKeys.size === 0) {
+                const numberKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+                const specialChars = ['`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '=', '+', '[', ']', '{', '}', '\\', '|', ';', ':', "'", '"', ',', '<', '.', '>', '/', '?'];
+                const capitalKeys = ['caps', 'shift', 'shift-right'];
 
-            fingerBtns.forEach(btn => {
-                const finger = btn.dataset.finger;
-                btn.classList.add('active');
-                fingerMap[finger].forEach(key => {
-                    // Skip space - it's always available
-                    if (key === ' ') return;
-                    // Skip numbers if disabled
-                    if (!includeNumbers && numberKeys.includes(key)) return;
-                    // Skip special chars if disabled
-                    if (!includeSpecialChars && specialChars.includes(key)) return;
-                    // Skip caps/shift if capitals are disabled
-                    if (!useCapitals && capitalKeys.includes(key)) return;
+                fingerBtns.forEach(btn => {
+                    const finger = btn.dataset.finger;
+                    btn.classList.add('active');
+                    fingerMap[finger].forEach(key => {
+                        // Skip space - it's always available
+                        if (key === ' ') return;
+                        // Skip numbers if disabled
+                        if (!includeNumbers && numberKeys.includes(key)) return;
+                        // Skip special chars if disabled
+                        if (!includeSpecialChars && specialChars.includes(key)) return;
+                        // Skip caps/shift if capitals are disabled
+                        if (!useCapitals && capitalKeys.includes(key)) return;
 
-                    selectedKeys.add(key);
-                    const keyEl = document.querySelector(`.key[data-key="${key}"]`);
-                    if (keyEl) keyEl.classList.add('selected');
+                        selectedKeys.add(key);
+                        const keyEl = document.querySelector(`.key[data-key="${key}"]`);
+                        if (keyEl) keyEl.classList.add('selected');
+                    });
                 });
-            });
-            updateSelectedKeysList();
+                updateSelectedKeysList();
+            }
         });
     </script>
 </body>
