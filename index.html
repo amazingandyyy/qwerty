@@ -508,6 +508,23 @@
             display: inline-block;
         }
 
+        /* Error typed character display */
+        .error-typed {
+            position: absolute;
+            top: -0.7em;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.6em;
+            color: #ca4754;
+            font-weight: 600;
+            opacity: 0.9;
+            text-decoration: line-through;
+        }
+
+        .target-text .incorrect {
+            position: relative;
+        }
+
         @keyframes blink-cursor {
             0%, 49% { border-left-color: #2d3748; }
             50%, 100% { border-left-color: transparent; }
@@ -1656,6 +1673,17 @@
                         </label>
                     </div>
                 </div>
+
+                <!-- Error Mode -->
+                <div class="setting-item full-width">
+                    <span class="setting-label">Error Mode:</span>
+                    <div class="mode-toggle">
+                        <input type="radio" id="errorModeBlock" name="errorMode" value="block" checked>
+                        <label for="errorModeBlock">Block</label>
+                        <input type="radio" id="errorModeBackspace" name="errorMode" value="backspace">
+                        <label for="errorModeBackspace">Backspace</label>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -1958,6 +1986,7 @@
         let startTime = null;
         let lastWpmUpdate = 0;
         let timerInterval = null;
+        let errorPositions = new Map(); // Track positions with errors and what was typed
         let timeLimit = 30;
         let isTimedMode = false;
         let isUnlimitedMode = true;
@@ -1970,6 +1999,7 @@
         let useRealWords = true;
         let useCapitals = false;
         let includeSpecialChars = false;
+        let errorMode = 'block'; // 'block', 'skip', 'backspace'
 
         const keys = document.querySelectorAll('.key');
         const fingerBtns = document.querySelectorAll('.finger-btn');
@@ -2219,6 +2249,13 @@
             updateSelectedKeysList();
         });
 
+        // Error Mode listeners
+        document.querySelectorAll('input[name="errorMode"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                errorMode = e.target.value;
+            });
+        });
+
         function updateKeyboardVisuals() {
             // Update keyboard visual highlights based on settings
             const specialChars = ['`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '=', '+', '[', ']', '{', '}', '\\', '|', ';', ':', "'", '"', ',', '<', '.', '>', '/', '?'];
@@ -2310,6 +2347,7 @@
             totalTyped = 0;
             startTime = null;
             lastWpmUpdate = 0;
+            errorPositions.clear();
 
             if (timerInterval) {
                 clearInterval(timerInterval);
@@ -2555,6 +2593,7 @@
             totalTyped = 0;
             startTime = null;
             lastWpmUpdate = 0;
+            errorPositions.clear();
 
             // Setup timer display
             if (isTimedMode) {
@@ -2585,16 +2624,23 @@
                 while (i < currentText.length && currentText[i] !== ' ') {
                     const char = currentText[i];
                     let className = '';
+                    let displayChar = char;
 
                     if (i < currentPosition) {
-                        className = 'correct';
+                        if (errorPositions.has(i)) {
+                            className = 'incorrect';
+                            const typedChar = errorPositions.get(i);
+                            displayChar = `<span class="error-typed">${typedChar}</span>${char}`;
+                        } else {
+                            className = 'correct';
+                        }
                     } else if (i === currentPosition) {
                         className = 'current';
                     } else {
                         className = 'upcoming';
                     }
 
-                    html += `<span class="${className}" data-index="${i}">${char}</span>`;
+                    html += `<span class="${className}" data-index="${i}">${displayChar}</span>`;
                     i++;
                 }
 
@@ -2604,7 +2650,7 @@
                 if (i < currentText.length && currentText[i] === ' ') {
                     let className = '';
                     if (i < currentPosition) {
-                        className = 'correct';
+                        className = errorPositions.has(i) ? 'incorrect' : 'correct';
                     } else if (i === currentPosition) {
                         className = 'current';
                     } else {
@@ -2685,6 +2731,11 @@
                 totalTyped++;
 
                 if (typedChar === currentText[currentPosition]) {
+                    // Correct character typed
+                    // If this position was previously an error, remove it
+                    if (errorPositions.has(currentPosition)) {
+                        errorPositions.delete(currentPosition);
+                    }
                     currentPosition++;
 
                     // In unlimited mode, append more text when getting close to the end
@@ -2719,12 +2770,35 @@
                     }
                 } else {
                     errorCount++;
-                    // Don't advance position on error, let them try again
-                    e.target.value = typedValue.slice(0, -1);
+
+                    // Handle different error modes
+                    if (errorMode === 'block') {
+                        // Block mode: Don't advance position, remove incorrect character
+                        e.target.value = typedValue.slice(0, -1);
+                    } else if (errorMode === 'backspace') {
+                        // Backspace mode: Mark as error, allow backspace to correct
+                        errorPositions.set(currentPosition, typedChar);
+                        currentPosition++;
+                    }
                 }
 
                 renderText();
                 updateStats();
+            }
+        });
+
+        // Handle backspace for backspace error mode
+        typingInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Backspace' && errorMode === 'backspace') {
+                const typedValue = e.target.value;
+                if (typedValue.length < currentPosition && currentPosition > 0) {
+                    // Allow going back
+                    currentPosition--;
+                    // Remove from error positions if correcting
+                    errorPositions.delete(currentPosition);
+                    renderText();
+                    updateStats();
+                }
             }
         });
 
