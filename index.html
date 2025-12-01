@@ -953,94 +953,95 @@
             position: fixed;
             top: 20px;
             right: 20px;
-            padding: 10px 20px;
-            background: rgba(255, 255, 255, 0.95);
-            color: #2d3748;
-            border: none;
-            border-radius: 20px;
-            font-size: 0.8em;
+            padding: 8px 16px;
+            background: transparent;
+            color: #666;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 0.75em;
             cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
+            transition: all 0.2s ease;
+            font-weight: 500;
             z-index: 1000;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08),
-                        0 1px 3px rgba(0, 0, 0, 0.06);
             letter-spacing: 0.3px;
         }
 
         .focus-toggle:hover {
-            background: white;
-            color: #1a202c;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12),
-                        0 2px 6px rgba(0, 0, 0, 0.08);
+            background: #f5f5f5;
+            color: #333;
+            border-color: #d0d0d0;
         }
 
         .focus-toggle:active {
-            transform: translateY(0);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transform: scale(0.98);
         }
 
         body.focus-mode .focus-toggle {
-            background: #2d3748;
-            color: white;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3),
-                        0 2px 6px rgba(0, 0, 0, 0.1);
+            background: #e0e0e0;
+            color: #333;
+            border-color: #d0d0d0;
         }
 
         body.focus-mode .focus-toggle:hover {
-            background: #1a202c;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35),
-                        0 3px 8px rgba(0, 0, 0, 0.12);
+            background: #d0d0d0;
         }
 
         .dark-mode-toggle {
             position: fixed;
             top: 20px;
             left: 20px;
-            padding: 10px 20px;
-            background: rgba(255, 255, 255, 0.95);
-            color: #2d3748;
-            border: none;
-            border-radius: 20px;
-            font-size: 0.8em;
+            padding: 8px 16px;
+            background: transparent;
+            color: #666;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 0.75em;
             cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
+            transition: all 0.2s ease;
+            font-weight: 500;
             z-index: 1000;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08),
-                        0 1px 3px rgba(0, 0, 0, 0.06);
             letter-spacing: 0.3px;
         }
 
         .dark-mode-toggle:hover {
-            background: white;
-            color: #1a202c;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12),
-                        0 2px 6px rgba(0, 0, 0, 0.08);
+            background: #f5f5f5;
+            color: #333;
+            border-color: #d0d0d0;
         }
 
         .dark-mode-toggle:active {
-            transform: translateY(0);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transform: scale(0.98);
+        }
+
+        body.dark-mode .focus-toggle {
+            background: transparent;
+            color: #646669;
+            border-color: #646669;
+        }
+
+        body.dark-mode .focus-toggle:hover {
+            background: #2c2e31;
+            color: #d1d0c5;
+        }
+
+        body.dark-mode.focus-mode .focus-toggle {
+            background: #2c2e31;
+            color: #d1d0c5;
+        }
+
+        body.dark-mode.focus-mode .focus-toggle:hover {
+            background: #646669;
         }
 
         body.dark-mode .dark-mode-toggle {
-            background: #2d3748;
-            color: white;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3),
-                        0 2px 6px rgba(0, 0, 0, 0.1);
+            background: transparent;
+            color: #646669;
+            border-color: #646669;
         }
 
         body.dark-mode .dark-mode-toggle:hover {
-            background: #1a202c;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35),
-                        0 3px 8px rgba(0, 0, 0, 0.12);
+            background: #2c2e31;
+            color: #d1d0c5;
         }
 
         .focus-hint {
@@ -1073,44 +1074,82 @@
             margin: 0 2px;
         }
 
+        /* Typing Overlay */
+        .typing-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            cursor: pointer;
+            z-index: 10;
+            transition: opacity 0.3s ease;
+        }
+
+        .typing-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .overlay-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #999;
+            font-size: 1.1em;
+            font-weight: 500;
+        }
+
+        .overlay-content svg {
+            color: #999;
+        }
+
+        .typing-area {
+            position: relative;
+        }
+
         /* Dark Mode Styles */
         body.dark-mode {
-            background: #1a1a1a;
-            color: #e0e0e0;
+            background: #323437;
+            color: #d1d0c5;
         }
 
         body.dark-mode h1 {
-            color: #e0e0e0;
+            color: #d1d0c5;
         }
 
         body.dark-mode .subtitle {
-            color: #a0a0a0;
+            color: #646669;
         }
 
         body.dark-mode .settings-panel {
-            background: #2a2a2a;
-            border-color: #3a3a3a;
+            background: #2c2e31;
+            border: none;
         }
 
         body.dark-mode .finger-selector {
-            background: #2a2a2a;
-            border-color: #3a3a3a;
+            background: #2c2e31;
+            border: none;
         }
 
         body.dark-mode .setting-label {
-            color: #b0b0b0;
+            color: #646669;
         }
 
         body.dark-mode .mode-toggle label {
-            background: #3a3a3a;
-            color: #b0b0b0;
-            border-color: #4a4a4a;
+            background: #2c2e31;
+            color: #646669;
+            border-color: #646669;
         }
 
         body.dark-mode .mode-toggle label:hover {
-            background: #4a4a4a;
-            color: #e0e0e0;
-            border-color: #5a5a5a;
+            background: #646669;
+            color: #d1d0c5;
+            border-color: #646669;
         }
 
         body.dark-mode .mode-toggle input:checked + label {
@@ -1125,15 +1164,15 @@
         }
 
         body.dark-mode .radio-option label {
-            background: #3a3a3a;
-            color: #b0b0b0;
-            border-color: #4a4a4a;
+            background: #2c2e31;
+            color: #646669;
+            border-color: #646669;
         }
 
         body.dark-mode .radio-option label:hover {
-            background: #4a4a4a;
-            color: #e0e0e0;
-            border-color: #5a5a5a;
+            background: #646669;
+            color: #d1d0c5;
+            border-color: #646669;
         }
 
         body.dark-mode .radio-option input:checked + label {
@@ -1148,7 +1187,7 @@
         }
 
         body.dark-mode .toggle-slider {
-            background-color: #3a3a3a;
+            background-color: #2c2e31;
         }
 
         body.dark-mode input:checked + .toggle-slider {
@@ -1156,7 +1195,7 @@
         }
 
         body.dark-mode .slider {
-            background: #3a3a3a;
+            background: #2c2e31;
         }
 
         body.dark-mode .slider::-webkit-slider-thumb {
@@ -1168,21 +1207,21 @@
         }
 
         body.dark-mode .slider-value {
-            color: #e0e0e0;
-            background: #3a3a3a;
-            border-color: #4a4a4a;
+            color: #d1d0c5;
+            background: #2c2e31;
+            border-color: #646669;
         }
 
         body.dark-mode .finger-btn {
-            background: #3a3a3a;
-            color: #b0b0b0;
-            border-color: #4a4a4a;
+            background: #2c2e31;
+            color: #646669;
+            border-color: #646669;
         }
 
         body.dark-mode .finger-btn:hover {
-            background: #4f4f4f;
-            border-color: #6a6a6a;
-            color: #e0e0e0;
+            background: #646669;
+            border-color: #646669;
+            color: #d1d0c5;
             transform: translateY(-1px);
             box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
         }
@@ -1197,47 +1236,47 @@
         }
 
         body.dark-mode .selected-keys {
-            background: #2a2a2a;
-            border-color: #3a3a3a;
+            background: #2c2e31;
+            border: none;
         }
 
         body.dark-mode .selected-keys strong {
-            color: #e0e0e0;
+            color: #d1d0c5;
         }
 
         body.dark-mode .selected-keys-list {
-            color: #b0b0b0;
+            color: #646669;
         }
 
         body.dark-mode .key-chip {
-            background: #3a3a3a;
-            color: #e0e0e0;
-            border-color: #4a4a4a;
+            background: #2c2e31;
+            color: #d1d0c5;
+            border-color: #646669;
         }
 
         body.dark-mode .keyboard {
-            background: #2a2a2a;
-            border-color: #3a3a3a;
+            background: #2c2e31;
+            border: none;
         }
 
         body.dark-mode .key {
-            background: #3a3a3a;
-            color: #b0b0b0;
-            border-color: #4a4a4a;
+            background: #2c2e31;
+            color: #646669;
+            border-color: #646669;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         body.dark-mode .key:hover {
-            background: #4f4f4f;
-            color: #e0e0e0;
-            border-color: #6a6a6a;
+            background: #646669;
+            color: #d1d0c5;
+            border-color: #646669;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
             transform: translateY(-2px);
         }
 
         body.dark-mode .key.disabled {
-            background: #252525;
-            color: #505050;
+            background: #2c2e31;
+            color: #3a3a3d;
         }
 
         body.dark-mode .key.disabled:hover {
@@ -1246,25 +1285,33 @@
         }
 
         body.dark-mode .typing-area {
-            background: #2a2a2a;
-            border-color: #3a3a3a;
+            background: #2c2e31;
+            border: none;
         }
 
         body.dark-mode .target-text {
-            color: #808080;
+            color: #646669;
         }
 
         body.dark-mode .target-text .correct {
-            color: #60d060;
+            color: #d1d0c5;
         }
 
         body.dark-mode .target-text .incorrect {
-            color: #ff6b6b;
-            background: rgba(255, 107, 107, 0.2);
+            color: #ca4754;
+            background: rgba(202, 71, 84, 0.2);
+        }
+
+        body.dark-mode .target-text .upcoming {
+            color: #646669;
+            opacity: 1;
         }
 
         body.dark-mode .target-text .current {
-            color: #909090;
+            color: #646669;
+            opacity: 1;
+            background: transparent;
+            font-weight: 400;
             border-left-color: #e2b714;
             animation: blink-cursor-dark 1.2s ease-in-out infinite;
         }
@@ -1275,26 +1322,26 @@
         }
 
         body.dark-mode .typing-input {
-            background: #2a2a2a;
-            color: #e0e0e0;
-            border-color: #3a3a3a;
+            background: #2c2e31;
+            color: #d1d0c5;
+            border: none;
         }
 
         body.dark-mode .stats {
-            background: #2a2a2a;
-            border-color: #3a3a3a;
+            background: #2c2e31;
+            border: none;
         }
 
         body.dark-mode .stats h3 {
-            color: #e0e0e0;
+            color: #d1d0c5;
         }
 
         body.dark-mode .stat-item {
-            color: #b0b0b0;
+            color: #646669;
         }
 
         body.dark-mode .stat-value {
-            color: #e0e0e0;
+            color: #d1d0c5;
         }
 
         body.dark-mode .restart-btn {
@@ -1311,50 +1358,58 @@
         body.dark-mode .btn-generate,
         body.dark-mode .btn-restart {
             background: transparent;
-            color: #b0b0b0;
-            border-color: #4a4a4a;
+            color: #646669;
+            border-color: #646669;
         }
 
         body.dark-mode .btn-generate:hover,
         body.dark-mode .btn-restart:hover {
-            background: #3a3a3a;
-            border-color: #6a6a6a;
-            color: #e0e0e0;
+            background: #2c2e31;
+            border-color: #646669;
+            color: #d1d0c5;
         }
 
         body.dark-mode .btn-generate:disabled,
         body.dark-mode .btn-restart:disabled {
             opacity: 0.3;
-            color: #505050;
+            color: #3a3a3d;
         }
 
         body.dark-mode .instructions {
-            color: #a0a0a0;
+            color: #646669;
         }
 
         body.dark-mode .shortcuts {
-            color: #a0a0a0;
+            color: #646669;
         }
 
         body.dark-mode .shortcuts strong {
-            color: #c0c0c0;
+            color: #646669;
         }
 
         body.dark-mode .shortcut-key {
-            background: #3a3a3a;
-            border-color: #5a5a5a;
-            color: #e0e0e0;
+            background: #2c2e31;
+            border-color: #646669;
+            color: #d1d0c5;
         }
 
         body.dark-mode .focus-hint {
-            background: rgba(255, 255, 255, 0.1);
-            color: #808080;
+            background: rgba(0, 0, 0, 0.5);
+            color: #646669;
         }
 
         body.dark-mode .focus-hint kbd {
-            background: #3a3a3a;
-            border-color: #4a4a4a;
-            color: #e0e0e0;
+            background: #2c2e31;
+            border-color: #646669;
+            color: #d1d0c5;
+        }
+
+        body.dark-mode .overlay-content {
+            color: #646669;
+        }
+
+        body.dark-mode .overlay-content svg {
+            color: #646669;
         }
     </style>
 </head>
@@ -1631,6 +1686,14 @@
                 <div class="progress-bar" id="progressBar" style="width: 0%;"></div>
             </div>
 
+            <div class="typing-overlay" id="typingOverlay">
+                <div class="overlay-content">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/>
+                    </svg>
+                    <span>Click here or press any key to focus</span>
+                </div>
+            </div>
             <div class="target-text" id="targetText">
                 Select keys above to generate practice text
             </div>
@@ -2125,7 +2188,7 @@
 
             typingInput.value = '';
             typingInput.disabled = false;
-            typingInput.focus();
+            showOverlay();
         }
 
         function startTimer() {
@@ -2596,6 +2659,39 @@
         typingInput.addEventListener('keydown', (e) => {
             if (e.key === 'Backspace') {
                 e.preventDefault();
+            }
+        });
+
+        // Typing Overlay
+        const typingOverlay = document.getElementById('typingOverlay');
+
+        function hideOverlay() {
+            if (typingOverlay && !typingOverlay.classList.contains('hidden')) {
+                typingOverlay.classList.add('hidden');
+                if (!typingInput.disabled) {
+                    typingInput.focus();
+                }
+            }
+        }
+
+        function showOverlay() {
+            if (typingOverlay && currentText) {
+                typingOverlay.classList.remove('hidden');
+            }
+        }
+
+        // Hide overlay on click
+        if (typingOverlay) {
+            typingOverlay.addEventListener('click', hideOverlay);
+        }
+
+        // Hide overlay on any keypress
+        document.addEventListener('keydown', (e) => {
+            if (typingOverlay && !typingOverlay.classList.contains('hidden') && currentText) {
+                // Don't hide for modifier keys only
+                if (!['Shift', 'Control', 'Alt', 'Meta'].includes(e.key)) {
+                    hideOverlay();
+                }
             }
         });
 
