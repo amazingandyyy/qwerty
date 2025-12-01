@@ -659,6 +659,60 @@
             box-shadow: none;
         }
 
+        .settings-container {
+            position: relative;
+        }
+
+        .floating-save-btn {
+            position: absolute;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: #e2b714;
+            color: #2d3748;
+            border: none;
+            border-radius: 28px;
+            font-size: 0.9em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .floating-save-btn.visible {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .floating-save-btn.visible:hover {
+            background: #d1a513;
+            transform: translateX(-50%) translateY(-2px) scale(1.05);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .floating-save-btn.visible:active {
+            transform: translateX(-50%) translateY(0) scale(1);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .floating-save-btn svg {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
+        }
+
+        .floating-save-btn span {
+            font-size: 0.95em;
+        }
+
         .instructions {
             text-align: left;
             color: #cbd5e0;
@@ -854,8 +908,8 @@
         .toggle-switch {
             position: relative;
             display: inline-block;
-            width: 40px;
-            height: 20px;
+            width: 44px;
+            height: 24px;
             flex-shrink: 0;
         }
 
@@ -872,32 +926,31 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: white;
-            border: 1px solid #d0d0d0;
-            transition: .2s;
-            border-radius: 20px;
+            background-color: #e0e0e0;
+            border: none;
+            transition: background 0.3s;
+            border-radius: 12px;
         }
 
         .toggle-slider:before {
             position: absolute;
             content: "";
-            height: 14px;
-            width: 14px;
+            height: 18px;
+            width: 18px;
             left: 3px;
             bottom: 3px;
-            background-color: #9ca3af;
-            transition: .2s;
+            background-color: white;
+            transition: transform 0.3s;
             border-radius: 50%;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
         }
 
         .toggle-switch input:checked + .toggle-slider {
-            background: #2d3748;
-            border-color: #2d3748;
+            background: #e2b714;
         }
 
         .toggle-switch input:checked + .toggle-slider:before {
             transform: translateX(20px);
-            background-color: white;
         }
 
         .toggle-label {
@@ -983,94 +1036,235 @@
             position: fixed;
             top: 20px;
             right: 20px;
-            padding: 8px 16px;
-            background: transparent;
-            color: #666;
-            border: 1px solid #e0e0e0;
-            border-radius: 6px;
-            font-size: 0.75em;
+            padding: 10px 18px;
+            background: white;
+            color: #2d3748;
+            border: none;
+            border-radius: 24px;
+            font-size: 0.85em;
             cursor: pointer;
-            transition: all 0.2s ease;
-            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 600;
             z-index: 1000;
-            letter-spacing: 0.3px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         .focus-toggle:hover {
             background: #f5f5f5;
-            color: #333;
-            border-color: #d0d0d0;
+            transform: translateY(-1px) scale(1.02);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
         }
 
         .focus-toggle:active {
-            transform: scale(0.98);
+            transform: translateY(0) scale(1);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
         }
 
         body.focus-mode .focus-toggle {
-            background: #e0e0e0;
-            color: #333;
-            border-color: #d0d0d0;
+            background: #e8e8e8;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
         }
 
         body.focus-mode .focus-toggle:hover {
-            background: #d0d0d0;
+            background: #f5f5f5;
         }
 
         .dark-mode-toggle {
             position: fixed;
             top: 20px;
             left: 20px;
-            padding: 8px 16px;
-            background: transparent;
-            color: #666;
-            border: 1px solid #e0e0e0;
-            border-radius: 6px;
-            font-size: 0.75em;
+            padding: 10px 18px;
+            background: white;
+            color: #2d3748;
+            border: none;
+            border-radius: 24px;
+            font-size: 0.85em;
             cursor: pointer;
-            transition: all 0.2s ease;
-            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 600;
             z-index: 1000;
-            letter-spacing: 0.3px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         .dark-mode-toggle:hover {
             background: #f5f5f5;
-            color: #333;
-            border-color: #d0d0d0;
+            transform: translateY(-1px) scale(1.02);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
         }
 
         .dark-mode-toggle:active {
-            transform: scale(0.98);
+            transform: translateY(0) scale(1);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
         }
 
         body.dark-mode .focus-toggle {
-            background: transparent;
-            color: #646669;
-            border-color: #646669;
-        }
-
-        body.dark-mode .focus-toggle:hover {
             background: #2c2e31;
             color: #d1d0c5;
         }
 
+        body.dark-mode .focus-toggle:hover {
+            background: #3a3c3f;
+        }
+
         body.dark-mode.focus-mode .focus-toggle {
-            background: #2c2e31;
+            background: #3a3c3f;
             color: #d1d0c5;
         }
 
         body.dark-mode.focus-mode .focus-toggle:hover {
-            background: #646669;
+            background: #4a4c4f;
         }
 
         body.dark-mode .dark-mode-toggle {
-            background: transparent;
-            color: #646669;
-            border-color: #646669;
+            background: #2c2e31;
+            color: #d1d0c5;
         }
 
         body.dark-mode .dark-mode-toggle:hover {
+            background: #3a3c3f;
+        }
+
+        /* Settings Dropdown */
+        .settings-dropdown {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .settings-btn {
+            padding: 10px;
+            background: white;
+            color: #2d3748;
+            border: none;
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .settings-btn:hover {
+            background: #f5f5f5;
+            transform: translateY(-1px) scale(1.05);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .settings-btn:active {
+            transform: translateY(0) scale(1);
+        }
+
+        .settings-menu {
+            position: absolute;
+            top: 54px;
+            right: 0;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            padding: 8px;
+            min-width: 180px;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(-10px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .settings-menu.show {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+
+        .settings-menu-item {
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+
+        .settings-menu-item:hover {
+            background: #f5f5f5;
+        }
+
+        .settings-switch {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .settings-switch input[type="checkbox"] {
+            display: none;
+        }
+
+        .settings-slider {
+            position: relative;
+            width: 40px;
+            height: 22px;
+            background: #e0e0e0;
+            border-radius: 11px;
+            transition: background 0.3s;
+        }
+
+        .settings-slider::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 18px;
+            height: 18px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        .settings-switch input[type="checkbox"]:checked + .settings-slider {
+            background: #e2b714;
+        }
+
+        .settings-switch input[type="checkbox"]:checked + .settings-slider::after {
+            transform: translateX(18px);
+        }
+
+        .settings-label {
+            font-size: 0.9em;
+            font-weight: 500;
+            color: #2d3748;
+        }
+
+        /* Dark mode styles */
+        body.dark-mode .settings-btn {
             background: #2c2e31;
+            color: #d1d0c5;
+        }
+
+        body.dark-mode .settings-btn:hover {
+            background: #3a3c3f;
+        }
+
+        body.dark-mode .settings-menu {
+            background: #2c2e31;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        }
+
+        body.dark-mode .settings-menu-item:hover {
+            background: #3a3c3f;
+        }
+
+        body.dark-mode .settings-slider {
+            background: #646669;
+        }
+
+        body.dark-mode .settings-slider::after {
+            background: #d1d0c5;
+        }
+
+        body.dark-mode .settings-label {
             color: #d1d0c5;
         }
 
@@ -1292,11 +1486,19 @@
         }
 
         body.dark-mode .toggle-slider {
-            background-color: #2c2e31;
+            background-color: #646669;
+        }
+
+        body.dark-mode .toggle-slider:before {
+            background-color: #d1d0c5;
         }
 
         body.dark-mode input:checked + .toggle-slider {
             background-color: #e2b714;
+        }
+
+        body.dark-mode input:checked + .toggle-slider:before {
+            background-color: white;
         }
 
         body.dark-mode .slider {
@@ -1497,6 +1699,21 @@
             color: #3a3a3d;
         }
 
+        body.dark-mode .floating-save-btn {
+            background: #e2b714;
+            color: #323437;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        body.dark-mode .floating-save-btn.visible:hover {
+            background: #d1a513;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+        }
+
+        body.dark-mode .floating-save-btn.visible:active {
+            box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+
         body.dark-mode .instructions {
             color: #646669;
         }
@@ -1557,14 +1774,39 @@
     </style>
 </head>
 <body>
-    <button class="focus-toggle" id="focusToggle">Focus Mode</button>
-    <button class="dark-mode-toggle" id="darkModeToggle">Dark Mode</button>
+    <!-- Settings Dropdown -->
+    <div class="settings-dropdown">
+        <button class="settings-btn" id="settingsBtn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+            </svg>
+        </button>
+        <div class="settings-menu" id="settingsMenu">
+            <div class="settings-menu-item">
+                <label class="settings-switch">
+                    <input type="checkbox" id="darkModeToggle">
+                    <span class="settings-slider"></span>
+                    <span class="settings-label">Dark Mode</span>
+                </label>
+            </div>
+            <div class="settings-menu-item">
+                <label class="settings-switch">
+                    <input type="checkbox" id="focusToggle">
+                    <span class="settings-slider"></span>
+                    <span class="settings-label">Focus Mode</span>
+                </label>
+            </div>
+        </div>
+    </div>
     <div class="focus-hint">Press <kbd>Esc</kbd> to exit focus mode</div>
 
     <div class="container">
         <h1>Better QWERTY</h1>
         <p class="subtitle">Improve your typing skills by practicing specific keys and fingers</p>
 
+        <!-- Settings Container -->
+        <div class="settings-container">
         <!-- Mode Settings Panel -->
         <div class="settings-panel">
             <div class="settings-grid">
@@ -1575,7 +1817,7 @@
                         <input type="radio" id="modeWords" name="mode" value="words">
                         <label for="modeWords">Words</label>
                         <input type="radio" id="modeTimed" name="mode" value="timed">
-                        <label for="modeTimed">Timed</label>
+                        <label for="modeTimed">Time</label>
                         <input type="radio" id="modeUnlimited" name="mode" value="unlimited" checked>
                         <label for="modeUnlimited">Infinited</label>
                     </div>
@@ -1584,44 +1826,30 @@
                 <!-- Word Count -->
                 <div class="setting-item" id="wordCountSetting" style="display: none;">
                     <span class="setting-label">Words:</span>
-                    <div class="slider-container">
-                        <input type="range" min="5" max="50" value="15" class="slider" id="wordCountSlider">
-                        <span class="slider-value" id="wordCountValue">15</span>
+                    <div class="mode-toggle">
+                        <input type="radio" id="wordCount10" name="wordCount" value="10" checked>
+                        <label for="wordCount10">10</label>
+                        <input type="radio" id="wordCount25" name="wordCount" value="25">
+                        <label for="wordCount25">25</label>
+                        <input type="radio" id="wordCount50" name="wordCount" value="50">
+                        <label for="wordCount50">50</label>
+                        <input type="radio" id="wordCount100" name="wordCount" value="100">
+                        <label for="wordCount100">100</label>
                     </div>
                 </div>
 
                 <!-- Time Limit -->
                 <div class="setting-item" id="timeLimitSetting" style="display: none;">
                     <span class="setting-label">Time:</span>
-                    <div class="radio-group">
-                        <div class="radio-option">
-                            <input type="radio" id="time30" name="timeLimit" value="30" checked>
-                            <label for="time30">30s</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="time60" name="timeLimit" value="60">
-                            <label for="time60">60s</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="time120" name="timeLimit" value="120">
-                            <label for="time120">2min</label>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Word Length -->
-                <div class="setting-item" id="wordLengthSetting" style="display: none;">
-                    <span class="setting-label">Length:</span>
-                    <div class="setting-control">
-                        <div class="slider-container">
-                            <input type="range" min="2" max="12" value="3" class="slider" id="minWordLengthSlider">
-                            <span class="slider-value" id="minWordLengthValue">3</span>
-                        </div>
-                        <span style="color: #adb5bd; font-size: 0.85em;">-</span>
-                        <div class="slider-container">
-                            <input type="range" min="2" max="12" value="6" class="slider" id="maxWordLengthSlider">
-                            <span class="slider-value" id="maxWordLengthValue">6</span>
-                        </div>
+                    <div class="mode-toggle">
+                        <input type="radio" id="time15" name="timeLimit" value="15">
+                        <label for="time15">15</label>
+                        <input type="radio" id="time30" name="timeLimit" value="30" checked>
+                        <label for="time30">30</label>
+                        <input type="radio" id="time60" name="timeLimit" value="60">
+                        <label for="time60">60</label>
+                        <input type="radio" id="time120" name="timeLimit" value="120">
+                        <label for="time120">120</label>
                     </div>
                 </div>
             </div>
@@ -1675,7 +1903,7 @@
                 </div>
 
                 <!-- Error Mode -->
-                <div class="setting-item full-width">
+                <div class="setting-item">
                     <span class="setting-label">Error Mode:</span>
                     <div class="mode-toggle">
                         <input type="radio" id="errorModeBlock" name="errorMode" value="block" checked>
@@ -1684,8 +1912,35 @@
                         <label for="errorModeBackspace">Backspace</label>
                     </div>
                 </div>
+
+                <!-- Word Bank -->
+                <div class="setting-item">
+                    <span class="setting-label">Word Bank:</span>
+                    <div class="mode-toggle">
+                        <input type="radio" id="wordBank1k" name="wordBank" value="1k">
+                        <label for="wordBank1k">1K</label>
+                        <input type="radio" id="wordBank10k" name="wordBank" value="10k" checked>
+                        <label for="wordBank10k">10K</label>
+                        <input type="radio" id="wordBank25k" name="wordBank" value="25k">
+                        <label for="wordBank25k">25K</label>
+                        <input type="radio" id="wordBank450k" name="wordBank" value="450k">
+                        <label for="wordBank450k">450K</label>
+                    </div>
+                </div>
             </div>
         </div>
+
+        <!-- Floating Save Button -->
+        <button class="floating-save-btn" id="saveSettingsBtn" title="Save Settings">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                <polyline points="7 3 7 8 15 8"></polyline>
+            </svg>
+            <span>Save</span>
+        </button>
+        </div>
+        <!-- End Settings Container -->
 
         <div class="finger-selector">
             <div class="finger-buttons">
@@ -1889,7 +2144,30 @@
         window.addEventListener('DOMContentLoaded', () => {
             document.getElementById('modKey1').textContent = modifierKeyName;
             document.getElementById('modKey2').textContent = modifierKeyName;
+            // Load default word bank
+            loadWordBank('10k');
         });
+
+        // Function to load word bank from Monkeytype
+        async function loadWordBank(size) {
+            const urls = {
+                '1k': 'https://raw.githubusercontent.com/monkeytype/monkeytype/master/frontend/static/languages/english_1k.json',
+                '10k': 'https://raw.githubusercontent.com/monkeytype/monkeytype/master/frontend/static/languages/english_10k.json',
+                '25k': 'https://raw.githubusercontent.com/monkeytype/monkeytype/master/frontend/static/languages/english_25k.json',
+                '450k': 'https://raw.githubusercontent.com/monkeytype/monkeytype/master/frontend/static/languages/english_450k.json'
+            };
+
+            try {
+                const response = await fetch(urls[size]);
+                const data = await response.json();
+                realWords = data.words;
+                wordBankSize = size;
+                console.log(`Loaded ${realWords.length} words from ${size} word bank`);
+            } catch (error) {
+                console.error('Failed to load word bank, using fallback:', error);
+                realWords = fallbackWords;
+            }
+        }
 
         const fingerMap = {
             'left-pinky': ['`', '1', 'q', 'a', 'z', 'tab', 'caps', 'shift'],
@@ -1902,8 +2180,8 @@
             'right-pinky': ['0', '-', '=', 'p', '[', ']', '\\', ';', "'", '/', 'enter', 'backspace', 'shift-right']
         };
 
-        // Top 2000 most common English words (frequency-based, public domain)
-        const realWords = [
+        // Fallback word list
+        const fallbackWords = [
             'the', 'be', 'to', 'of', 'and', 'a', 'in', 'that', 'have', 'it', 'for', 'not', 'on', 'with', 'he', 'as', 'you', 'do', 'at', 'this',
             'but', 'his', 'by', 'from', 'they', 'we', 'say', 'her', 'she', 'or', 'an', 'will', 'my', 'one', 'all', 'would', 'there', 'their', 'what', 'so',
             'up', 'out', 'if', 'about', 'who', 'get', 'which', 'go', 'me', 'when', 'make', 'can', 'like', 'time', 'no', 'just', 'him', 'know', 'take', 'people',
@@ -1978,6 +2256,10 @@
             'dog', 'scene', 'peace', 'citizen', 'weapon', 'perspective', 'advantage', 'tone', 'ocean', 'signal', 'sentence', 'discipline', 'elsewhere', 'iron', 'perception', 'pack', 'contempor'
         ];
 
+        // Real words - loaded from Monkeytype API
+        let realWords = fallbackWords;
+        let wordBankSize = '10k'; // Default to 10K
+
         let selectedKeys = new Set();
         let currentText = '';
         let currentPosition = 0;
@@ -1992,9 +2274,7 @@
         let isUnlimitedMode = true;
 
         // Settings
-        let wordCount = 15;
-        let minWordLength = 3;
-        let maxWordLength = 6;
+        let wordCount = 10;
         let includeNumbers = false;
         let useRealWords = true;
         let useCapitals = false;
@@ -2006,6 +2286,7 @@
         const selectedKeysList = document.getElementById('selectedKeysList');
         const generateBtn = document.getElementById('generateBtn');
         const restartBtn = document.getElementById('restartBtn');
+        const saveSettingsBtn = document.getElementById('saveSettingsBtn');
         const targetText = document.getElementById('targetText');
         const typingInput = document.getElementById('typingInput');
         const accuracyEl = document.getElementById('accuracy');
@@ -2023,15 +2304,6 @@
         const modeUnlimited = document.getElementById('modeUnlimited');
         const wordCountSetting = document.getElementById('wordCountSetting');
         const timeLimitSetting = document.getElementById('timeLimitSetting');
-        const wordLengthSetting = document.getElementById('wordLengthSetting');
-        const wordCountSlider = document.getElementById('wordCountSlider');
-        const wordCountValue = document.getElementById('wordCountValue');
-        const minWordLengthSlider = document.getElementById('minWordLengthSlider');
-        const minWordLengthValue = document.getElementById('minWordLengthValue');
-        const maxWordLengthSlider = document.getElementById('maxWordLengthSlider');
-        const maxWordLengthValue = document.getElementById('maxWordLengthValue');
-        const minDisplay = document.getElementById('minDisplay');
-        const maxDisplay = document.getElementById('maxDisplay');
         const includeNumbersCheckbox = document.getElementById('includeNumbers');
         const wordSetGibberish = document.getElementById('wordSetGibberish');
         const wordSetReal = document.getElementById('wordSetReal');
@@ -2118,7 +2390,7 @@
             isUnlimitedMode = false;
             wordCountSetting.style.display = 'flex';
             timeLimitSetting.style.display = 'none';
-            wordLengthSetting.style.display = 'flex';
+            showSaveButton();
             if (selectedKeys.size > 0) generatePracticeText();
         });
 
@@ -2127,9 +2399,9 @@
             isUnlimitedMode = false;
             wordCountSetting.style.display = 'none';
             timeLimitSetting.style.display = 'flex';
-            wordLengthSetting.style.display = 'flex';
             const selectedTime = document.querySelector('input[name="timeLimit"]:checked');
             timeLimit = parseInt(selectedTime.value);
+            showSaveButton();
             if (selectedKeys.size > 0) generatePracticeText();
         });
 
@@ -2138,51 +2410,29 @@
             isUnlimitedMode = true;
             wordCountSetting.style.display = 'none';
             timeLimitSetting.style.display = 'none';
-            wordLengthSetting.style.display = 'none';
+            showSaveButton();
             if (selectedKeys.size > 0) generatePracticeText();
         });
 
         document.querySelectorAll('input[name="timeLimit"]').forEach(radio => {
             radio.addEventListener('change', (e) => {
                 timeLimit = parseInt(e.target.value);
+                showSaveButton();
                 if (isTimedMode && selectedKeys.size > 0) generatePracticeText();
             });
         });
 
-        wordCountSlider.addEventListener('input', (e) => {
-            wordCount = parseInt(e.target.value);
-            wordCountValue.textContent = wordCount;
-            if (!isTimedMode && selectedKeys.size > 0) generatePracticeText();
-        });
-
-        minWordLengthSlider.addEventListener('input', (e) => {
-            minWordLength = parseInt(e.target.value);
-            if (minWordLength > maxWordLength) {
-                maxWordLength = minWordLength;
-                maxWordLengthSlider.value = maxWordLength;
-                maxWordLengthValue.textContent = maxWordLength;
-            }
-            minWordLengthValue.textContent = minWordLength;
-            minDisplay.textContent = minWordLength;
-            maxDisplay.textContent = maxWordLength;
-            if (selectedKeys.size > 0) generatePracticeText();
-        });
-
-        maxWordLengthSlider.addEventListener('input', (e) => {
-            maxWordLength = parseInt(e.target.value);
-            if (maxWordLength < minWordLength) {
-                minWordLength = maxWordLength;
-                minWordLengthSlider.value = minWordLength;
-                minWordLengthValue.textContent = minWordLength;
-            }
-            maxWordLengthValue.textContent = maxWordLength;
-            minDisplay.textContent = minWordLength;
-            maxDisplay.textContent = maxWordLength;
-            if (selectedKeys.size > 0) generatePracticeText();
+        document.querySelectorAll('input[name="wordCount"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                wordCount = parseInt(e.target.value);
+                showSaveButton();
+                if (!isTimedMode && !isUnlimitedMode && selectedKeys.size > 0) generatePracticeText();
+            });
         });
 
         includeNumbersCheckbox.addEventListener('change', (e) => {
             includeNumbers = e.target.checked;
+            showSaveButton();
             const numberKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
             // Add or remove number keys based on toggle
@@ -2209,22 +2459,26 @@
 
         wordSetGibberish.addEventListener('change', () => {
             useRealWords = false;
+            showSaveButton();
             if (selectedKeys.size > 0) generatePracticeText();
         });
 
         wordSetReal.addEventListener('change', () => {
             useRealWords = true;
+            showSaveButton();
             if (selectedKeys.size > 0) generatePracticeText();
         });
 
         includeCapitalsCheckbox.addEventListener('change', (e) => {
             useCapitals = e.target.checked;
+            showSaveButton();
             updateKeyboardVisuals();
             if (selectedKeys.size > 0) generatePracticeText();
         });
 
         includeSpecialCharsCheckbox.addEventListener('change', (e) => {
             includeSpecialChars = e.target.checked;
+            showSaveButton();
             const specialChars = ['`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '=', '+', '[', ']', '{', '}', '\\', '|', ';', ':', "'", '"', ',', '<', '.', '>', '/', '?'];
 
             // Add or remove special char keys based on toggle
@@ -2253,6 +2507,20 @@
         document.querySelectorAll('input[name="errorMode"]').forEach(radio => {
             radio.addEventListener('change', (e) => {
                 errorMode = e.target.value;
+                showSaveButton();
+            });
+        });
+
+        // Word Bank listeners
+        document.querySelectorAll('input[name="wordBank"]').forEach(radio => {
+            radio.addEventListener('change', async (e) => {
+                const size = e.target.value;
+                showSaveButton();
+                await loadWordBank(size);
+                // Regenerate text with new word bank if already practicing
+                if (selectedKeys.size > 0 && currentText) {
+                    generatePracticeText();
+                }
             });
         });
 
@@ -2480,7 +2748,7 @@
 
             let text = '';
             for (let i = 0; i < numWords; i++) {
-                const wordLength = Math.floor(Math.random() * (maxWordLength - minWordLength + 1)) + minWordLength;
+                const wordLength = Math.floor(Math.random() * 7) + 2; // Random length between 2-8 characters
 
                 // Generate word primarily from letters
                 const useLettersForWord = letters.length > 0;
@@ -2804,6 +3072,10 @@
 
         generateBtn.addEventListener('click', generatePracticeText);
         restartBtn.addEventListener('click', restartTest);
+        saveSettingsBtn.addEventListener('click', () => {
+            saveSettings();
+            hideSaveButton();
+        });
 
         // Click on target text to focus input and start typing
         targetText.addEventListener('click', () => {
@@ -2827,6 +3099,22 @@
             }
         }, 100);
 
+        // Settings Dropdown
+        const settingsBtn = document.getElementById('settingsBtn');
+        const settingsMenu = document.getElementById('settingsMenu');
+
+        settingsBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            settingsMenu.classList.toggle('show');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!settingsMenu.contains(e.target) && !settingsBtn.contains(e.target)) {
+                settingsMenu.classList.remove('show');
+            }
+        });
+
         // Focus Mode
         const focusToggle = document.getElementById('focusToggle');
         let isFocusMode = false;
@@ -2834,10 +3122,12 @@
         function toggleFocusMode() {
             isFocusMode = !isFocusMode;
             document.body.classList.toggle('focus-mode', isFocusMode);
-            focusToggle.textContent = isFocusMode ? 'Exit Focus' : 'Focus Mode';
+            focusToggle.checked = isFocusMode;
         }
 
-        focusToggle.addEventListener('click', toggleFocusMode);
+        focusToggle.addEventListener('change', () => {
+            toggleFocusMode();
+        });
 
         // Dark Mode
         const darkModeToggle = document.getElementById('darkModeToggle');
@@ -2849,17 +3139,19 @@
         function toggleDarkMode() {
             isDarkMode = !isDarkMode;
             document.body.classList.toggle('dark-mode', isDarkMode);
-            darkModeToggle.textContent = isDarkMode ? 'Light Mode' : 'Dark Mode';
+            darkModeToggle.checked = isDarkMode;
             localStorage.setItem('darkMode', isDarkMode);
         }
 
         // Initialize dark mode
         if (isDarkMode) {
             document.body.classList.add('dark-mode');
-            darkModeToggle.textContent = 'Light Mode';
+            darkModeToggle.checked = true;
         }
 
-        darkModeToggle.addEventListener('click', toggleDarkMode);
+        darkModeToggle.addEventListener('change', () => {
+            toggleDarkMode();
+        });
 
         // Keyboard shortcuts
         document.addEventListener('keydown', (e) => {
@@ -2977,27 +3269,134 @@
             }
         });
 
+        // Save button visibility
+        function showSaveButton() {
+            saveSettingsBtn.classList.add('visible');
+        }
+
+        function hideSaveButton() {
+            saveSettingsBtn.classList.remove('visible');
+        }
+
+        // LocalStorage functions
+        function saveSettings() {
+            const settings = {
+                mode: isTimedMode ? 'timed' : (isUnlimitedMode ? 'unlimited' : 'words'),
+                wordCount: wordCount,
+                timeLimit: timeLimit,
+                includeNumbers: includeNumbers,
+                useRealWords: useRealWords,
+                includeCapitals: useCapitals,
+                includeSpecialChars: includeSpecialChars,
+                errorMode: errorMode,
+                wordBankSize: wordBankSize
+            };
+            localStorage.setItem('typingPracticeSettings', JSON.stringify(settings));
+        }
+
+        function loadSettings() {
+            const saved = localStorage.getItem('typingPracticeSettings');
+            if (!saved) return;
+
+            try {
+                const settings = JSON.parse(saved);
+
+                // Apply mode settings
+                if (settings.mode === 'timed') {
+                    isTimedMode = true;
+                    isUnlimitedMode = false;
+                    modeTimed.checked = true;
+                } else if (settings.mode === 'unlimited') {
+                    isTimedMode = false;
+                    isUnlimitedMode = true;
+                    modeUnlimited.checked = true;
+                } else {
+                    isTimedMode = false;
+                    isUnlimitedMode = false;
+                    modeWords.checked = true;
+                }
+
+                // Apply word count
+                if (settings.wordCount !== undefined) {
+                    wordCount = settings.wordCount;
+                    const wordCountRadio = document.getElementById(`wordCount${settings.wordCount}`);
+                    if (wordCountRadio) wordCountRadio.checked = true;
+                }
+
+                // Apply time limit
+                if (settings.timeLimit !== undefined) {
+                    timeLimit = settings.timeLimit;
+                    const timeLimitRadio = document.getElementById(`time${settings.timeLimit}`);
+                    if (timeLimitRadio) timeLimitRadio.checked = true;
+                }
+
+                // Apply toggles
+                if (settings.includeNumbers !== undefined) {
+                    includeNumbers = settings.includeNumbers;
+                    includeNumbersCheckbox.checked = settings.includeNumbers;
+                }
+
+                if (settings.useRealWords !== undefined) {
+                    useRealWords = settings.useRealWords;
+                    if (settings.useRealWords) {
+                        wordSetReal.checked = true;
+                    } else {
+                        wordSetGibberish.checked = true;
+                    }
+                }
+
+                if (settings.includeCapitals !== undefined) {
+                    includeCapitals = settings.includeCapitals;
+                    includeCapitalsCheckbox.checked = settings.includeCapitals;
+                }
+
+                if (settings.includeSpecialChars !== undefined) {
+                    includeSpecialChars = settings.includeSpecialChars;
+                    includeSpecialCharsCheckbox.checked = settings.includeSpecialChars;
+                }
+
+                // Apply error mode
+                if (settings.errorMode !== undefined) {
+                    errorMode = settings.errorMode;
+                    if (settings.errorMode === 'backspace') {
+                        errorModeBackspace.checked = true;
+                    } else {
+                        errorModeBlock.checked = true;
+                    }
+                }
+
+                // Apply word bank size
+                if (settings.wordBankSize !== undefined) {
+                    wordBankSize = settings.wordBankSize;
+                    const wordBankRadio = document.getElementById(`wordBank${settings.wordBankSize}`);
+                    if (wordBankRadio) wordBankRadio.checked = true;
+                }
+            } catch (error) {
+                console.error('Error loading settings:', error);
+            }
+        }
+
         // Initialize settings display based on defaults
         function initializeSettingsDisplay() {
             // Set up display based on default mode (Infinited)
             if (isUnlimitedMode) {
                 wordCountSetting.style.display = 'none';
                 timeLimitSetting.style.display = 'none';
-                wordLengthSetting.style.display = 'none';
             } else if (isTimedMode) {
                 wordCountSetting.style.display = 'none';
                 timeLimitSetting.style.display = 'flex';
-                wordLengthSetting.style.display = 'flex';
             } else {
                 wordCountSetting.style.display = 'flex';
                 timeLimitSetting.style.display = 'none';
-                wordLengthSetting.style.display = 'flex';
             }
         }
 
         // Initialize: Auto-select all fingers on page load
         window.addEventListener('DOMContentLoaded', () => {
-            // Initialize settings display first
+            // Load saved settings first
+            loadSettings();
+
+            // Initialize settings display based on loaded settings
             initializeSettingsDisplay();
 
             const numberKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
