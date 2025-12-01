@@ -434,9 +434,7 @@
             overflow-y: auto;
             overflow-x: hidden;
             letter-spacing: 0.02em;
-            word-wrap: break-word;
             word-break: break-word;
-            overflow-wrap: break-word;
             white-space: pre-wrap;
             text-align: left;
             color: #2d3748;
@@ -503,6 +501,11 @@
         .target-text .space-char {
             opacity: 0.4;
             font-size: 0.9em;
+        }
+
+        /* Word wrapper to prevent mid-word breaks */
+        .word-wrapper {
+            display: inline-block;
         }
 
         @keyframes blink-cursor {
@@ -577,11 +580,22 @@
             font-family: 'SF Mono', 'Monaco', monospace;
         }
 
+        .practice-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .practice-header h2 {
+            margin: 0;
+        }
+
         .button-group {
             display: flex;
             gap: 8px;
-            justify-content: flex-start;
-            margin-top: 30px;
+            justify-content: flex-end;
+            margin: 0;
             opacity: 0.4;
             transition: opacity 0.3s;
         }
@@ -682,7 +696,7 @@
         .setting-item {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 8px;
         }
 
         .setting-item.full-width {
@@ -695,7 +709,6 @@
             color: #495057;
             font-size: 0.9em;
             white-space: nowrap;
-            min-width: 105px;
         }
 
         .setting-control {
@@ -1084,10 +1097,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: transparent;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(8px);
             cursor: pointer;
             z-index: 10;
             transition: opacity 0.3s ease;
+            border-radius: 8px;
         }
 
         .typing-overlay.hidden {
@@ -1099,17 +1114,90 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            color: #999;
+            color: #666;
             font-size: 1.1em;
             font-weight: 500;
         }
 
         .overlay-content svg {
-            color: #999;
+            color: #666;
         }
 
         .typing-area {
             position: relative;
+        }
+
+        /* Custom Modal */
+        .custom-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            backdrop-filter: blur(4px);
+        }
+
+        .custom-modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            padding: 32px;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: modalFadeIn 0.2s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-body {
+            color: #2d3748;
+            font-size: 1.1em;
+            line-height: 1.8;
+            margin-bottom: 24px;
+            white-space: pre-line;
+            text-align: center;
+        }
+
+        .modal-btn {
+            width: 100%;
+            padding: 12px 24px;
+            background: #e2b714;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            letter-spacing: 0.3px;
+        }
+
+        .modal-btn:hover {
+            background: #d4a912;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(226, 183, 20, 0.3);
+        }
+
+        .modal-btn:active {
+            transform: translateY(0);
         }
 
         /* Dark Mode Styles */
@@ -1274,6 +1362,15 @@
             transform: translateY(-2px);
         }
 
+        body.dark-mode .key.selected[data-finger]:hover {
+            background: inherit;
+            border-color: inherit;
+            color: inherit;
+            transform: translateY(-4px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+            filter: brightness(1.15);
+        }
+
         body.dark-mode .key.disabled {
             background: #2c2e31;
             color: #3a3a3d;
@@ -1287,6 +1384,14 @@
         body.dark-mode .typing-area {
             background: #2c2e31;
             border: none;
+        }
+
+        body.dark-mode .progress-bar-container {
+            background: #2c2e31;
+        }
+
+        body.dark-mode .progress-bar {
+            background: #646669;
         }
 
         body.dark-mode .target-text {
@@ -1328,7 +1433,7 @@
         }
 
         body.dark-mode .stats {
-            background: #2c2e31;
+            background: transparent;
             border: none;
         }
 
@@ -1404,12 +1509,33 @@
             color: #d1d0c5;
         }
 
+        body.dark-mode .typing-overlay {
+            background: rgba(50, 52, 55, 0.8);
+            backdrop-filter: blur(8px);
+        }
+
         body.dark-mode .overlay-content {
-            color: #646669;
+            color: #d1d0c5;
         }
 
         body.dark-mode .overlay-content svg {
-            color: #646669;
+            color: #d1d0c5;
+        }
+
+        body.dark-mode .modal-content {
+            background: #2c2e31;
+        }
+
+        body.dark-mode .modal-body {
+            color: #d1d0c5;
+        }
+
+        body.dark-mode .key.home-row::after {
+            background: #646669;
+        }
+
+        body.dark-mode .key.home-row.selected::after {
+            background: #d1d0c5;
         }
     </style>
 </head>
@@ -1653,7 +1779,13 @@
         </div>
 
         <div class="practice-area">
-            <h2>Typing Practice</h2>
+            <div class="practice-header">
+                <h2>Typing Practice</h2>
+                <div class="button-group">
+                    <button class="btn-restart" id="restartBtn" disabled>Restart Test</button>
+                    <button class="btn-generate" id="generateBtn" disabled>Generate New Exercise</button>
+                </div>
+            </div>
 
             <div class="stats">
                 <div class="stat-box">
@@ -1686,25 +1818,21 @@
                 <div class="progress-bar" id="progressBar" style="width: 0%;"></div>
             </div>
 
-            <div class="typing-overlay" id="typingOverlay">
-                <div class="overlay-content">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/>
-                    </svg>
-                    <span>Click here or press any key to focus</span>
-                </div>
-            </div>
             <div class="target-text" id="targetText">
+                <div class="typing-overlay" id="typingOverlay">
+                    <div class="overlay-content">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/>
+                        </svg>
+                        <span>Click here or press any key to focus</span>
+                    </div>
+                </div>
                 Select keys above to generate practice text
             </div>
             <div class="input-area">
                 <input type="text" class="typing-input" id="typingInput" placeholder="Start typing here..." disabled>
             </div>
 
-            <div class="button-group">
-                <button class="btn-restart" id="restartBtn" disabled>Restart Test</button>
-                <button class="btn-generate" id="generateBtn" disabled>Generate New Exercise</button>
-            </div>
             <p class="instructions">Select keys and start typing! Use buttons or keyboard shortcuts below.</p>
             <div class="shortcuts">
                 <strong>Keyboard Shortcuts:</strong>
@@ -1713,6 +1841,14 @@
                 <span class="shortcut-key" id="modKey1">Cmd</span>+<span class="shortcut-key">N</span> New •
                 <span class="shortcut-key" id="modKey2">Cmd</span>+<span class="shortcut-key">K</span> Focus Input
             </div>
+        </div>
+    </div>
+
+    <!-- Custom Modal -->
+    <div class="custom-modal" id="customModal">
+        <div class="modal-content">
+            <div class="modal-body" id="modalBody"></div>
+            <button class="modal-btn" id="modalBtn">OK</button>
         </div>
     </div>
 
@@ -1820,6 +1956,7 @@
         let errorCount = 0;
         let totalTyped = 0;
         let startTime = null;
+        let lastWpmUpdate = 0;
         let timerInterval = null;
         let timeLimit = 30;
         let isTimedMode = false;
@@ -2172,6 +2309,7 @@
             errorCount = 0;
             totalTyped = 0;
             startTime = null;
+            lastWpmUpdate = 0;
 
             if (timerInterval) {
                 clearInterval(timerInterval);
@@ -2222,7 +2360,7 @@
             const finalAccuracy = totalTyped === 0 ? 100 : Math.round(((totalTyped - errorCount) / totalTyped) * 100);
 
             setTimeout(() => {
-                alert(`Time's up!\n\nWPM: ${finalWPM}\nAccuracy: ${finalAccuracy}%\nErrors: ${errorCount}\n\nClick "Generate New Exercise" to try again!`);
+                showModal(`Time's up!\n\nWPM: ${finalWPM}\nAccuracy: ${finalAccuracy}%\nErrors: ${errorCount}\n\nClick "Generate New Exercise" to try again!`);
             }, 100);
         }
 
@@ -2375,6 +2513,9 @@
                 newText += generateGibberishText(keysArray, numWords);
             }
 
+            // Remove any double spaces
+            newText = newText.replace(/\s+/g, ' ');
+
             currentText += newText;
             renderText();
         }
@@ -2391,7 +2532,7 @@
             const keysArray = getFilteredKeys();
 
             if (keysArray.length === 0) {
-                alert('Please select some typeable keys (letters, numbers, symbols)');
+                showModal('Please select some typeable keys (letters, numbers, symbols)');
                 return;
             }
 
@@ -2405,11 +2546,15 @@
                 text = generateGibberishText(keysArray, numWords);
             }
 
+            // Remove any double spaces
+            text = text.replace(/\s+/g, ' ').trim();
+
             currentText = text;
             currentPosition = 0;
             errorCount = 0;
             totalTyped = 0;
             startTime = null;
+            lastWpmUpdate = 0;
 
             // Setup timer display
             if (isTimedMode) {
@@ -2425,29 +2570,53 @@
 
             typingInput.value = '';
             typingInput.disabled = false;
+            showOverlay();
         }
 
         function renderText() {
             let html = '';
-            for (let i = 0; i < currentText.length; i++) {
-                const char = currentText[i];
-                let className = '';
+            let i = 0;
 
-                if (i < currentPosition) {
-                    className = 'correct';
-                } else if (i === currentPosition) {
-                    className = 'current';
-                } else {
-                    className = 'upcoming';
+            while (i < currentText.length) {
+                // Start a word wrapper
+                html += '<span class="word-wrapper">';
+
+                // Collect all characters until we hit a space or end of text
+                while (i < currentText.length && currentText[i] !== ' ') {
+                    const char = currentText[i];
+                    let className = '';
+
+                    if (i < currentPosition) {
+                        className = 'correct';
+                    } else if (i === currentPosition) {
+                        className = 'current';
+                    } else {
+                        className = 'upcoming';
+                    }
+
+                    html += `<span class="${className}" data-index="${i}">${char}</span>`;
+                    i++;
                 }
 
-                // Add space-char class for spaces
-                if (char === ' ') {
+                html += '</span>';
+
+                // Handle space if present
+                if (i < currentText.length && currentText[i] === ' ') {
+                    let className = '';
+                    if (i < currentPosition) {
+                        className = 'correct';
+                    } else if (i === currentPosition) {
+                        className = 'current';
+                    } else {
+                        className = 'upcoming';
+                    }
                     className += ' space-char';
-                }
 
-                html += `<span class="${className}" data-index="${i}">${char === ' ' ? '␣' : char}</span>`;
+                    html += `<span class="${className}" data-index="${i}"> </span>`;
+                    i++;
+                }
             }
+
             targetText.innerHTML = html;
 
             // Auto-scroll to keep current character visible
@@ -2479,9 +2648,13 @@
             progressEl.textContent = `${currentPosition}/${currentText.length}`;
             errorsEl.textContent = errorCount;
 
-            // Update WPM
-            const wpm = calculateWPM();
-            wpmEl.textContent = wpm;
+            // Update WPM only every 5 seconds
+            const now = Date.now();
+            if (now - lastWpmUpdate >= 5000) {
+                const wpm = calculateWPM();
+                wpmEl.textContent = wpm;
+                lastWpmUpdate = now;
+            }
 
             // Update time elapsed
             if (startTime) {
@@ -2540,7 +2713,7 @@
                             const finalWPM = calculateWPM();
                             const finalAccuracy = totalTyped === 0 ? 100 : Math.round(((totalTyped - errorCount) / totalTyped) * 100);
                             setTimeout(() => {
-                                alert(`Great job!\n\nWPM: ${finalWPM}\nAccuracy: ${finalAccuracy}%\nErrors: ${errorCount}\n\nClick "Generate New Exercise" for another round!`);
+                                showModal(`Great job!\n\nWPM: ${finalWPM}\nAccuracy: ${finalAccuracy}%\nErrors: ${errorCount}\n\nClick "Generate New Exercise" for another round!`);
                             }, 100);
                         }
                     }
@@ -2692,6 +2865,41 @@
                 if (!['Shift', 'Control', 'Alt', 'Meta'].includes(e.key)) {
                     hideOverlay();
                 }
+            }
+        });
+
+        // Custom Modal
+        const customModal = document.getElementById('customModal');
+        const modalBody = document.getElementById('modalBody');
+        const modalBtn = document.getElementById('modalBtn');
+
+        function showModal(message) {
+            modalBody.textContent = message;
+            customModal.classList.add('show');
+        }
+
+        function hideModal() {
+            customModal.classList.remove('show');
+        }
+
+        // Close modal on button click
+        if (modalBtn) {
+            modalBtn.addEventListener('click', hideModal);
+        }
+
+        // Close modal on backdrop click
+        if (customModal) {
+            customModal.addEventListener('click', (e) => {
+                if (e.target === customModal) {
+                    hideModal();
+                }
+            });
+        }
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && customModal.classList.contains('show')) {
+                hideModal();
             }
         });
 
