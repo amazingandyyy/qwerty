@@ -1043,26 +1043,25 @@
         function startTimer() {
             if (!isTimedMode) return;
 
-            let elapsed = 0;
+            const startTimeMs = Date.now();
+            const timeLimitMs = timeLimit * 1000;
+
+            // Update every 50ms for smooth progress bar
             timerInterval = setInterval(() => {
-                elapsed++;
-                const remaining = timeLimit - elapsed;
-                timeRemaining.textContent = remaining + 's';
+                const elapsedMs = Date.now() - startTimeMs;
+                const remainingMs = Math.max(0, timeLimitMs - elapsedMs);
+                const remainingSec = Math.ceil(remainingMs / 1000);
 
-                if (remaining <= 10 && remaining > 5) {
-                    timerDisplay.classList.add('warning');
-                    timerDisplay.classList.remove('danger');
-                } else if (remaining <= 5) {
-                    timerDisplay.classList.add('danger');
-                    timerDisplay.classList.remove('warning');
-                }
+                timeRemaining.textContent = remainingSec + 's';
 
-                if (remaining <= 0) {
+                // No color changes - keep it consistent
+
+                if (remainingMs <= 0) {
                     clearInterval(timerInterval);
                     timerInterval = null;
                     endTest();
                 }
-            }, 1000);
+            }, 50);
         }
 
         function endTest() {
@@ -1897,6 +1896,11 @@
         }
 
         function showCompletionTooltip(wpm, accuracy, errors) {
+            // Removed completion modal - it was distracting
+            // Stats are already visible in the UI, no need for a popup
+            return;
+
+            /* Disabled tooltip code
             const tooltip = document.getElementById('completionTooltip');
             if (!tooltip) return;
 
@@ -1936,6 +1940,7 @@
             setTimeout(() => {
                 tooltip.classList.remove('show');
             }, 5000);
+            */
         }
 
         // Close modal on button click

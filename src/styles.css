@@ -1894,7 +1894,7 @@
         .progress-bar {
             height: 100%;
             background: #2d3748;
-            transition: width 0.3s ease;
+            transition: width 0.05s linear;
             border-radius: 0;
         }
 
@@ -1908,13 +1908,11 @@
         }
 
         .timer-display.warning {
-            color: #f39c12;
-            animation: none;
+            /* Removed distracting color change */
         }
 
         .timer-display.danger {
-            color: #e74c3c;
-            animation: none;
+            /* Removed distracting color change */
         }
 
         @keyframes pulse-warning {
@@ -3466,6 +3464,7 @@
         }
 
         body.dark-mode .progress-bar {
+            transition: width 0.05s linear;
             background: #646669;
         }
 
