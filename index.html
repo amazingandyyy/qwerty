@@ -298,8 +298,8 @@
         }
 
         .key.selected[data-finger="left-ring"]:hover {
-            background: #f87171;
-            border-color: #fca5a5;
+            background: #a78bfa;
+            border-color: #c4b5fd;
         }
 
         .key.selected[data-finger="left-middle"]:hover {
@@ -509,48 +509,235 @@
             font-weight: 600;
         }
 
-        /* Lessons Section */
-        .lessons-container {
-            margin: 32px 0;
-            padding: 32px;
+        /* Main Layout - Push design */
+        .main-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Lessons Sidebar */
+        .lessons-sidebar {
+            width: 380px;
+            min-width: 380px;
+            height: 100vh;
             background: white;
-            border-radius: 16px;
-            border: 1px solid #e8e8e8;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02), 0 1px 2px rgba(0, 0, 0, 0.04);
+            transform: translateX(-100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                        margin-left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            overflow-x: hidden;
+            position: sticky;
+            top: 0;
+            will-change: transform;
+            margin-left: -380px;
         }
 
-        body.dark-mode .lessons-container {
+        body.dark-mode .lessons-sidebar {
             background: #18191a;
-            border-color: #2a2d32;
         }
 
-        .lessons-header {
-            text-align: center;
-            margin-bottom: 24px;
+        .lessons-sidebar.open {
+            transform: translateX(0);
+            margin-left: 0;
         }
 
-        .lessons-header h3 {
+        .lessons-sidebar-header {
+            position: sticky;
+            top: 0;
+            background: white;
+            padding: 24px;
+            border-bottom: 1px solid #e8e8e8;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+        }
+
+        body.dark-mode .lessons-sidebar-header {
+            background: #18191a;
+            border-bottom-color: #2a2d32;
+        }
+
+        .lessons-sidebar-header h3 {
             font-size: 1.5em;
             color: #1a1a1a;
-            margin-bottom: 8px;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
-        body.dark-mode .lessons-header h3 {
+        .lessons-sidebar-header h3::before {
+            content: "📚";
+            font-size: 1.2em;
+            line-height: 1;
+        }
+
+        body.dark-mode .lessons-sidebar-header h3 {
             color: #e8e8e8;
+        }
+
+        .sidebar-close {
+            width: 36px;
+            height: 36px;
+            border: none;
+            background: #f8f8f8;
+            border-radius: 8px;
+            font-size: 24px;
+            color: #525252;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+        }
+
+        .sidebar-close:hover {
+            background: #e8e8e8;
+            color: #1a1a1a;
+        }
+
+        body.dark-mode .sidebar-close {
+            background: #2a2d32;
+            color: #a0a0a0;
+        }
+
+        body.dark-mode .sidebar-close:hover {
+            background: #3a3d42;
+            color: #e8e8e8;
+        }
+
+        .lessons-sidebar-content {
+            padding: 24px;
         }
 
         .lessons-subtitle {
             color: #737373;
-            font-size: 0.95em;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+            text-align: center;
         }
 
         body.dark-mode .lessons-subtitle {
             color: #888;
         }
 
+        /* Container - grows to fill available space */
+        .container {
+            flex: 1;
+            min-width: 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Lessons Toggle Button */
+        .lessons-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: none;
+            background: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 900;
+            padding: 10px;
+            color: #2d3748;
+        }
+
+        body.dark-mode .lessons-toggle {
+            background: #2c2e31;
+            color: #d1d0c5;
+        }
+
+        .lessons-toggle:hover {
+            background: #f5f5f5;
+            transform: translateY(-1px) scale(1.05);
+        }
+
+        body.dark-mode .lessons-toggle:hover {
+            background: #3a3c3f;
+        }
+
+        .lessons-toggle:active {
+            transform: translateY(0) scale(1);
+        }
+
+        .lessons-toggle svg {
+            color: inherit;
+        }
+
+        .lessons-toggle .toggle-text {
+            display: none;
+        }
+
+        /* Active Course Title */
+        .active-course-title {
+            position: fixed;
+            top: 20px;
+            left: 72px;
+            height: 44px;
+            padding: 0 16px;
+            border-radius: 22px;
+            background: white;
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 500;
+            color: #2d3748;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 900;
+            white-space: nowrap;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        }
+
+        body.dark-mode .active-course-title {
+            background: #2c2e31;
+            color: #d1d0c5;
+        }
+
+        .active-course-title.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .lessons-toggle .progress-badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            width: 20px;
+            height: 20px;
+            background: #10b981;
+            color: white;
+            border-radius: 50%;
+            font-size: 0.65em;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid white;
+        }
+
+        body.dark-mode .lessons-toggle .progress-badge {
+            border-color: #2c2e31;
+        }
+
+        body.focus-mode .lessons-toggle {
+            opacity: 0.3;
+        }
+
+        body.focus-mode .lessons-toggle:hover {
+            opacity: 1;
+        }
+
         .lessons-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            display: flex;
+            flex-direction: column;
             gap: 16px;
         }
 
@@ -571,9 +758,11 @@
         }
 
         .lesson-card:hover {
-            transform: translateY(-2px);
-            border-color: #e2b714;
-            box-shadow: 0 4px 12px rgba(226, 183, 20, 0.15);
+            border-color: #d0d0d0;
+        }
+
+        body.dark-mode .lesson-card:hover {
+            border-color: #4a4d52;
         }
 
         .lesson-card.active {
@@ -586,32 +775,204 @@
             border-color: #e2b714;
         }
 
+        .lesson-delete-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            line-height: 1;
+            transition: all 0.2s ease;
+            z-index: 10;
+        }
+
+        .lesson-delete-btn:hover {
+            background: #ef4444;
+            color: white;
+            border-color: #ef4444;
+            transform: scale(1.1);
+        }
+
+        body.dark-mode .lesson-delete-btn {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: rgba(239, 68, 68, 0.4);
+        }
+
+        body.dark-mode .lesson-delete-btn:hover {
+            background: #ef4444;
+            color: white;
+            border-color: #ef4444;
+        }
+
+        /* Mark as Finished button */
+        .lesson-mark-finished-btn {
+            width: 100%;
+            padding: 8px 12px;
+            margin-top: 12px;
+            background: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 6px;
+            font-size: 0.85em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .lesson-mark-finished-btn:hover {
+            background: #10b981;
+            color: white;
+            border-color: #10b981;
+            transform: translateY(-1px);
+        }
+
+        body.dark-mode .lesson-mark-finished-btn {
+            background: rgba(16, 185, 129, 0.15);
+            border-color: rgba(16, 185, 129, 0.4);
+        }
+
+        body.dark-mode .lesson-mark-finished-btn:hover {
+            background: #10b981;
+            color: white;
+            border-color: #10b981;
+        }
+
+        /* Completed badge */
+        .lesson-completed-badge {
+            width: 100%;
+            padding: 8px 12px;
+            margin-top: 12px;
+            background: rgba(16, 185, 129, 0.15);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 6px;
+            font-size: 0.85em;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .lesson-completed-badge:hover {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            border-color: rgba(239, 68, 68, 0.3);
+            transform: translateY(-1px);
+        }
+
+        body.dark-mode .lesson-completed-badge {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: rgba(16, 185, 129, 0.4);
+        }
+
+        body.dark-mode .lesson-completed-badge:hover {
+            background: rgba(239, 68, 68, 0.15);
+            border-color: rgba(239, 68, 68, 0.4);
+        }
+
+        /* Completed course card styling */
         .lesson-card.completed {
-            border-color: #10b981;
-            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+            opacity: 0.88;
         }
 
-        body.dark-mode .lesson-card.completed {
-            background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
-            border-color: #10b981;
+        .lesson-card.completed:hover {
+            opacity: 1;
         }
 
-        .lesson-card.locked {
-            opacity: 0.5;
-            cursor: not-allowed;
+        /* Placeholder card for creating custom courses */
+        .lesson-card-placeholder {
+            border: 2px dashed #d0d0d0 !important;
+            background: #fafafa !important;
         }
 
-        .lesson-card.locked:hover {
-            transform: none;
-            border-color: #e8e8e8;
-            box-shadow: none;
+        body.dark-mode .lesson-card-placeholder {
+            border-color: #3a3d42 !important;
+            background: #1a1c1e !important;
         }
 
-        body.dark-mode .lesson-card.locked:hover {
-            border-color: #2a2d32;
+        .lesson-card-placeholder .lesson-title,
+        .lesson-card-placeholder .lesson-description {
+            outline: none;
+            transition: all 0.2s;
+            cursor: text;
         }
 
-        .lesson-number {
+        .lesson-card-placeholder .lesson-title:hover,
+        .lesson-card-placeholder .lesson-description:hover {
+            background: rgba(226, 183, 20, 0.03);
+            border-radius: 4px;
+        }
+
+        .lesson-card-placeholder .lesson-title:focus,
+        .lesson-card-placeholder .lesson-description:focus {
+            background: rgba(226, 183, 20, 0.08);
+            border-radius: 4px;
+        }
+
+        body.dark-mode .lesson-card-placeholder .lesson-title:hover,
+        body.dark-mode .lesson-card-placeholder .lesson-description:hover {
+            background: rgba(226, 183, 20, 0.05);
+        }
+
+        body.dark-mode .lesson-card-placeholder .lesson-title:focus,
+        body.dark-mode .lesson-card-placeholder .lesson-description:focus {
+            background: rgba(226, 183, 20, 0.1);
+        }
+
+        .lesson-card-placeholder .lesson-title:empty:before,
+        .lesson-card-placeholder .lesson-description:empty:before {
+            content: attr(data-placeholder);
+            color: #a0a0a0;
+        }
+
+        .difficulty-cycle-badge {
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.2s;
+        }
+
+        .difficulty-cycle-badge:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
+
+        .difficulty-cycle-badge:active {
+            transform: scale(0.95);
+        }
+
+        .create-course-inline-btn {
+            width: 100%;
+            margin-top: 12px;
+            padding: 10px 16px;
+            background: linear-gradient(135deg, #e2b714 0%, #d1a513 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .create-course-inline-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(226, 183, 20, 0.3);
+        }
+
+        .lesson-card-number {
             position: absolute;
             top: 12px;
             right: 12px;
@@ -646,11 +1007,19 @@
             content: '✓';
         }
 
-        .lesson-title {
-            font-size: 1.1em;
-            font-weight: 600;
-            color: #1a1a1a;
+        .lesson-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
             margin-bottom: 8px;
+            gap: 8px;
+        }
+
+        .lesson-title {
+            font-size: 1.15em;
+            font-weight: 700;
+            color: #1a1a1a;
+            flex: 1;
         }
 
         body.dark-mode .lesson-title {
@@ -658,7 +1027,7 @@
         }
 
         .lesson-description {
-            font-size: 0.9em;
+            font-size: 0.88em;
             color: #737373;
             margin-bottom: 12px;
             line-height: 1.4;
@@ -668,14 +1037,29 @@
             color: #888;
         }
 
+        .lesson-keys-count {
+            font-size: 0.75em;
+            color: #525252;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        body.dark-mode .lesson-keys-count {
+            color: #888;
+        }
+
         .lesson-keys {
             font-family: 'Monaco', 'Courier New', monospace;
-            font-size: 0.85em;
+            font-size: 0.8em;
             color: #525252;
             background: white;
-            padding: 8px 12px;
-            border-radius: 6px;
-            margin-bottom: 12px;
+            padding: 10px 12px;
+            border-radius: 8px;
+            margin-bottom: 14px;
+            line-height: 1.6;
+            word-spacing: 2px;
         }
 
         body.dark-mode .lesson-keys {
@@ -683,14 +1067,47 @@
             color: #a0a0a0;
         }
 
-        .lesson-progress {
-            font-size: 0.85em;
-            color: #737373;
-            font-weight: 500;
+        .lesson-stats {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
         }
 
-        body.dark-mode .lesson-progress {
-            color: #888;
+        .lesson-stat-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85em;
+            color: #525252;
+            background: white;
+            padding: 6px 10px;
+            border-radius: 6px;
+        }
+
+        body.dark-mode .lesson-stat-item {
+            background: #0f1012;
+            color: #a0a0a0;
+        }
+
+        .stat-icon {
+            font-size: 1.1em;
+            line-height: 1;
+        }
+
+        .stat-text {
+            font-weight: 600;
+        }
+
+        .lesson-new-badge {
+            font-size: 0.85em;
+            color: #e2b714;
+            font-weight: 600;
+            padding: 8px 0;
+            text-align: center;
+        }
+
+        body.dark-mode .lesson-new-badge {
+            color: #fde68a;
         }
 
         .lesson-badge {
@@ -725,6 +1142,212 @@
         body.dark-mode .lesson-badge.locked {
             background: #2a2d32;
             color: #888;
+        }
+
+        .lesson-badge.difficulty-beginner {
+            background: #d1fae5;
+            color: #064e3b;
+        }
+
+        body.dark-mode .lesson-badge.difficulty-beginner {
+            background: #065f46;
+            color: #d1fae5;
+        }
+
+        .lesson-badge.difficulty-intermediate {
+            background: #fef3c7;
+            color: #78350f;
+        }
+
+        body.dark-mode .lesson-badge.difficulty-intermediate {
+            background: #3a2f1a;
+            color: #fde68a;
+        }
+
+        .lesson-badge.difficulty-advanced {
+            background: #fecaca;
+            color: #7f1d1d;
+        }
+
+        body.dark-mode .lesson-badge.difficulty-advanced {
+            background: #7f1d1d;
+            color: #fecaca;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            /* Fix main layout for mobile */
+            .main-layout {
+                display: block;
+            }
+
+            .lessons-sidebar {
+                position: fixed;
+                width: 85%;
+                max-width: 320px;
+                min-width: 0;
+                left: 0;
+                top: 0;
+                z-index: 1000;
+                transform: translateX(-100%);
+                margin-left: 0;
+            }
+
+            .lessons-sidebar.open {
+                transform: translateX(0);
+                margin-left: 0;
+            }
+
+            /* Container takes full width on mobile */
+            .container {
+                width: 100%;
+                max-width: 100%;
+            }
+
+            /* Add backdrop when sidebar is open on mobile */
+            .lessons-sidebar.open::before {
+                content: '';
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: -1;
+            }
+
+            .lessons-toggle {
+                width: 40px;
+                height: 40px;
+                top: 12px;
+                left: 12px;
+            }
+
+            .active-course-title {
+                top: 12px;
+                left: 60px;
+                height: 40px;
+                font-size: 13px;
+                padding: 0 12px;
+            }
+
+            .lessons-toggle .toggle-text {
+                font-size: 0.65em;
+            }
+
+            .lesson-card {
+                padding: 16px;
+            }
+
+            .lessons-sidebar-header {
+                padding: 20px;
+            }
+
+            .lessons-sidebar-content {
+                padding: 16px;
+            }
+
+            /* Hide finger visualization on small screens */
+            .finger-groups {
+                display: none;
+            }
+
+            /* Make keyboard smaller */
+            .keyboard {
+                transform: scale(0.7);
+                transform-origin: top center;
+                margin-bottom: -60px;
+            }
+
+            /* Reduce header size */
+            h1 {
+                font-size: 2em !important;
+                margin-bottom: 8px !important;
+            }
+
+            .subtitle {
+                font-size: 0.9em !important;
+                margin-bottom: 16px !important;
+            }
+
+            /* Compact stats */
+            .stats-container {
+                gap: 8px !important;
+                margin-bottom: 12px !important;
+            }
+
+            .stat-box {
+                padding: 8px 12px !important;
+                min-width: 70px !important;
+            }
+
+            .stat-label {
+                font-size: 0.65em !important;
+            }
+
+            .stat-value {
+                font-size: 1.2em !important;
+            }
+
+            /* Selected keys compact */
+            #selectedKeysList {
+                font-size: 0.75em !important;
+                padding: 8px !important;
+            }
+
+            /* Smaller buttons */
+            .top-right-buttons {
+                gap: 8px !important;
+            }
+
+            .stats-btn, .settings-btn {
+                width: 40px !important;
+                height: 40px !important;
+                top: 12px !important;
+            }
+
+            /* Target text smaller */
+            .target-text {
+                font-size: 1.8em !important;
+                max-height: 15em !important;
+            }
+
+            /* Input smaller */
+            #typingInput {
+                font-size: 1.2em !important;
+                padding: 8px 12px !important;
+            }
+
+            /* Progress bar thinner */
+            .progress-bar-container {
+                height: 3px !important;
+            }
+
+            /* Container padding */
+            .container {
+                padding: 12px !important;
+            }
+        }
+
+        /* Extra small screens */
+        @media (max-width: 480px) {
+            .keyboard {
+                transform: scale(0.5);
+                margin-bottom: -100px;
+            }
+
+            h1 {
+                font-size: 1.5em !important;
+            }
+
+            .target-text {
+                font-size: 1.5em !important;
+            }
+
+            .stat-box {
+                min-width: 60px !important;
+                padding: 6px 8px !important;
+            }
         }
 
         .practice-area {
@@ -1464,8 +2087,6 @@
             padding: 20px;
             min-width: 320px;
             max-width: 400px;
-            max-height: 70vh;
-            overflow-y: auto;
             opacity: 0;
             pointer-events: none;
             transform: translateY(-8px);
@@ -1640,6 +2261,39 @@
             transform: translateX(20px);
         }
 
+        .sound-cycle-btn {
+            padding: 6px 16px;
+            background: rgba(226, 183, 20, 0.1);
+            border: 1px solid rgba(226, 183, 20, 0.3);
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #d4a017;
+            cursor: pointer;
+            transition: all 0.2s;
+            user-select: none;
+        }
+
+        .sound-cycle-btn:hover {
+            background: rgba(226, 183, 20, 0.15);
+            border-color: rgba(226, 183, 20, 0.4);
+            transform: scale(1.02);
+        }
+
+        .sound-cycle-btn:active {
+            transform: scale(0.98);
+        }
+
+        body.dark-mode .sound-cycle-btn {
+            background: rgba(226, 183, 20, 0.15);
+            border-color: rgba(226, 183, 20, 0.4);
+        }
+
+        body.dark-mode .sound-cycle-btn:hover {
+            background: rgba(226, 183, 20, 0.2);
+            border-color: rgba(226, 183, 20, 0.5);
+        }
+
         .settings-switch {
             display: flex;
             align-items: center;
@@ -1794,6 +2448,59 @@
             font-family: monospace;
             font-size: 0.9em;
             margin: 0 2px;
+        }
+
+        /* Completion Tooltip */
+        .completion-tooltip {
+            position: fixed;
+            padding: 24px 32px;
+            background: white;
+            border: 3px solid #e2b714;
+            border-radius: 16px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #2d3748;
+            opacity: 0;
+            transform: translateX(-50%) translateY(-50%) translateY(20px) scale(0.9);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+            z-index: 10000;
+            box-shadow: 0 16px 48px rgba(226, 183, 20, 0.2), 0 8px 16px rgba(0, 0, 0, 0.15);
+            white-space: nowrap;
+            min-width: 280px;
+        }
+
+        .completion-tooltip.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(-50%) scale(1);
+        }
+
+        .completion-tooltip .stats-line {
+            margin: 4px 0;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .completion-tooltip .stat-label {
+            color: #718096;
+            font-size: 13px;
+        }
+
+        .completion-tooltip .stat-value {
+            color: #e2b714;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        body.dark-mode .completion-tooltip {
+            background: #2d3748;
+            color: #d1d0c5;
+            border-color: #e2b714;
+        }
+
+        body.dark-mode .completion-tooltip .stat-label {
+            color: #9ca3af;
         }
 
         /* Typing Overlay */
@@ -2279,6 +2986,50 @@
             font-weight: 700;
         }
 
+        /* Dark mode error levels */
+        body.dark-mode .heatmap-key[data-error-level="1"] {
+            background: #fef3c7;
+            border-color: #fde68a;
+            color: #78350f;
+        }
+
+        body.dark-mode .heatmap-key[data-error-level="2"] {
+            background: #fde68a;
+            border-color: #fcd34d;
+            color: #78350f;
+        }
+
+        body.dark-mode .heatmap-key[data-error-level="3"] {
+            background: #fbbf24;
+            border-color: #f59e0b;
+            color: #78350f;
+        }
+
+        body.dark-mode .heatmap-key[data-error-level="4"] {
+            background: #fb923c;
+            border-color: #f97316;
+            color: #7c2d12;
+        }
+
+        body.dark-mode .heatmap-key[data-error-level="5"] {
+            background: #f87171;
+            border-color: #ef4444;
+            color: #7f1d1d;
+        }
+
+        body.dark-mode .heatmap-key[data-error-level="6"] {
+            background: #ef4444;
+            border-color: #dc2626;
+            color: white;
+        }
+
+        body.dark-mode .heatmap-key[data-error-level="7"] {
+            background: #dc2626;
+            border-color: #b91c1c;
+            color: white;
+            font-weight: 700;
+        }
+
         .heatmap-key::after {
             content: attr(data-error-count);
             position: absolute;
@@ -2357,41 +3108,115 @@
 
         .modal-content {
             background: white;
-            border-radius: 12px;
-            padding: 32px;
-            max-width: 400px;
+            border-radius: 16px;
+            padding: 0;
+            max-width: 440px;
             width: 90%;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            animation: modalFadeIn 0.2s ease;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            animation: modalFadeIn 0.3s ease;
+            overflow: hidden;
         }
 
         @keyframes modalFadeIn {
             from {
                 opacity: 0;
-                transform: translateY(-20px);
+                transform: scale(0.95) translateY(-20px);
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: scale(1) translateY(0);
             }
         }
 
         .modal-body {
             color: #2d3748;
-            font-size: 1.1em;
-            line-height: 1.8;
-            margin-bottom: 24px;
-            white-space: pre-line;
+            font-size: 1em;
+            line-height: 1.6;
+            padding: 32px;
             text-align: center;
         }
 
+        .modal-header {
+            background: linear-gradient(135deg, #e2b714 0%, #d1a513 100%);
+            padding: 24px 32px;
+            text-align: center;
+        }
+
+        .modal-title {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: white;
+            margin: 0 0 8px 0;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-subtitle {
+            font-size: 0.95em;
+            color: rgba(255, 255, 255, 0.9);
+            margin: 0;
+        }
+
+        .modal-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 24px 0;
+        }
+
+        .modal-info-item {
+            background: #f8f8f8;
+            border-radius: 10px;
+            padding: 16px;
+        }
+
+        body.dark-mode .modal-info-item {
+            background: #1e2023;
+        }
+
+        .modal-info-label {
+            font-size: 0.75em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #737373;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        body.dark-mode .modal-info-label {
+            color: #888;
+        }
+
+        .modal-info-value {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        body.dark-mode .modal-info-value {
+            color: #e8e8e8;
+        }
+
+        .modal-message {
+            font-size: 0.95em;
+            color: #525252;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e8e8e8;
+        }
+
+        body.dark-mode .modal-message {
+            color: #a0a0a0;
+            border-top-color: #2a2d32;
+        }
+
         .modal-btn {
-            width: 100%;
-            padding: 12px 24px;
+            width: calc(100% - 64px);
+            margin: 0 32px 32px 32px;
+            padding: 14px 24px;
             background: #e2b714;
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             font-size: 1em;
             font-weight: 600;
             cursor: pointer;
@@ -2400,8 +3225,9 @@
         }
 
         .modal-btn:hover {
-            background: #d4a912;
-            transform: translateY(-2px);
+            background: #d1a513;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(226, 183, 20, 0.3);
         }
 
         .modal-btn:active {
@@ -2594,8 +3420,8 @@
         }
 
         body.dark-mode .key.selected[data-finger="left-ring"]:hover {
-            background: #f87171;
-            border-color: #fca5a5;
+            background: #a78bfa;
+            border-color: #c4b5fd;
         }
 
         body.dark-mode .key.selected[data-finger="left-middle"]:hover {
@@ -2856,6 +3682,12 @@
                         <span class="settings-label">Sound Feedback</span>
                     </label>
                 </div>
+
+                <!-- Sound Type -->
+                <div class="setting-item-dropdown" style="margin-top: 12px;">
+                    <span class="setting-label-dropdown">Sound:</span>
+                    <button id="soundTypeCycle" class="sound-cycle-btn" onclick="cycleSoundType()">Classic</button>
+                </div>
             </div>
 
             <div class="settings-menu-divider"></div>
@@ -2907,15 +3739,6 @@
                     </div>
                 </div>
 
-                <!-- Numbers Toggle -->
-                <div class="setting-item-dropdown">
-                    <span class="setting-label-dropdown">Numbers:</span>
-                    <label class="toggle-switch-small">
-                        <input type="checkbox" id="includeNumbers">
-                        <span class="toggle-slider-small"></span>
-                    </label>
-                </div>
-
                 <!-- Word Set -->
                 <div class="setting-item-dropdown">
                     <span class="setting-label-dropdown">Words:</span>
@@ -2925,32 +3748,6 @@
                         <input type="radio" id="wordSetReal" name="wordSet" value="real" checked>
                         <label for="wordSetReal">Real</label>
                     </div>
-                </div>
-
-                <!-- Capitals Toggle -->
-                <div class="setting-item-dropdown">
-                    <span class="setting-label-dropdown">Capitals:</span>
-                    <label class="toggle-switch-small">
-                        <input type="checkbox" id="includeCapitals">
-                        <span class="toggle-slider-small"></span>
-                    </label>
-                </div>
-
-                <!-- Special Characters Toggle -->
-                <div class="setting-item-dropdown">
-                    <span class="setting-label-dropdown">Special Chars:</span>
-                    <label class="toggle-switch-small">
-                        <input type="checkbox" id="includeSpecialChars">
-                        <span class="toggle-slider-small"></span>
-                    </label>
-                </div>
-
-                <div class="setting-item-dropdown">
-                    <span class="setting-label-dropdown">Spaces:</span>
-                    <label class="toggle-switch-small">
-                        <input type="checkbox" id="includeSpaces" checked>
-                        <span class="toggle-slider-small"></span>
-                    </label>
                 </div>
 
                 <!-- Error Mode -->
@@ -2997,6 +3794,49 @@
 
             <div class="settings-menu-divider"></div>
 
+            <!-- Content Filter -->
+            <div class="settings-section">
+                <h4 style="margin: 8px 0; font-size: 13px; font-weight: 600; opacity: 0.7;">Content Filter</h4>
+
+                <!-- Numbers Toggle -->
+                <div class="setting-item-dropdown">
+                    <span class="setting-label-dropdown">Numbers:</span>
+                    <label class="toggle-switch-small">
+                        <input type="checkbox" id="includeNumbers">
+                        <span class="toggle-slider-small"></span>
+                    </label>
+                </div>
+
+                <!-- Capitals Toggle -->
+                <div class="setting-item-dropdown">
+                    <span class="setting-label-dropdown">Capitals:</span>
+                    <label class="toggle-switch-small">
+                        <input type="checkbox" id="includeCapitals">
+                        <span class="toggle-slider-small"></span>
+                    </label>
+                </div>
+
+                <!-- Special Characters Toggle -->
+                <div class="setting-item-dropdown">
+                    <span class="setting-label-dropdown">Special Chars:</span>
+                    <label class="toggle-switch-small">
+                        <input type="checkbox" id="includeSpecialChars">
+                        <span class="toggle-slider-small"></span>
+                    </label>
+                </div>
+
+                <!-- Spaces Toggle -->
+                <div class="setting-item-dropdown">
+                    <span class="setting-label-dropdown">Spaces:</span>
+                    <label class="toggle-switch-small">
+                        <input type="checkbox" id="includeSpaces" checked>
+                        <span class="toggle-slider-small"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="settings-menu-divider"></div>
+
             <!-- Reset -->
             <div class="settings-menu-item">
                 <button class="reset-btn" id="resetBtn">
@@ -3012,7 +3852,40 @@
     </div>
     <div class="focus-hint">Press <kbd>Esc</kbd> to exit focus mode</div>
 
-    <div class="container">
+    <!-- Completion Tooltip -->
+    <div class="completion-tooltip" id="completionTooltip"></div>
+
+    <!-- Lessons Toggle Button -->
+    <button class="lessons-toggle" id="lessonsToggle" title="Open Courses">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+        </svg>
+        <span class="toggle-text">Courses</span>
+        <span class="progress-badge" id="lessonProgress" style="display: none;">0</span>
+    </button>
+
+    <!-- Active Course Title -->
+    <div class="active-course-title" id="activeCourseTitle" style="display: none;"></div>
+
+    <!-- Main Layout Wrapper -->
+    <div class="main-layout">
+        <!-- Lessons Sidebar -->
+        <div class="lessons-sidebar" id="lessonsSidebar">
+            <div class="lessons-sidebar-header">
+                <h3>Courses</h3>
+                <button class="sidebar-close" id="sidebarClose">&times;</button>
+            </div>
+            <div class="lessons-sidebar-content">
+                <p class="lessons-subtitle">Quick key presets for focused practice</p>
+                <div class="lessons-grid" id="lessonsGrid">
+                    <!-- Lessons will be dynamically inserted here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="container">
         <h1>Better QWERTY</h1>
         <p class="subtitle">Improve your typing skills by practicing specific keys and fingers</p>
 
@@ -3135,17 +4008,6 @@
             <strong>Selected Keys:</strong> <span id="selectedKeysList">None - Click keys above or use finger shortcuts</span>
         </div>
 
-        <!-- Lessons Section -->
-        <div class="lessons-container" id="lessonsContainer">
-            <div class="lessons-header">
-                <h3>Structured Lessons</h3>
-                <p class="lessons-subtitle">Follow a progressive path from beginner to expert</p>
-            </div>
-            <div class="lessons-grid" id="lessonsGrid">
-                <!-- Lessons will be dynamically inserted here -->
-            </div>
-        </div>
-
         <div class="practice-area">
             <div class="practice-header">
                 <h2>Typing Practice</h2>
@@ -3215,6 +4077,7 @@
                 <span class="shortcut-key" id="modKey1">Cmd</span>+<span class="shortcut-key">N</span> New •
                 <span class="shortcut-key" id="modKey2">Cmd</span>+<span class="shortcut-key">K</span> Focus Input
             </div>
+        </div>
         </div>
     </div>
 
@@ -3495,6 +4358,27 @@
         let errorMode = 'block'; // 'block', 'skip', 'backspace'
         let fontSize = 'medium'; // 'small', 'medium', 'large', 'xlarge'
         let soundFeedbackEnabled = true;
+        let soundType = 'classic';
+
+        // Sound presets
+        const soundPresets = {
+            classic: {
+                correct: { freq: 800, type: 'sine', duration: 0.05, volume: 0.03 },
+                error: { freq: 200, type: 'sawtooth', duration: 0.1, volume: 0.05 }
+            },
+            mechanical: {
+                correct: { freq: 1200, type: 'square', duration: 0.03, volume: 0.02 },
+                error: { freq: 150, type: 'square', duration: 0.08, volume: 0.04 }
+            },
+            soft: {
+                correct: { freq: 600, type: 'sine', duration: 0.08, volume: 0.02 },
+                error: { freq: 300, type: 'sine', duration: 0.15, volume: 0.03 }
+            },
+            minimal: {
+                correct: { freq: 1000, type: 'sine', duration: 0.02, volume: 0.015 },
+                error: { freq: 250, type: 'triangle', duration: 0.05, volume: 0.025 }
+            }
+        };
 
         // Audio Context for sound feedback
         let audioContext = null;
@@ -3509,40 +4393,42 @@
             if (!soundFeedbackEnabled) return;
             initAudioContext();
 
+            const preset = soundPresets[soundType].correct;
             const oscillator = audioContext.createOscillator();
             const gainNode = audioContext.createGain();
 
             oscillator.connect(gainNode);
             gainNode.connect(audioContext.destination);
 
-            oscillator.frequency.value = 800;
-            oscillator.type = 'sine';
+            oscillator.frequency.value = preset.freq;
+            oscillator.type = preset.type;
 
-            gainNode.gain.setValueAtTime(0.03, audioContext.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.05);
+            gainNode.gain.setValueAtTime(preset.volume, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + preset.duration);
 
             oscillator.start(audioContext.currentTime);
-            oscillator.stop(audioContext.currentTime + 0.05);
+            oscillator.stop(audioContext.currentTime + preset.duration);
         }
 
         function playErrorSound() {
             if (!soundFeedbackEnabled) return;
             initAudioContext();
 
+            const preset = soundPresets[soundType].error;
             const oscillator = audioContext.createOscillator();
             const gainNode = audioContext.createGain();
 
             oscillator.connect(gainNode);
             gainNode.connect(audioContext.destination);
 
-            oscillator.frequency.value = 200;
-            oscillator.type = 'sawtooth';
+            oscillator.frequency.value = preset.freq;
+            oscillator.type = preset.type;
 
-            gainNode.gain.setValueAtTime(0.05, audioContext.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+            gainNode.gain.setValueAtTime(preset.volume, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + preset.duration);
 
             oscillator.start(audioContext.currentTime);
-            oscillator.stop(audioContext.currentTime + 0.1);
+            oscillator.stop(audioContext.currentTime + preset.duration);
         }
 
         function flashKey(keyChar, isCorrect) {
@@ -3572,129 +4458,353 @@
         };
         let sessionKeyErrors = {}; // Track errors for current session
 
-        // Lesson System
+        // Practice Courses - Convenient key presets
         const lessons = [
             {
                 id: 1,
-                title: "Home Row Basics",
-                description: "Master the foundation: ASDF JKL;",
+                title: "Home Row",
+                description: "Practice the foundation keys",
                 keys: ['a', 's', 'd', 'f', 'j', 'k', 'l', ';'],
-                requiredWPM: 30,
-                requiredAccuracy: 85
+                difficulty: "Beginner"
             },
             {
                 id: 2,
                 title: "Top Row",
-                description: "Add QWERT YUIOP to your skills",
+                description: "QWERTY row practice",
                 keys: ['a', 's', 'd', 'f', 'j', 'k', 'l', ';', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
-                requiredWPM: 35,
-                requiredAccuracy: 88
+                difficulty: "Beginner"
             },
             {
                 id: 3,
                 title: "Bottom Row",
-                description: "Complete the alphabet with ZXCV BNM",
+                description: "Complete alphabet practice",
                 keys: ['a', 's', 'd', 'f', 'j', 'k', 'l', ';', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/'],
-                requiredWPM: 40,
-                requiredAccuracy: 90
+                difficulty: "Intermediate"
             },
             {
                 id: 4,
                 title: "Numbers",
-                description: "Add number keys 0-9 to your typing",
+                description: "Letters + number keys practice",
                 keys: ['a', 's', 'd', 'f', 'j', 'k', 'l', ';', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
-                requiredWPM: 45,
-                requiredAccuracy: 90
+                difficulty: "Intermediate"
             },
             {
                 id: 5,
-                title: "Special Characters",
-                description: "Master the full keyboard with special characters",
+                title: "Full Keyboard",
+                description: "All keys including special characters",
                 keys: ['a', 's', 'd', 'f', 'j', 'k', 'l', ';', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '`', '-', '=', '[', ']', '\\', "'"],
-                requiredWPM: 50,
-                requiredAccuracy: 92
+                difficulty: "Advanced"
+            },
+            {
+                id: 6,
+                title: "Left Hand",
+                description: "Left hand keys only",
+                keys: ['q', 'w', 'e', 'r', 't', 'a', 's', 'd', 'f', 'g', 'z', 'x', 'c', 'v', 'b', '1', '2', '3', '4', '5'],
+                difficulty: "Intermediate"
+            },
+            {
+                id: 7,
+                title: "Right Hand",
+                description: "Right hand keys only",
+                keys: ['y', 'u', 'i', 'o', 'p', 'h', 'j', 'k', 'l', ';', 'n', 'm', ',', '.', '/', '6', '7', '8', '9', '0'],
+                difficulty: "Intermediate"
             }
         ];
 
-        let lessonProgress = {
-            currentLesson: 1,
-            completedLessons: [],
-            lessonStats: {} // { lessonId: { bestWPM: 45, bestAccuracy: 92 } }
+        let courseStats = {
+            courseData: {} // { courseId: { bestWPM: 45, bestAccuracy: 92, sessions: 5 } }
         };
 
-        let activeLessonId = null;
+        let activeCourseId = null;
 
-        function loadLessonProgress() {
-            const saved = localStorage.getItem('lessonProgress');
+        function loadCourseStats() {
+            const saved = localStorage.getItem('courseStats');
             if (saved) {
                 try {
-                    lessonProgress = JSON.parse(saved);
+                    courseStats = JSON.parse(saved);
                 } catch (e) {
-                    console.error('Failed to load lesson progress', e);
+                    console.error('Failed to load course stats', e);
                 }
             }
         }
 
-        function saveLessonProgress() {
-            localStorage.setItem('lessonProgress', JSON.stringify(lessonProgress));
+        function saveCourseStats() {
+            localStorage.setItem('courseStats', JSON.stringify(courseStats));
         }
+
+        // Custom courses management
+        let customCourses = [];
+
+        function loadCustomCourses() {
+            const saved = localStorage.getItem('customCourses');
+            if (saved) {
+                try {
+                    customCourses = JSON.parse(saved);
+                } catch (e) {
+                    console.error('Failed to load custom courses', e);
+                    customCourses = [];
+                }
+            }
+        }
+
+        function saveCustomCourses() {
+            localStorage.setItem('customCourses', JSON.stringify(customCourses));
+        }
+
+        function deleteCustomCourse(courseId) {
+            customCourses = customCourses.filter(c => c.id !== courseId);
+            saveCustomCourses();
+
+            // Also remove stats for this course
+            if (courseStats.courseData[courseId]) {
+                delete courseStats.courseData[courseId];
+                saveCourseStats();
+            }
+
+            renderLessons();
+        }
+
+        function toggleCourseCompletion(courseId) {
+            // Initialize course data if it doesn't exist
+            if (!courseStats.courseData[courseId]) {
+                courseStats.courseData[courseId] = {
+                    bestWPM: 0,
+                    bestAccuracy: 0,
+                    sessions: 0,
+                    completed: false
+                };
+            }
+
+            // Toggle completion status
+            courseStats.courseData[courseId].completed = !courseStats.courseData[courseId].completed;
+            saveCourseStats();
+            renderLessons();
+        }
+
+        window.toggleCourseCompletion = toggleCourseCompletion;
+
+        function getAllCourses() {
+            return [...lessons, ...customCourses];
+        }
+
+        function createCustomCourseFromPlaceholder(title, description, difficulty) {
+            // Validation
+            if (!title || title.trim() === '' || title === 'New Custom Course') {
+                alert('Please enter a course name');
+                return false;
+            }
+
+            if (selectedKeys.size === 0) {
+                alert('Please select at least one key for your course');
+                return false;
+            }
+
+            // Create new course with unique ID
+            const newCourse = {
+                id: `custom-${Date.now()}`,
+                title: title.trim(),
+                description: description.trim() || 'Custom course',
+                keys: Array.from(selectedKeys),
+                difficulty: difficulty,
+                custom: true
+            };
+
+            customCourses.push(newCourse);
+            saveCustomCourses();
+            renderLessons();
+            return true;
+        }
+
+        window.deleteCustomCourse = deleteCustomCourse;
+        window.createCustomCourseFromPlaceholder = createCustomCourseFromPlaceholder;
 
         function renderLessons() {
             const lessonsGrid = document.getElementById('lessonsGrid');
             if (!lessonsGrid) return;
 
-            lessonsGrid.innerHTML = lessons.map(lesson => {
-                const isCompleted = lessonProgress.completedLessons.includes(lesson.id);
-                const isActive = activeLessonId === lesson.id;
-                const isLocked = lesson.id > 1 && !lessonProgress.completedLessons.includes(lesson.id - 1);
-                const lessonStat = lessonProgress.lessonStats[lesson.id];
+            const allCourses = getAllCourses();
 
-                let statusBadge = '';
+            lessonsGrid.innerHTML = allCourses.map(lesson => {
+                const isActive = activeCourseId == lesson.id;
+                const courseData = courseStats.courseData[lesson.id];
+                const isCustom = lesson.custom === true;
+
                 let cardClass = 'lesson-card';
-
-                if (isLocked) {
-                    cardClass += ' locked';
-                    statusBadge = '<span class="lesson-badge locked">Locked</span>';
-                } else if (isActive) {
+                if (isActive) {
                     cardClass += ' active';
-                    statusBadge = '<span class="lesson-badge in-progress">In Progress</span>';
-                } else if (isCompleted) {
-                    cardClass += ' completed';
-                    statusBadge = '<span class="lesson-badge completed">Completed</span>';
                 }
 
-                const keysDisplay = lesson.keys.slice(0, 15).join(' ').toUpperCase() + (lesson.keys.length > 15 ? '...' : '');
+                const keysDisplay = lesson.keys.slice(0, 18).join(' ').toUpperCase() + (lesson.keys.length > 18 ? ' ...' : '');
 
-                let progressText = '';
-                if (lessonStat) {
-                    progressText = `<div class="lesson-progress">Best: ${lessonStat.bestWPM} WPM, ${lessonStat.bestAccuracy}% Accuracy</div>`;
+                // Check completion status
+                const isCompleted = courseData && courseData.completed;
+
+                let statsText = '';
+                if (courseData) {
+                    // Show stats
+                    statsText = `
+                        <div class="lesson-stats">
+                            <div class="lesson-stat-item">
+                                <span class="stat-icon">⚡</span>
+                                <span class="stat-text">${courseData.bestWPM} WPM</span>
+                            </div>
+                            <div class="lesson-stat-item">
+                                <span class="stat-icon">🎯</span>
+                                <span class="stat-text">${courseData.bestAccuracy}%</span>
+                            </div>
+                            <div class="lesson-stat-item">
+                                <span class="stat-icon">📊</span>
+                                <span class="stat-text">${courseData.sessions} session${courseData.sessions !== 1 ? 's' : ''}</span>
+                            </div>
+                        </div>
+                    `;
+
+                    // Add completion action
+                    if (isCompleted) {
+                        statsText += `<button class="lesson-completed-badge" onclick="event.stopPropagation(); toggleCourseCompletion('${lesson.id}');">✓ Finished</button>`;
+                    } else {
+                        statsText += `<button class="lesson-mark-finished-btn" onclick="event.stopPropagation(); toggleCourseCompletion('${lesson.id}');">Mark as Finished</button>`;
+                    }
+                } else {
+                    statsText = `<div class="lesson-new-badge">✨ Try this course</div>`;
                 }
+
+                let difficultyBadge = '';
+                if (lesson.difficulty === 'Beginner') {
+                    difficultyBadge = '<span class="lesson-badge difficulty-beginner">Beginner</span>';
+                } else if (lesson.difficulty === 'Intermediate') {
+                    difficultyBadge = '<span class="lesson-badge difficulty-intermediate">Intermediate</span>';
+                } else if (lesson.difficulty === 'Advanced') {
+                    difficultyBadge = '<span class="lesson-badge difficulty-advanced">Advanced</span>';
+                }
+
+                // Add custom badge and delete button for custom courses
+                const customBadge = isCustom ? '<span class="lesson-badge" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">Custom</span>' : '';
+                const deleteBtn = isCustom ? `<button class="lesson-delete-btn" onclick="event.stopPropagation(); deleteCustomCourse('${lesson.id}');" title="Delete custom course">×</button>` : '';
 
                 return `
-                    <div class="${cardClass}" data-lesson-id="${lesson.id}" onclick="selectLesson(${lesson.id})">
-                        <div class="lesson-number">${isCompleted ? '' : lesson.id}</div>
-                        <div class="lesson-title">${lesson.title}</div>
+                    <div class="${cardClass}${isCompleted ? ' completed' : ''}" data-lesson-id="${lesson.id}" onclick="selectLesson('${lesson.id}')">
+                        ${deleteBtn}
+                        <div class="lesson-header-row">
+                            <div class="lesson-title">${lesson.title}</div>
+                            <div style="display: flex; gap: 6px;">
+                                ${customBadge}
+                                ${difficultyBadge}
+                            </div>
+                        </div>
                         <div class="lesson-description">${lesson.description}</div>
+                        <div class="lesson-keys-count">${lesson.keys.length} keys</div>
                         <div class="lesson-keys">${keysDisplay}</div>
-                        <div class="lesson-progress">Target: ${lesson.requiredWPM}+ WPM, ${lesson.requiredAccuracy}%+ Accuracy</div>
-                        ${progressText}
-                        ${statusBadge}
+                        ${statsText}
                     </div>
                 `;
             }).join('');
+
+            // Add placeholder card for creating new custom course
+            const keysDisplay = selectedKeys.size > 0
+                ? Array.from(selectedKeys).slice(0, 18).join(' ').toUpperCase() + (selectedKeys.size > 18 ? ' ...' : '')
+                : 'Select keys from keyboard first';
+
+            const placeholderCard = `
+                <div class="lesson-card lesson-card-placeholder" onclick="event.stopPropagation();">
+                    <div class="lesson-header-row">
+                        <div class="lesson-title" contenteditable="true" id="newCourseTitle" data-placeholder="New Custom Course">New Custom Course</div>
+                        <span class="lesson-badge difficulty-intermediate difficulty-cycle-badge" id="difficultyCycleBadge" onclick="cycleDifficulty()" title="Click to cycle difficulty">Intermediate</span>
+                    </div>
+                    <div class="lesson-description" contenteditable="true" id="newCourseDescription" data-placeholder="Add a description...">Add a description...</div>
+                    <div class="lesson-keys-count">${selectedKeys.size} keys</div>
+                    <div class="lesson-keys">${keysDisplay}</div>
+                    <button class="create-course-inline-btn" onclick="saveNewCourse()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                        Create Course
+                    </button>
+                </div>
+            `;
+
+            lessonsGrid.innerHTML += placeholderCard;
+
+            // Update progress badge on toggle button - show number of courses tried
+            const progressBadge = document.getElementById('lessonProgress');
+            if (progressBadge) {
+                const triedCount = Object.keys(courseStats.courseData).length;
+                if (triedCount > 0) {
+                    progressBadge.textContent = `${triedCount}`;
+                    progressBadge.style.display = 'flex';
+                } else {
+                    progressBadge.style.display = 'none';
+                }
+            }
+        }
+
+        let selectedDifficulty = 'Intermediate';
+        const difficultyLevels = ['Beginner', 'Intermediate', 'Advanced'];
+
+        window.cycleDifficulty = function() {
+            const badge = document.getElementById('difficultyCycleBadge');
+            if (!badge) return;
+
+            // Get current index and move to next
+            const currentIndex = difficultyLevels.indexOf(selectedDifficulty);
+            const nextIndex = (currentIndex + 1) % difficultyLevels.length;
+            selectedDifficulty = difficultyLevels[nextIndex];
+
+            // Update badge text
+            badge.textContent = selectedDifficulty;
+
+            // Update badge class
+            badge.className = 'lesson-badge difficulty-cycle-badge';
+            if (selectedDifficulty === 'Beginner') {
+                badge.classList.add('difficulty-beginner');
+            } else if (selectedDifficulty === 'Intermediate') {
+                badge.classList.add('difficulty-intermediate');
+            } else if (selectedDifficulty === 'Advanced') {
+                badge.classList.add('difficulty-advanced');
+            }
+        };
+
+        window.saveNewCourse = function() {
+            const title = document.getElementById('newCourseTitle').textContent;
+            const description = document.getElementById('newCourseDescription').textContent;
+
+            if (createCustomCourseFromPlaceholder(title, description, selectedDifficulty)) {
+                // Success - course was created and renderLessons was called
+                selectedDifficulty = 'Intermediate'; // Reset to default
+            }
+        };
+
+        function updatePlaceholderKeys() {
+            const keysCountEl = document.querySelector('.lesson-card-placeholder .lesson-keys-count');
+            const keysDisplayEl = document.querySelector('.lesson-card-placeholder .lesson-keys');
+
+            if (!keysCountEl || !keysDisplayEl) return;
+
+            // Update keys count
+            keysCountEl.textContent = `${selectedKeys.size} keys`;
+
+            // Update keys display
+            const keysDisplay = selectedKeys.size > 0
+                ? Array.from(selectedKeys).slice(0, 18).join(' ').toUpperCase() + (selectedKeys.size > 18 ? ' ...' : '')
+                : 'Select keys from keyboard first';
+            keysDisplayEl.textContent = keysDisplay;
         }
 
         window.selectLesson = function(lessonId) {
-            const lesson = lessons.find(l => l.id === lessonId);
+            const allCourses = getAllCourses();
+            // Handle both string and number IDs (numeric IDs come as strings from onclick)
+            const lesson = allCourses.find(l => l.id == lessonId);
             if (!lesson) return;
 
-            // Check if locked
-            if (lessonId > 1 && !lessonProgress.completedLessons.includes(lessonId - 1)) {
-                showModal(`This lesson is locked!\n\nComplete "${lessons[lessonId - 2].title}" first to unlock it.`);
-                return;
-            }
+            activeCourseId = lessonId;
 
-            activeLessonId = lessonId;
+            // Update active course title display
+            const activeCourseTitle = document.getElementById('activeCourseTitle');
+            if (activeCourseTitle) {
+                activeCourseTitle.textContent = lesson.title;
+                activeCourseTitle.style.display = 'flex';
+            }
 
             // Clear current selection
             selectedKeys.clear();
@@ -3727,46 +4837,35 @@
             generatePracticeText();
             renderLessons();
 
-            // Scroll to practice area
-            document.querySelector('.practice-area').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            // Keep sidebar open (user may want to browse courses)
+            // You can optionally close it automatically with:
+            // const sidebar = document.getElementById('lessonsSidebar');
+            // if (sidebar) sidebar.classList.remove('open');
 
-            showModal(`Starting: ${lesson.title}\n\n${lesson.description}\n\nGoal: Reach ${lesson.requiredWPM}+ WPM with ${lesson.requiredAccuracy}%+ accuracy to complete this lesson!`);
+            // Scroll to practice area
+            setTimeout(() => {
+                document.querySelector('.practice-area').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 300);
         }
 
-        function checkLessonCompletion(wpm, accuracy) {
-            if (!activeLessonId) return;
+        function updateCourseStats(wpm, accuracy) {
+            if (!activeCourseId) return;
 
-            const lesson = lessons.find(l => l.id === activeLessonId);
-            if (!lesson) return;
-
-            // Update lesson stats
-            if (!lessonProgress.lessonStats[activeLessonId]) {
-                lessonProgress.lessonStats[activeLessonId] = { bestWPM: 0, bestAccuracy: 0 };
+            // Update course stats
+            if (!courseStats.courseData[activeCourseId]) {
+                courseStats.courseData[activeCourseId] = {
+                    bestWPM: 0,
+                    bestAccuracy: 0,
+                    sessions: 0
+                };
             }
 
-            const lessonStat = lessonProgress.lessonStats[activeLessonId];
-            if (wpm > lessonStat.bestWPM) lessonStat.bestWPM = wpm;
-            if (accuracy > lessonStat.bestAccuracy) lessonStat.bestAccuracy = accuracy;
+            const courseData = courseStats.courseData[activeCourseId];
+            courseData.sessions++;
+            if (wpm > courseData.bestWPM) courseData.bestWPM = wpm;
+            if (accuracy > courseData.bestAccuracy) courseData.bestAccuracy = accuracy;
 
-            // Check if lesson is completed
-            if (wpm >= lesson.requiredWPM && accuracy >= lesson.requiredAccuracy) {
-                if (!lessonProgress.completedLessons.includes(activeLessonId)) {
-                    lessonProgress.completedLessons.push(activeLessonId);
-                    lessonProgress.currentLesson = Math.min(activeLessonId + 1, lessons.length);
-
-                    saveLessonProgress();
-                    renderLessons();
-
-                    setTimeout(() => {
-                        const nextLesson = lessons.find(l => l.id === activeLessonId + 1);
-                        const congratsMsg = `Lesson Completed!\n\n${lesson.title} mastered!\n\nWPM: ${wpm}\nAccuracy: ${accuracy}%` +
-                            (nextLesson ? `\n\nNext: ${nextLesson.title}` : '\n\nYou completed all lessons!');
-                        showModal(congratsMsg);
-                    }, 500);
-                }
-            }
-
-            saveLessonProgress();
+            saveCourseStats();
             renderLessons();
         }
 
@@ -4114,6 +5213,9 @@
                     generatePracticeText();
                 }
             }
+
+            // Update placeholder card keys display
+            updatePlaceholderKeys();
         }
 
         function restartTest() {
@@ -4185,7 +5287,7 @@
             saveSessionStats(finalWPM, finalAccuracy);
 
             setTimeout(() => {
-                showModal(`Time's up!\n\nWPM: ${finalWPM}\nAccuracy: ${finalAccuracy}%\nErrors: ${errorCount}\n\nClick "New Exercise" to try again!`);
+                showCompletionTooltip(finalWPM, finalAccuracy, errorCount);
             }, 100);
         }
 
@@ -4564,7 +5666,15 @@
             }
 
             // Update progress bar
-            const progressPercent = currentText.length > 0 ? (currentPosition / currentText.length) * 100 : 0;
+            let progressPercent = 0;
+            if (isTimedMode && startTime) {
+                // In timed mode, show time progress
+                const elapsed = Math.floor((Date.now() - startTime) / 1000);
+                progressPercent = Math.min((elapsed / timeLimit) * 100, 100);
+            } else {
+                // In word/unlimited mode, show typing progress
+                progressPercent = currentText.length > 0 ? (currentPosition / currentText.length) * 100 : 0;
+            }
             progressBar.style.width = progressPercent + '%';
         }
 
@@ -4628,7 +5738,7 @@
                             saveSessionStats(finalWPM, finalAccuracy);
 
                             setTimeout(() => {
-                                showModal(`Great job!\n\nWPM: ${finalWPM}\nAccuracy: ${finalAccuracy}%\nErrors: ${errorCount}\n\nClick "New Exercise" for another round!`);
+                                showCompletionTooltip(finalWPM, finalAccuracy, errorCount);
                             }, 100);
                         }
                     }
@@ -4747,6 +5857,39 @@
             resetStats();
         });
 
+        // Lessons Sidebar
+        const lessonsSidebar = document.getElementById('lessonsSidebar');
+        const lessonsToggle = document.getElementById('lessonsToggle');
+        const sidebarClose = document.getElementById('sidebarClose');
+
+        function openLessonsSidebar() {
+            lessonsSidebar.classList.add('open');
+        }
+
+        function closeLessonsSidebar() {
+            lessonsSidebar.classList.remove('open');
+        }
+
+        function toggleLessonsSidebar() {
+            lessonsSidebar.classList.toggle('open');
+
+            // Toggle active course title visibility
+            const activeCourseTitle = document.getElementById('activeCourseTitle');
+            if (activeCourseTitle) {
+                activeCourseTitle.classList.toggle('hidden');
+            }
+        }
+
+        lessonsToggle.addEventListener('click', toggleLessonsSidebar);
+        sidebarClose.addEventListener('click', closeLessonsSidebar);
+
+        // Close sidebar on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && lessonsSidebar.classList.contains('open')) {
+                closeLessonsSidebar();
+            }
+        });
+
         // Focus Mode
         const focusToggle = document.getElementById('focusToggle');
         const focusHint = document.querySelector('.focus-hint');
@@ -4819,6 +5962,31 @@
             soundFeedbackEnabled = soundFeedbackToggle.checked;
             showSaveButton();
         });
+
+        // Sound Type Cycle Button
+        const soundTypes = ['classic', 'mechanical', 'soft', 'minimal'];
+        const soundTypeLabels = {
+            'classic': 'Classic',
+            'mechanical': 'Mechanical',
+            'soft': 'Soft',
+            'minimal': 'Minimal'
+        };
+
+        window.cycleSoundType = function() {
+            const currentIndex = soundTypes.indexOf(soundType);
+            const nextIndex = (currentIndex + 1) % soundTypes.length;
+            soundType = soundTypes[nextIndex];
+
+            const btn = document.getElementById('soundTypeCycle');
+            if (btn) {
+                btn.textContent = soundTypeLabels[soundType];
+            }
+
+            // Play a preview of the selected sound
+            playCorrectSound();
+
+            showSaveButton();
+        };
 
         // Keyboard shortcuts
         document.addEventListener('keydown', (e) => {
@@ -4926,12 +6094,59 @@
         const modalBtn = document.getElementById('modalBtn');
 
         function showModal(message) {
-            modalBody.textContent = message;
+            // Check if message contains HTML
+            if (message.includes('<')) {
+                modalBody.innerHTML = message;
+            } else {
+                modalBody.textContent = message;
+            }
             customModal.classList.add('show');
         }
 
         function hideModal() {
             customModal.classList.remove('show');
+        }
+
+        function showCompletionTooltip(wpm, accuracy, errors) {
+            const tooltip = document.getElementById('completionTooltip');
+            if (!tooltip) return;
+
+            // Create stats HTML with title
+            tooltip.innerHTML = `
+                <div style="font-size: 16px; font-weight: 600; margin-bottom: 12px; color: #e2b714;">
+                    ✓ Session Complete
+                </div>
+                <div class="stats-line">
+                    <span class="stat-label">WPM:</span>
+                    <span class="stat-value">${wpm}</span>
+                </div>
+                <div class="stats-line">
+                    <span class="stat-label">Accuracy:</span>
+                    <span class="stat-value">${accuracy}%</span>
+                </div>
+                <div class="stats-line">
+                    <span class="stat-label">Errors:</span>
+                    <span class="stat-value">${errors}</span>
+                </div>
+                <div style="font-size: 11px; margin-top: 12px; opacity: 0.6; text-align: center;">
+                    Press Shift+Enter to restart
+                </div>
+            `;
+
+            // Position in center of viewport
+            tooltip.style.left = '50%';
+            tooltip.style.top = '40%';
+            tooltip.style.transform = 'translateX(-50%) translateY(-50%) translateY(10px) scale(0.95)';
+
+            // Show tooltip
+            setTimeout(() => {
+                tooltip.classList.add('show');
+            }, 10);
+
+            // Hide after 5 seconds
+            setTimeout(() => {
+                tooltip.classList.remove('show');
+            }, 5000);
         }
 
         // Close modal on button click
@@ -4986,6 +6201,7 @@
                 wordBankSize: wordBankSize,
                 fontSize: fontSize,
                 soundFeedbackEnabled: soundFeedbackEnabled,
+                soundType: soundType,
                 selectedKeys: Array.from(selectedKeys)
             };
             localStorage.setItem('typingPracticeSettings', JSON.stringify(settings));
@@ -5088,6 +6304,16 @@
                 if (settings.soundFeedbackEnabled !== undefined) {
                     soundFeedbackEnabled = settings.soundFeedbackEnabled;
                     document.getElementById('soundFeedbackToggle').checked = settings.soundFeedbackEnabled;
+                }
+
+                // Apply sound type setting
+                if (settings.soundType !== undefined) {
+                    soundType = settings.soundType;
+                    const btn = document.getElementById('soundTypeCycle');
+                    if (btn) {
+                        const labels = { 'classic': 'Classic', 'mechanical': 'Mechanical', 'soft': 'Soft', 'minimal': 'Minimal' };
+                        btn.textContent = labels[settings.soundType] || 'Classic';
+                    }
                 }
 
                 // Restore selected keys
@@ -5281,8 +6507,8 @@
             // Reset session tracking
             sessionKeyErrors = {};
 
-            // Check lesson completion
-            checkLessonCompletion(wpm, accuracy);
+            // Update course stats if in a course
+            updateCourseStats(wpm, accuracy);
 
             // Save to localStorage
             saveStats();
@@ -5588,7 +6814,8 @@
             // Load saved settings and stats
             loadSettings();
             loadStats();
-            loadLessonProgress();
+            loadCourseStats();
+            loadCustomCourses();
 
             // Initialize settings display based on loaded settings
             initializeSettingsDisplay();
