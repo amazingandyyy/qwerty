@@ -132,8 +132,8 @@
         let timerInterval = null;
         let errorPositions = new Map(); // Track positions with errors and what was typed
         let timeLimit = 30;
-        let isTimedMode = false;
-        let isUnlimitedMode = true;
+        let isTimedMode = true;
+        let isUnlimitedMode = false;
 
         // Settings
         let wordCount = 10;

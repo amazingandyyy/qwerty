@@ -1,9 +1,9 @@
 import { defineConfig } from 'vite'
 
-export default defineConfig({
+export default defineConfig(({ command }) => ({
   // Set base path for GitHub Pages deployment
   // For repo: github.com/amazingandyyy/qwerty
-  base: process.env.NODE_ENV === 'production' ? '/qwerty/' : '/',
+  base: command === 'build' ? '/qwerty/' : '/',
 
   build: {
     rollupOptions: {
@@ -17,4 +17,4 @@ export default defineConfig({
       }
     }
   }
-})
+}))
