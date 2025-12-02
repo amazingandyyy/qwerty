@@ -2402,26 +2402,13 @@
                 document.getElementById('insightsSection').style.display = 'none';
             }
 
-            // Display most frequent error keys (exclude space)
+            // Removed: Most Frequent Error Keys list - heatmap is better and more visual
+            /*
             const errorKeys = Object.entries(typingStats.keyErrorCounts)
                 .filter(([key]) => key !== ' ')
                 .sort((a, b) => b[1] - a[1])
                 .slice(0, 10);
-
-            if (errorKeys.length > 0) {
-                errorKeysList.innerHTML = errorKeys.map(([key, count]) => {
-                    const displayKey = key === ' ' ? 'Space' : key.toUpperCase();
-                    return `
-                        <div class="error-key-item">
-                            <span class="error-key-name">${displayKey}</span>
-                            <span class="error-key-count">${count} errors</span>
-                        </div>
-                    `;
-                }).join('');
-                document.getElementById('errorsSection').style.display = 'block';
-            } else {
-                document.getElementById('errorsSection').style.display = 'none';
-            }
+            */
 
             // Render keyboard heatmap
             renderKeyboardHeatmap();
