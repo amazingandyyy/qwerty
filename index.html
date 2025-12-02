@@ -332,6 +332,51 @@
             border-color: #c4b5fd;
         }
 
+        /* Visual Feedback Animations */
+        @keyframes keyPressCorrect {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+            }
+            50% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+            }
+        }
+
+        @keyframes keyPressError {
+            0% {
+                transform: scale(1) translateX(0);
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+            }
+            25% {
+                transform: scale(0.95) translateX(-2px);
+                box-shadow: 0 0 0 8px rgba(239, 68, 68, 0);
+            }
+            50% {
+                transform: scale(0.95) translateX(2px);
+            }
+            75% {
+                transform: scale(0.95) translateX(-2px);
+            }
+            100% {
+                transform: scale(1) translateX(0);
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+            }
+        }
+
+        .key.flash-correct {
+            animation: keyPressCorrect 0.3s ease;
+        }
+
+        .key.flash-error {
+            animation: keyPressError 0.4s ease;
+        }
+
         .finger-btn {
             width: 28px;
             border: none;
@@ -462,6 +507,224 @@
         .selected-keys strong {
             color: #262626;
             font-weight: 600;
+        }
+
+        /* Lessons Section */
+        .lessons-container {
+            margin: 32px 0;
+            padding: 32px;
+            background: white;
+            border-radius: 16px;
+            border: 1px solid #e8e8e8;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02), 0 1px 2px rgba(0, 0, 0, 0.04);
+        }
+
+        body.dark-mode .lessons-container {
+            background: #18191a;
+            border-color: #2a2d32;
+        }
+
+        .lessons-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .lessons-header h3 {
+            font-size: 1.5em;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+        }
+
+        body.dark-mode .lessons-header h3 {
+            color: #e8e8e8;
+        }
+
+        .lessons-subtitle {
+            color: #737373;
+            font-size: 0.95em;
+        }
+
+        body.dark-mode .lessons-subtitle {
+            color: #888;
+        }
+
+        .lessons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .lesson-card {
+            padding: 20px;
+            background: #f8f8f8;
+            border: 2px solid #e8e8e8;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body.dark-mode .lesson-card {
+            background: #1e2023;
+            border-color: #2a2d32;
+        }
+
+        .lesson-card:hover {
+            transform: translateY(-2px);
+            border-color: #e2b714;
+            box-shadow: 0 4px 12px rgba(226, 183, 20, 0.15);
+        }
+
+        .lesson-card.active {
+            border-color: #e2b714;
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+        }
+
+        body.dark-mode .lesson-card.active {
+            background: linear-gradient(135deg, #2a2415 0%, #3a2f1a 100%);
+            border-color: #e2b714;
+        }
+
+        .lesson-card.completed {
+            border-color: #10b981;
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+        }
+
+        body.dark-mode .lesson-card.completed {
+            background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
+            border-color: #10b981;
+        }
+
+        .lesson-card.locked {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .lesson-card.locked:hover {
+            transform: none;
+            border-color: #e8e8e8;
+            box-shadow: none;
+        }
+
+        body.dark-mode .lesson-card.locked:hover {
+            border-color: #2a2d32;
+        }
+
+        .lesson-number {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #e8e8e8;
+            color: #525252;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9em;
+        }
+
+        body.dark-mode .lesson-number {
+            background: #2a2d32;
+            color: #888;
+        }
+
+        .lesson-card.active .lesson-number {
+            background: #e2b714;
+            color: #78350f;
+        }
+
+        .lesson-card.completed .lesson-number {
+            background: #10b981;
+            color: white;
+        }
+
+        .lesson-card.completed .lesson-number::before {
+            content: '✓';
+        }
+
+        .lesson-title {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+        }
+
+        body.dark-mode .lesson-title {
+            color: #e8e8e8;
+        }
+
+        .lesson-description {
+            font-size: 0.9em;
+            color: #737373;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        body.dark-mode .lesson-description {
+            color: #888;
+        }
+
+        .lesson-keys {
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.85em;
+            color: #525252;
+            background: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin-bottom: 12px;
+        }
+
+        body.dark-mode .lesson-keys {
+            background: #0f1012;
+            color: #a0a0a0;
+        }
+
+        .lesson-progress {
+            font-size: 0.85em;
+            color: #737373;
+            font-weight: 500;
+        }
+
+        body.dark-mode .lesson-progress {
+            color: #888;
+        }
+
+        .lesson-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75em;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+
+        .lesson-badge.in-progress {
+            background: #fef3c7;
+            color: #78350f;
+        }
+
+        .lesson-badge.completed {
+            background: #d1fae5;
+            color: #064e3b;
+        }
+
+        body.dark-mode .lesson-badge.completed {
+            background: #065f46;
+            color: #d1fae5;
+        }
+
+        .lesson-badge.locked {
+            background: #e8e8e8;
+            color: #737373;
+        }
+
+        body.dark-mode .lesson-badge.locked {
+            background: #2a2d32;
+            color: #888;
         }
 
         .practice-area {
@@ -1915,6 +2178,147 @@
             color: #d1a513;
         }
 
+        /* Keyboard Heatmap */
+        .heatmap-subtitle {
+            text-align: center;
+            color: #737373;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+        }
+
+        body.dark-mode .heatmap-subtitle {
+            color: #888;
+        }
+
+        .heatmap-keyboard {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding: 24px;
+            background: #f8f8f8;
+            border-radius: 12px;
+            margin-bottom: 16px;
+        }
+
+        body.dark-mode .heatmap-keyboard {
+            background: #1e2023;
+        }
+
+        .heatmap-row {
+            display: flex;
+            gap: 4px;
+            justify-content: center;
+        }
+
+        .heatmap-key {
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #e8e8e8;
+            border: 1px solid #d0d0d0;
+            border-radius: 6px;
+            font-size: 0.75em;
+            font-weight: 600;
+            color: #404040;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        body.dark-mode .heatmap-key {
+            background: #2a2d32;
+            border-color: #3a3d42;
+            color: #a0a0a0;
+        }
+
+        .heatmap-key.heatmap-space {
+            width: 200px;
+        }
+
+        .heatmap-key[data-error-level="1"] {
+            background: #fef3c7;
+            border-color: #fde68a;
+            color: #78350f;
+        }
+
+        .heatmap-key[data-error-level="2"] {
+            background: #fde68a;
+            border-color: #fcd34d;
+            color: #78350f;
+        }
+
+        .heatmap-key[data-error-level="3"] {
+            background: #fbbf24;
+            border-color: #f59e0b;
+            color: #78350f;
+        }
+
+        .heatmap-key[data-error-level="4"] {
+            background: #fb923c;
+            border-color: #f97316;
+            color: #7c2d12;
+        }
+
+        .heatmap-key[data-error-level="5"] {
+            background: #f87171;
+            border-color: #ef4444;
+            color: #7f1d1d;
+        }
+
+        .heatmap-key[data-error-level="6"] {
+            background: #ef4444;
+            border-color: #dc2626;
+            color: white;
+        }
+
+        .heatmap-key[data-error-level="7"] {
+            background: #dc2626;
+            border-color: #b91c1c;
+            color: white;
+            font-weight: 700;
+        }
+
+        .heatmap-key::after {
+            content: attr(data-error-count);
+            position: absolute;
+            bottom: 2px;
+            right: 3px;
+            font-size: 0.65em;
+            font-weight: 700;
+            opacity: 0.7;
+        }
+
+        .heatmap-legend {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .legend-label {
+            font-size: 0.85em;
+            color: #737373;
+        }
+
+        body.dark-mode .legend-label {
+            color: #888;
+        }
+
+        .legend-gradient {
+            width: 200px;
+            height: 20px;
+            background: linear-gradient(to right, #e8e8e8, #fde68a, #fbbf24, #fb923c, #f87171, #ef4444, #dc2626);
+            border-radius: 10px;
+            border: 1px solid #d0d0d0;
+        }
+
+        body.dark-mode .legend-gradient {
+            background: linear-gradient(to right, #2a2d32, #fde68a, #fbbf24, #fb923c, #f87171, #ef4444, #dc2626);
+            border-color: #3a3d42;
+        }
+
         .reset-stats-btn {
             width: 100%;
             padding: 12px;
@@ -2445,6 +2849,13 @@
                         <span class="settings-label">Focus Mode</span>
                     </label>
                 </div>
+                <div class="settings-menu-item">
+                    <label class="settings-switch">
+                        <input type="checkbox" id="soundFeedbackToggle" checked>
+                        <span class="settings-slider"></span>
+                        <span class="settings-label">Sound Feedback</span>
+                    </label>
+                </div>
             </div>
 
             <div class="settings-menu-divider"></div>
@@ -2724,6 +3135,17 @@
             <strong>Selected Keys:</strong> <span id="selectedKeysList">None - Click keys above or use finger shortcuts</span>
         </div>
 
+        <!-- Lessons Section -->
+        <div class="lessons-container" id="lessonsContainer">
+            <div class="lessons-header">
+                <h3>Structured Lessons</h3>
+                <p class="lessons-subtitle">Follow a progressive path from beginner to expert</p>
+            </div>
+            <div class="lessons-grid" id="lessonsGrid">
+                <!-- Lessons will be dynamically inserted here -->
+            </div>
+        </div>
+
         <div class="practice-area">
             <div class="practice-header">
                 <h2>Typing Practice</h2>
@@ -2833,6 +3255,82 @@
                 <h3>Most Frequent Error Keys</h3>
                 <div class="error-keys-list" id="errorKeysList">
                     <!-- Error keys will be dynamically inserted here -->
+                </div>
+            </div>
+
+            <!-- Keyboard Heatmap -->
+            <div class="stats-section" id="heatmapSection">
+                <h3>Error Heatmap</h3>
+                <p class="heatmap-subtitle">Visual representation of your most problematic keys</p>
+                <div class="heatmap-keyboard">
+                    <!-- Number Row -->
+                    <div class="heatmap-row">
+                        <div class="heatmap-key" data-key="`">`</div>
+                        <div class="heatmap-key" data-key="1">1</div>
+                        <div class="heatmap-key" data-key="2">2</div>
+                        <div class="heatmap-key" data-key="3">3</div>
+                        <div class="heatmap-key" data-key="4">4</div>
+                        <div class="heatmap-key" data-key="5">5</div>
+                        <div class="heatmap-key" data-key="6">6</div>
+                        <div class="heatmap-key" data-key="7">7</div>
+                        <div class="heatmap-key" data-key="8">8</div>
+                        <div class="heatmap-key" data-key="9">9</div>
+                        <div class="heatmap-key" data-key="0">0</div>
+                        <div class="heatmap-key" data-key="-">-</div>
+                        <div class="heatmap-key" data-key="=">=</div>
+                    </div>
+                    <!-- QWERTY Row -->
+                    <div class="heatmap-row">
+                        <div class="heatmap-key" data-key="q">Q</div>
+                        <div class="heatmap-key" data-key="w">W</div>
+                        <div class="heatmap-key" data-key="e">E</div>
+                        <div class="heatmap-key" data-key="r">R</div>
+                        <div class="heatmap-key" data-key="t">T</div>
+                        <div class="heatmap-key" data-key="y">Y</div>
+                        <div class="heatmap-key" data-key="u">U</div>
+                        <div class="heatmap-key" data-key="i">I</div>
+                        <div class="heatmap-key" data-key="o">O</div>
+                        <div class="heatmap-key" data-key="p">P</div>
+                        <div class="heatmap-key" data-key="[">[</div>
+                        <div class="heatmap-key" data-key="]">]</div>
+                        <div class="heatmap-key" data-key="\">\</div>
+                    </div>
+                    <!-- Home Row -->
+                    <div class="heatmap-row">
+                        <div class="heatmap-key" data-key="a">A</div>
+                        <div class="heatmap-key" data-key="s">S</div>
+                        <div class="heatmap-key" data-key="d">D</div>
+                        <div class="heatmap-key" data-key="f">F</div>
+                        <div class="heatmap-key" data-key="g">G</div>
+                        <div class="heatmap-key" data-key="h">H</div>
+                        <div class="heatmap-key" data-key="j">J</div>
+                        <div class="heatmap-key" data-key="k">K</div>
+                        <div class="heatmap-key" data-key="l">L</div>
+                        <div class="heatmap-key" data-key=";">;</div>
+                        <div class="heatmap-key" data-key="'">'</div>
+                    </div>
+                    <!-- Bottom Row -->
+                    <div class="heatmap-row">
+                        <div class="heatmap-key" data-key="z">Z</div>
+                        <div class="heatmap-key" data-key="x">X</div>
+                        <div class="heatmap-key" data-key="c">C</div>
+                        <div class="heatmap-key" data-key="v">V</div>
+                        <div class="heatmap-key" data-key="b">B</div>
+                        <div class="heatmap-key" data-key="n">N</div>
+                        <div class="heatmap-key" data-key="m">M</div>
+                        <div class="heatmap-key" data-key=",">,</div>
+                        <div class="heatmap-key" data-key=".">.</div>
+                        <div class="heatmap-key" data-key="/">/</div>
+                    </div>
+                    <!-- Space Row -->
+                    <div class="heatmap-row" style="justify-content: center;">
+                        <div class="heatmap-key heatmap-space" data-key=" ">SPACE</div>
+                    </div>
+                </div>
+                <div class="heatmap-legend">
+                    <span class="legend-label">Fewer errors</span>
+                    <div class="legend-gradient"></div>
+                    <span class="legend-label">More errors</span>
                 </div>
             </div>
 
@@ -2996,6 +3494,68 @@
         let includeSpaces = true;
         let errorMode = 'block'; // 'block', 'skip', 'backspace'
         let fontSize = 'medium'; // 'small', 'medium', 'large', 'xlarge'
+        let soundFeedbackEnabled = true;
+
+        // Audio Context for sound feedback
+        let audioContext = null;
+
+        function initAudioContext() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        function playCorrectSound() {
+            if (!soundFeedbackEnabled) return;
+            initAudioContext();
+
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+
+            oscillator.frequency.value = 800;
+            oscillator.type = 'sine';
+
+            gainNode.gain.setValueAtTime(0.03, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.05);
+
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.05);
+        }
+
+        function playErrorSound() {
+            if (!soundFeedbackEnabled) return;
+            initAudioContext();
+
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+
+            oscillator.frequency.value = 200;
+            oscillator.type = 'sawtooth';
+
+            gainNode.gain.setValueAtTime(0.05, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.1);
+        }
+
+        function flashKey(keyChar, isCorrect) {
+            const keyElement = document.querySelector(`.key[data-key="${keyChar.toLowerCase()}"]`);
+            if (!keyElement) return;
+
+            const className = isCorrect ? 'flash-correct' : 'flash-error';
+            keyElement.classList.add(className);
+
+            setTimeout(() => {
+                keyElement.classList.remove(className);
+            }, isCorrect ? 300 : 400);
+        }
 
         // Stats tracking
         let typingStats = {
@@ -3011,6 +3571,204 @@
             longestStreak: 0 // Longest consecutive days streak
         };
         let sessionKeyErrors = {}; // Track errors for current session
+
+        // Lesson System
+        const lessons = [
+            {
+                id: 1,
+                title: "Home Row Basics",
+                description: "Master the foundation: ASDF JKL;",
+                keys: ['a', 's', 'd', 'f', 'j', 'k', 'l', ';'],
+                requiredWPM: 30,
+                requiredAccuracy: 85
+            },
+            {
+                id: 2,
+                title: "Top Row",
+                description: "Add QWERT YUIOP to your skills",
+                keys: ['a', 's', 'd', 'f', 'j', 'k', 'l', ';', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
+                requiredWPM: 35,
+                requiredAccuracy: 88
+            },
+            {
+                id: 3,
+                title: "Bottom Row",
+                description: "Complete the alphabet with ZXCV BNM",
+                keys: ['a', 's', 'd', 'f', 'j', 'k', 'l', ';', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/'],
+                requiredWPM: 40,
+                requiredAccuracy: 90
+            },
+            {
+                id: 4,
+                title: "Numbers",
+                description: "Add number keys 0-9 to your typing",
+                keys: ['a', 's', 'd', 'f', 'j', 'k', 'l', ';', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
+                requiredWPM: 45,
+                requiredAccuracy: 90
+            },
+            {
+                id: 5,
+                title: "Special Characters",
+                description: "Master the full keyboard with special characters",
+                keys: ['a', 's', 'd', 'f', 'j', 'k', 'l', ';', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '`', '-', '=', '[', ']', '\\', "'"],
+                requiredWPM: 50,
+                requiredAccuracy: 92
+            }
+        ];
+
+        let lessonProgress = {
+            currentLesson: 1,
+            completedLessons: [],
+            lessonStats: {} // { lessonId: { bestWPM: 45, bestAccuracy: 92 } }
+        };
+
+        let activeLessonId = null;
+
+        function loadLessonProgress() {
+            const saved = localStorage.getItem('lessonProgress');
+            if (saved) {
+                try {
+                    lessonProgress = JSON.parse(saved);
+                } catch (e) {
+                    console.error('Failed to load lesson progress', e);
+                }
+            }
+        }
+
+        function saveLessonProgress() {
+            localStorage.setItem('lessonProgress', JSON.stringify(lessonProgress));
+        }
+
+        function renderLessons() {
+            const lessonsGrid = document.getElementById('lessonsGrid');
+            if (!lessonsGrid) return;
+
+            lessonsGrid.innerHTML = lessons.map(lesson => {
+                const isCompleted = lessonProgress.completedLessons.includes(lesson.id);
+                const isActive = activeLessonId === lesson.id;
+                const isLocked = lesson.id > 1 && !lessonProgress.completedLessons.includes(lesson.id - 1);
+                const lessonStat = lessonProgress.lessonStats[lesson.id];
+
+                let statusBadge = '';
+                let cardClass = 'lesson-card';
+
+                if (isLocked) {
+                    cardClass += ' locked';
+                    statusBadge = '<span class="lesson-badge locked">Locked</span>';
+                } else if (isActive) {
+                    cardClass += ' active';
+                    statusBadge = '<span class="lesson-badge in-progress">In Progress</span>';
+                } else if (isCompleted) {
+                    cardClass += ' completed';
+                    statusBadge = '<span class="lesson-badge completed">Completed</span>';
+                }
+
+                const keysDisplay = lesson.keys.slice(0, 15).join(' ').toUpperCase() + (lesson.keys.length > 15 ? '...' : '');
+
+                let progressText = '';
+                if (lessonStat) {
+                    progressText = `<div class="lesson-progress">Best: ${lessonStat.bestWPM} WPM, ${lessonStat.bestAccuracy}% Accuracy</div>`;
+                }
+
+                return `
+                    <div class="${cardClass}" data-lesson-id="${lesson.id}" onclick="selectLesson(${lesson.id})">
+                        <div class="lesson-number">${isCompleted ? '' : lesson.id}</div>
+                        <div class="lesson-title">${lesson.title}</div>
+                        <div class="lesson-description">${lesson.description}</div>
+                        <div class="lesson-keys">${keysDisplay}</div>
+                        <div class="lesson-progress">Target: ${lesson.requiredWPM}+ WPM, ${lesson.requiredAccuracy}%+ Accuracy</div>
+                        ${progressText}
+                        ${statusBadge}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        window.selectLesson = function(lessonId) {
+            const lesson = lessons.find(l => l.id === lessonId);
+            if (!lesson) return;
+
+            // Check if locked
+            if (lessonId > 1 && !lessonProgress.completedLessons.includes(lessonId - 1)) {
+                showModal(`This lesson is locked!\n\nComplete "${lessons[lessonId - 2].title}" first to unlock it.`);
+                return;
+            }
+
+            activeLessonId = lessonId;
+
+            // Clear current selection
+            selectedKeys.clear();
+            document.querySelectorAll('.key.selected').forEach(key => {
+                key.classList.remove('selected');
+            });
+            document.querySelectorAll('.finger-btn.active').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Select lesson keys
+            lesson.keys.forEach(key => {
+                selectedKeys.add(key);
+                const keyEl = document.querySelector(`.key[data-key="${key}"]`);
+                if (keyEl) keyEl.classList.add('selected');
+            });
+
+            // Auto-enable settings based on lesson
+            if (lesson.keys.some(k => ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].includes(k))) {
+                includeNumbers = true;
+                includeNumbersCheckbox.checked = true;
+            }
+            if (lesson.keys.some(k => ['`', '-', '=', '[', ']', '\\', "'"].includes(k))) {
+                includeSpecialChars = true;
+                includeSpecialCharsCheckbox.checked = true;
+            }
+
+            // Generate practice text
+            updateSelectedKeysList();
+            generatePracticeText();
+            renderLessons();
+
+            // Scroll to practice area
+            document.querySelector('.practice-area').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            showModal(`Starting: ${lesson.title}\n\n${lesson.description}\n\nGoal: Reach ${lesson.requiredWPM}+ WPM with ${lesson.requiredAccuracy}%+ accuracy to complete this lesson!`);
+        }
+
+        function checkLessonCompletion(wpm, accuracy) {
+            if (!activeLessonId) return;
+
+            const lesson = lessons.find(l => l.id === activeLessonId);
+            if (!lesson) return;
+
+            // Update lesson stats
+            if (!lessonProgress.lessonStats[activeLessonId]) {
+                lessonProgress.lessonStats[activeLessonId] = { bestWPM: 0, bestAccuracy: 0 };
+            }
+
+            const lessonStat = lessonProgress.lessonStats[activeLessonId];
+            if (wpm > lessonStat.bestWPM) lessonStat.bestWPM = wpm;
+            if (accuracy > lessonStat.bestAccuracy) lessonStat.bestAccuracy = accuracy;
+
+            // Check if lesson is completed
+            if (wpm >= lesson.requiredWPM && accuracy >= lesson.requiredAccuracy) {
+                if (!lessonProgress.completedLessons.includes(activeLessonId)) {
+                    lessonProgress.completedLessons.push(activeLessonId);
+                    lessonProgress.currentLesson = Math.min(activeLessonId + 1, lessons.length);
+
+                    saveLessonProgress();
+                    renderLessons();
+
+                    setTimeout(() => {
+                        const nextLesson = lessons.find(l => l.id === activeLessonId + 1);
+                        const congratsMsg = `Lesson Completed!\n\n${lesson.title} mastered!\n\nWPM: ${wpm}\nAccuracy: ${accuracy}%` +
+                            (nextLesson ? `\n\nNext: ${nextLesson.title}` : '\n\nYou completed all lessons!');
+                        showModal(congratsMsg);
+                    }, 500);
+                }
+            }
+
+            saveLessonProgress();
+            renderLessons();
+        }
 
         const keys = document.querySelectorAll('.key');
         const fingerBtns = document.querySelectorAll('.finger-btn');
@@ -3827,6 +4585,9 @@
 
                 if (typedChar === currentText[currentPosition]) {
                     // Correct character typed
+                    playCorrectSound();
+                    flashKey(typedChar, true);
+
                     // If this position was previously an error, remove it
                     if (errorPositions.has(currentPosition)) {
                         errorPositions.delete(currentPosition);
@@ -3873,6 +4634,10 @@
                     }
                 } else {
                     errorCount++;
+
+                    // Play error feedback
+                    playErrorSound();
+                    flashKey(currentText[currentPosition], false);
 
                     // Track which key had the error
                     const expectedKey = currentText[currentPosition].toLowerCase();
@@ -4048,6 +4813,13 @@
             toggleDarkMode();
         });
 
+        // Sound Feedback Toggle
+        const soundFeedbackToggle = document.getElementById('soundFeedbackToggle');
+        soundFeedbackToggle.addEventListener('change', () => {
+            soundFeedbackEnabled = soundFeedbackToggle.checked;
+            showSaveButton();
+        });
+
         // Keyboard shortcuts
         document.addEventListener('keydown', (e) => {
             // Escape - Toggle focus mode
@@ -4213,6 +4985,7 @@
                 errorMode: errorMode,
                 wordBankSize: wordBankSize,
                 fontSize: fontSize,
+                soundFeedbackEnabled: soundFeedbackEnabled,
                 selectedKeys: Array.from(selectedKeys)
             };
             localStorage.setItem('typingPracticeSettings', JSON.stringify(settings));
@@ -4309,6 +5082,12 @@
                     // Remove all font size classes and add the selected one
                     targetText.classList.remove('font-small', 'font-medium', 'font-large', 'font-xlarge');
                     targetText.classList.add(`font-${fontSize}`);
+                }
+
+                // Apply sound feedback setting
+                if (settings.soundFeedbackEnabled !== undefined) {
+                    soundFeedbackEnabled = settings.soundFeedbackEnabled;
+                    document.getElementById('soundFeedbackToggle').checked = settings.soundFeedbackEnabled;
                 }
 
                 // Restore selected keys
@@ -4502,6 +5281,9 @@
             // Reset session tracking
             sessionKeyErrors = {};
 
+            // Check lesson completion
+            checkLessonCompletion(wpm, accuracy);
+
             // Save to localStorage
             saveStats();
         }
@@ -4619,6 +5401,51 @@
             } else {
                 document.getElementById('errorsSection').style.display = 'none';
             }
+
+            // Render keyboard heatmap
+            renderKeyboardHeatmap();
+        }
+
+        function renderKeyboardHeatmap() {
+            const heatmapKeys = document.querySelectorAll('.heatmap-key');
+            const errorCounts = typingStats.keyErrorCounts;
+
+            // If no errors yet, hide the heatmap section
+            if (Object.keys(errorCounts).length === 0) {
+                document.getElementById('heatmapSection').style.display = 'none';
+                return;
+            }
+
+            document.getElementById('heatmapSection').style.display = 'block';
+
+            // Find the max error count for scaling
+            const maxErrors = Math.max(...Object.values(errorCounts), 1);
+
+            // Color each key based on error frequency
+            heatmapKeys.forEach(keyElement => {
+                const key = keyElement.getAttribute('data-key');
+                const errorCount = errorCounts[key] || 0;
+
+                // Reset previous styling
+                keyElement.removeAttribute('data-error-level');
+                keyElement.removeAttribute('data-error-count');
+
+                if (errorCount > 0) {
+                    // Calculate error level (1-7) based on percentage of max
+                    const percentage = errorCount / maxErrors;
+                    let errorLevel;
+                    if (percentage < 0.15) errorLevel = 1;
+                    else if (percentage < 0.3) errorLevel = 2;
+                    else if (percentage < 0.45) errorLevel = 3;
+                    else if (percentage < 0.6) errorLevel = 4;
+                    else if (percentage < 0.75) errorLevel = 5;
+                    else if (percentage < 0.9) errorLevel = 6;
+                    else errorLevel = 7;
+
+                    keyElement.setAttribute('data-error-level', errorLevel);
+                    keyElement.setAttribute('data-error-count', errorCount);
+                }
+            });
         }
 
         function generateInsights() {
@@ -4761,9 +5588,13 @@
             // Load saved settings and stats
             loadSettings();
             loadStats();
+            loadLessonProgress();
 
             // Initialize settings display based on loaded settings
             initializeSettingsDisplay();
+
+            // Render lessons
+            renderLessons();
 
             // Only auto-select all fingers if there are no saved keys
             if (selectedKeys.size === 0) {
