@@ -1,0 +1,26 @@
+{
+  "name": "better-typing",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amazingandyyy/qwerty.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/amazingandyyy/qwerty/issues"
+  },
+  "homepage": "https://github.com/amazingandyyy/qwerty#readme",
+  "devDependencies": {
+    "vite": "^7.2.6"
+  }
+}
